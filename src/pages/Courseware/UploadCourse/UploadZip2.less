@@ -1,0 +1,103 @@
+@import '~antd/lib/style/themes/default.less';
+
+.afterUpload{
+    .afterUploadRow{
+        border-bottom: 1px dashed #dcdcdc;
+        :global{
+
+        }
+    }
+    .firstCol{
+        div.msgDetail{
+            padding: 10px 0 20px 0;
+            display: flex;
+            line-height: 1;
+            >span:nth-child(1){
+
+            }
+            >span:nth-child(2){
+                flex: 1;
+                &.msgDetailOverflow{
+                    width: 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+        .imgContent{
+            display: flex;
+            .imgLeft{
+                margin-right: 20px;
+                img{
+                    height: 132px;
+                    width: 235px;
+                }
+            }
+            .imgRight{
+                flex: 1;
+            }
+        }
+        // 课程文件类型、允许视频拖放
+        .columnContent{
+            display: flex;
+            .columnContentL{
+                width: 255px;
+            }
+            .columnContentR{
+                flex: 1;
+            }
+        }
+        // 讲师信息
+        .imgContent2{
+            display: flex;
+            .imgLeft2{
+                width: 125px;
+            }
+            .imgRight2{
+                flex: 1;
+                >div:nth-child(2){
+                    line-height: 1.5;
+                }
+            }
+        }
+    }
+    .secondCol{
+        .searchInputContent{
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            :global {
+                .ant-input-search{
+                    flex: 1;
+                }
+            }
+            // input{
+            //     flex: 1;
+            // }
+        }
+        :global {
+            .ant-table-pagination.ant-pagination{
+                display: flex;
+                justify-content: flex-end;
+                max-width: 100%;
+                flex-wrap: wrap;
+                padding-left: 90px;
+                .ant-pagination-total-text{
+                    position: absolute;
+                    left: 0;
+                }
+            }
+        }
+    }
+    .footerBtns{
+        display: flex;
+        justify-content: center;
+        padding: 34px 0 10px 0;
+        :global {
+            .ant-btn{
+                margin: 0 5px;
+            }
+        }
+    }
+}

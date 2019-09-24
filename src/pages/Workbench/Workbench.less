@@ -1,0 +1,258 @@
+@import '~antd/lib/style/themes/default.less';
+
+// @color1:#1890ff;
+// ------------平台公告------------
+.Notice_Card_contend {
+  display: flex;
+  justify-content: space-between;
+
+  .notice_left {
+    // width: 30%;
+    margin-right: 20px;
+
+    img {
+      width: 100%;
+      // height: 100%;
+      max-width: 470px;
+      height: 275px;
+    }
+  }
+
+  .workbench {
+    flex: 1;
+
+    // width: calc(100% - (30% + 20px));
+    span.listCircle {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #ccc;
+      border-radius: 8px;
+      margin-right: 10px;
+    }
+
+    :global {
+      .ant-list-item {
+        padding-left: 8px;
+        padding-right: 8px;
+        height: 55px;
+
+        &:last-child {
+          border-bottom: 1px solid #e8e8e8;
+        }
+
+        .ant-list-item-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+
+          >div {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            &:nth-child(1) {
+              width: calc(~"100% - 140px");
+            }
+
+            &:nth-child(2) {
+              width: 120px;
+            }
+          }
+        }
+      }
+
+      .ant-list-item:hover {
+        cursor: pointer;
+        background: #f0faff;
+
+        .ant-list-item-content {
+          >div:nth-child(1) {
+            span {
+              background: @primary-color;
+            }
+          }
+        }
+      }
+    }
+
+    .active_listItem {
+      cursor: pointer;
+      background: #f0faff;
+
+      >div {
+        >div:nth-child(1) {
+          span {
+            background: @primary-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .Notice_Card_contend {
+    display: flex;
+    flex-direction: column;
+
+    .notice_left {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px;
+
+      img {
+        width: 470px;
+        max-width: none;
+        height: auto;
+        // height: 100%;
+        // width: 470px;
+        // height: 275px;
+      }
+    }
+
+    .workbench {
+      width: 100%;
+    }
+  }
+}
+
+// ------------平台公告------------
+
+// ------------系统管理员平台运营数据部分样式------------
+.adminPlatformConent {
+  :global {
+    .ant-row {
+      >div {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .firstCard {
+    :global {
+      .ant-card-body {
+        padding-top: 35px;
+        padding-bottom: 0;
+        text-align: center;
+      }
+    }
+
+    .firstCard_tit {
+      font-size: 18px;
+      color: #3d3d3d;
+      margin-bottom: 10px;
+    }
+
+    .firstCard_det {
+      font-size: 14px;
+      color: #979797;
+    }
+  }
+
+  .secondCard {
+    :global {
+      .ant-card-body {
+        padding-top: 35px;
+        padding-bottom: 35px;
+      }
+    }
+
+    .secondCardCol {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #dcdcdc;
+
+      img {
+        margin-right: 35px;
+      }
+
+      >div {
+        >div {
+          &:nth-child(1) {
+            color: #979797;
+            font-size: 14px;
+          }
+
+          &:nth-child(2) {
+            color: #3c3c3c;
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .adminPlatformConent {
+    .secondCard {
+      .secondCardCol {
+        border: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @screen-xl) and (min-width: @screen-md) {
+  .adminPlatformConent {
+    .secondCard {
+      :global {
+        .ant-row {
+          >div:nth-child(2n) {
+            >div {
+              border: none;
+            }
+          }
+        }
+      }
+
+    }
+  }
+}
+
+@media screen and (min-width: @screen-xl) {
+  .adminPlatformConent {
+    .secondCard {
+      :global {
+        .ant-row {
+          >div:nth-child(4) {
+            >div {
+              border: none;
+            }
+          }
+        }
+      }
+
+    }
+  }
+}
+
+// ------------系统管理员平台运营数据部分样式------------
+
+// ------------学员（待完成、已完成、已逾期）------------
+.stuFinishCard {
+  margin-bottom: 25px;
+
+  :global {
+    .ant-card-body {
+      padding-top: 5px;
+
+      .ant-tabs {
+        overflow: unset;
+      }
+    }
+  }
+}
+
+// ------------学员（待完成、已完成、已逾期）------------
+// ------------没有数据时的提示------------
+.noDataTips {
+  font-size: 18px;
+  color: #abd6fb;
+  padding: 25px 0;
+}
+
+// ------------没有数据时的提示------------

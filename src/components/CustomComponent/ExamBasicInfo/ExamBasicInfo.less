@@ -1,0 +1,67 @@
+@import '~antd/lib/style/themes/default.less';
+
+.hiddenExamInfoContent{
+    display: none;
+}
+
+
+.examInfoContent{
+    .leftContent{
+        display: flex;
+        .imgLeft{
+            margin-right: 20px;
+            img{
+                height: 130px;
+                width: 232px;
+            }
+        }
+        .imgRight{
+            flex: 1;
+            display:flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding-right: 20px;
+        }
+    }
+    .rightContent{
+        padding-top: 20px;
+        >.introduceName{
+
+        }
+        >.introduceInfo{
+        }
+    }
+}
+@media screen and (min-width: @screen-xxl) {
+    .examInfoContent{
+        .leftContent{
+            border-right: 1px dashed #dcdcdc;
+        }
+        .rightContent{
+            padding-left: 20px;
+            padding-top: 0;
+            >.introduceName{
+    
+            }
+            >.introduceInfo{
+                max-height: 110px;
+                overflow: auto;
+            }
+        }
+    }
+}
+div.msgDetail{
+    display: flex;
+    line-height: 1;
+    >span:nth-child(1){
+    }
+    >span:nth-child(2){
+        flex: 1;
+        &.msgDetailOverflow{
+            width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}

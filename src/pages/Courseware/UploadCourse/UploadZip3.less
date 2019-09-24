@@ -1,0 +1,41 @@
+@import '~antd/lib/style/themes/default.less';
+.uploadSuccessCard{
+    margin-bottom: 20px;
+    .uploadSuccessTitle{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 35px;
+        >span{
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+    }
+    :global {
+        .ant-row{
+            >div{
+                margin-bottom: 15px;
+            }
+        }
+    }
+}
+.uploadSuccessCardTable{
+    .uploadSuccessCardTableMsg{
+        padding: 10px 0 30px 0;
+    }
+    .footerBtns{
+        border-top: 1px dashed #dcdcdc;
+        display: flex;
+        justify-content: center;
+        padding: 34px 0 10px 0;
+        :global {
+            .ant-btn{
+                margin: 0 5px;
+            }
+        }
+    }
+}
+

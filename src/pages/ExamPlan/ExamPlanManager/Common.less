@@ -1,0 +1,74 @@
+@import '~antd/lib/style/themes/default.less';
+
+
+// ------------计划名称、学习时间、选择培训群组------------
+.testInfoDetail{
+    .formContent{
+        border-bottom: 1px dashed #dcdcdc;
+        :global {
+            .ant-form-item{
+                margin-bottom: 24px;
+            }
+            .ant-form-item-with-help{
+                margin-bottom: 5px;
+            }
+        }
+    }
+    .tableContent{
+        padding: 30px 0;
+        border-bottom: 1px dashed #dcdcdc;
+    }
+    .searchContent{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 24px;
+        >div:nth-child(1){
+
+        }
+        >div:nth-child(2){
+            button{
+                margin-left: 20px;
+            }
+        }
+    }
+    .foonter_btns{
+        padding: 34px 0 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        :global {
+            .ant-btn{
+                margin: 0 5px;
+            }
+        }
+    }
+}
+// 剩余多少字的样式
+.spanTips{
+    padding-left: 10px;
+    span{
+        color: red;
+        width: 20px;
+        display: inline-block;
+        text-align: center;
+    }
+}
+// ------------计划名称、学习时间、选择培训群组------------
+
+// ------------自定义选择时间样式------------
+.customerRangePicker{
+    :global {
+        .ant-calendar-range.ant-calendar-time .ant-calendar-today-btn {
+            // height: unset;
+            line-height: unset;
+        }
+        .ant-calendar-today .ant-calendar-date {
+            border-radius: 50%;
+        }
+        .ant-calendar-selected-start-date .ant-calendar-date, .ant-calendar-selected-end-date .ant-calendar-date {
+            border-radius: unset;
+        }
+    }
+}
+// ------------自定义选择时间样式------------

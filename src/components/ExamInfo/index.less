@@ -1,0 +1,53 @@
+@import '~antd/lib/style/themes/default.less';
+
+
+
+
+.detailContent {
+    .leftContent {
+        display: flex;
+
+        .imgLeft {
+            margin-right: 20px;
+
+            img {
+                height: 130px;
+                width: 232px;
+            }
+        }
+
+        .imgRight {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding-right: 20px;
+        }
+    }
+
+    .rightContent {
+        padding-top: 20px;
+
+        >.introduceName {}
+
+        >.introduceInfo {}
+    }
+}
+
+div.msgDetail {
+    display: flex;
+
+
+    >span:nth-child(1) {}
+
+    >span:nth-child(2) {
+        flex: 1;
+
+        &.msgDetailOverflow {
+            width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
