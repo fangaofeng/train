@@ -20,7 +20,7 @@ yarn-error.log
 yarn.lock
 package-lock.json
 *bak
-.vscode
+# .vscode
 
 # visual studio code
 .history

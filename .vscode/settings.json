@@ -1,0 +1,11 @@
+{
+    "prettier.semi": false,
+    "prettier.singleQuote": true,
+    "prettier.jsxSingleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.eslintIntegration": true,
+    "javascript.format.enable": false,
+    //"eslint.autoFixOnSave": true,
+    "prettier.jsxBracketSameLine": true,
+    "editor.formatOnSave": true
+}
