@@ -97,6 +97,7 @@ class SelfItemCardDetail extends Component {
             )}
           {stuUnfinishedConfig && stuUnfinishedConfig.status === '未开始'
             ? stuUnfinishedConfig.planStartTime && (
+                // eslint-disable-next-line react/jsx-indent
                 <div className={styles.planStartTime}>
                   {stuUnfinishedConfig.planStartTime}
                   <Button type="primary" disabled>
