@@ -1,27 +1,21 @@
 import request from '@/utils/request';
 import { stringify } from 'qs';
-// export async function query() {
-//   return request('/api/users');
-// }
 
 // 获取用户信息
 export async function queryCurrent() {
   return request('/api/user/info');
-  // return request('/api/currentUser');
 }
 export async function patchuserinfo(params) {
   return request('/api/user/info', {
     method: 'PATCH',
     body: params,
   });
-  // return request('/api/currentUser');
 }
 export async function changeuseravatar(params) {
   return request('/api/user/avatar', {
     method: 'POST',
     body: params,
   });
-  // return request('/api/currentUser');
 }
 // ------------------------------------------------------------------
 // 增加培训群组（获取table表格数据）

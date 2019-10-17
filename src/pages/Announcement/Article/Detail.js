@@ -8,7 +8,7 @@ import { connect } from 'dva';
 class Detail extends Component {
   constructor(props) {
     super(props);
-    this.state = { body: '', pubTime: '', title: '', description: '', status: '', cover: '' };
+    this.state = { body: '', title: '', cover: '' };
   }
 
   // 页面渲染完成前
@@ -27,7 +27,7 @@ class Detail extends Component {
       },
       callback: res => {
         if (res.status === 'ok') {
-          const { body, title, description, pubTime, cover, status } = res.data;
+          // const { body, title, description, pubTime, cover, status } = res.data;
           // this.setState({body, title, description, pubTime, cover, status});
           this.setState({ ...res.data });
         } else {
@@ -38,12 +38,12 @@ class Detail extends Component {
   }
 
   render() {
-    const { body, title, description, pubTime, cover, status } = this.state;
+    const { body, title, cover } = this.state;
     return (
       <PageHeaderWrapper title={title}>
         <Card title={title} bordered={false}>
           <img src={cover} alt="no" />
-          <p>{body}</p>
+          <div dangerouslySetInnerHTML={{ __html: body }} />
         </Card>
       </PageHeaderWrapper>
     );

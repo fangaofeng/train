@@ -32,17 +32,17 @@ function mockTable(page, size) {
         // id:10,
         id: `${page}${i}`,
         // 试卷编号
-        number: `201810310001${page}${i}`,
+        exame_no: `201810310001${page}${i}`,
         // 试卷名称
-        title: '反贿赂合规体系的建立与实践考试',
+        name: '反贿赂合规体系的建立与实践考试',
         // 考试时长
-        time: 60,
+        duration: 60,
         // 试卷总分
-        score: 100,
+        total_score: 100,
         // 合格分数
-        passScore: 60,
+        passing_score: 60,
         // 适用对象
-        suitablePerson: '财务管理人员',
+        applicable_user: '财务管理人员',
         // 试卷介绍
         introduce: '考查反贿赂合规体系涵盖的业务范围和工作要点',
         // 封面
@@ -53,6 +53,7 @@ function mockTable(page, size) {
         applicableCourseName: '反贿赂合规体系的建立与实践',
         status: sta,
         creater: '刘涛',
+        created: '2019-09-02 18:01:31',
       });
     }
   }
@@ -77,7 +78,7 @@ function mockTable3(page, size) {
     if (currentTotal <= 58) {
       list.push({
         id: `${page}${i}`,
-        user_no: `试卷管理-2017050000-${page}-${i}`,
+        user_no: `2017050000-${page}-${i}`,
         name: `试卷管理-顾益明-${page}-${i}`,
         department_name: `试卷管理-技术部-${page}-${i}`,
         created: i % 2 === 0 ? '是' : '否',
@@ -104,14 +105,45 @@ export default {
    * 2、系统管理员首页：获取试卷管理
    * 3、系统管理员 ——> 试卷管理 ——> 主页，获取所有试卷的表格数据
    */
-  'GET /api/test/ware': (req, res) => {
+  'GET /api/paper': (req, res) => {
     const params = req.query;
     const { page, size } = params;
     const result = mockTable(page, size);
     return res.json(result);
   },
   // 系统管理员 ——> 试卷管理 ——> 主页，删除试卷
-  'DELETE /api/test/ware/:id': (req, res) => {
+  'GET /api/paper/:id': (req, res) => {
+    res.send({
+      id: 1,
+      status: 'ok',
+      data: {
+        exame_no: `201810310001`,
+        // 试卷名称
+        name: '反贿赂合规体系的建立与实践考试',
+        // 考试时长
+        duration: 60,
+        // 试卷总分
+        total_score: 100,
+        // 合格分数
+        passing_score: 60,
+        // 适用对象
+        applicable_user: '财务管理人员',
+        // 试卷介绍
+        introduce: '考查反贿赂合规体系涵盖的业务范围和工作要点',
+        // 封面
+        cover: `${basicUrl}/003.jpg`, // 背景图片
+        // 适用课程编号，不是必填
+        applicableCourseNumber: undefined,
+        // 适用课程名称，不是必填
+        applicableCourseName: '反贿赂合规体系的建立与实践',
+        status: '已上架',
+        creater: '刘涛',
+        created: '2019-09-02 18:01:31',
+      },
+    });
+  },
+  // 系统管理员 ——> 试卷管理 ——> 主页，删除试卷
+  'DELETE /api/paper/:id': (req, res) => {
     res.send({
       status: 'ok',
       data: {},
@@ -124,22 +156,20 @@ export default {
    * 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 获取现有培训管理员的Table表格数据
    * 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 增加培训管理员的Table表格数据 有参数exclude=true
    */
-  'GET /api/examManager/edit/:id/members': (req, res) => {
+  'GET /api/paper/:id/trainmanagers': (req, res) => {
     const params = req.query;
     const { page, size } = params;
     const result = mockTable3(page, size);
     return res.json(result);
   },
   // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> (单个删除、批量删除)
-  'PATCH /api/examManager/edit/:id/members': (req, res) => {
-    // 'POST /api//user/list/editTGManagerDel': (req, res) => {
+  'PATCH /api/paper/:id/trainmanagers': (req, res) => {
     res.send({
       status: 'ok',
     });
   },
   // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 增加培训管理员模态框提交按钮
-  'PUT /api/examManager/edit/:id/members': (req, res) => {
-    // 'POST /api//user/list/editTGMAddMemberSubmit': (req, res) => {
+  'PUT /api/paper/:id/trainmanagers': (req, res) => {
     res.send({
       status: 'ok',
     });
@@ -150,7 +180,7 @@ export default {
    * 系统管理员 ——> 试卷管理 ——> 主页，归档试卷
    * 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架）——> 上架试卷、重新上架试卷
    */
-  'PATCH /api/test/ware/:id': (req, res) => {
+  'PATCH /api/paper/:id': (req, res) => {
     // const { username,password } = req.body;
     res.send({
       status: 'ok', // ok成功  error失败

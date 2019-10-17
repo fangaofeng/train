@@ -97,12 +97,12 @@ class SelfItemCardDetail extends Component {
             )}
           {stuUnfinishedConfig && stuUnfinishedConfig.status === '未开始'
             ? stuUnfinishedConfig.planStartTime && (
-            <div className={styles.planStartTime}>
-              {stuUnfinishedConfig.planStartTime}
-              <Button type="primary" disabled>
+                <div className={styles.planStartTime}>
+                  {stuUnfinishedConfig.planStartTime}
+                  <Button type="primary" disabled>
                     未开始
-              </Button>
-            </div>
+                  </Button>
+                </div>
               )
             : stuUnfinishedConfig &&
               stuUnfinishedConfig.days && (
@@ -116,15 +116,6 @@ class SelfItemCardDetail extends Component {
                   </Button>
                 </div>
               )}
-          {/* {
-                stuUnfinishedConfig && stuUnfinishedConfig.days &&
-                <div className={styles.leftDays}>
-                  <span title={`剩余天数：${stuUnfinishedConfig.days}`}>
-                    剩余天数：<span style={{color:'red'}}>{stuUnfinishedConfig.days}</span>
-                  </span>
-                  <Button type="primary" disabled={stuUnfinishedConfig.status==='未开始'}>{stuUnfinishedConfig.btns}</Button>
-                </div>
-              } */}
           {/* --------------------------待完成、已逾期-------------------------- */}
           {/* --------------------------已完成-------------------------- */}
           {stuFinishedConfig &&
@@ -161,82 +152,6 @@ class SelfItemCardDetail extends Component {
               </span>
             </div>
           )}
-          {/* --------------------------推荐课程-------------------------- */}
-
-          {/* <div className={styles.title} title={item.title}>{item.title}{item.title}</div> */}
-          {/* <Authorized
-                authority='admin'
-              >
-                {
-                  item.isFinished==='Y'?
-                    <div className={styles.admin_edit}><span>拟制中</span><Button type="primary">编辑</Button></div>
-                  :
-                    <div className={styles.admin_edit}><span>已上架</span><Button type="primary">维护</Button></div>
-                }
-              </Authorized> */}
-          {/* <Authorized
-                authority='user'
-              >
-                {
-                    item.teacher?
-                      <div className={styles.teachAndSuitable}>
-                        <span title={`授课：${item.teacher}`}>授课：{item.teacher}</span>
-                        <span title={`适用对象：${item.suitablePerson}`}>适用对象：{item.suitablePerson}</span>
-                      </div>
-                    :
-                      <div className={styles.teachAndSuitable}>
-                        <span title={`适用对象：${item.suitablePerson}`}>适用对象：{item.suitablePerson}</span>
-                      </div>
-                }
-              </Authorized> */}
-          {/* --------------------------待完成、已完成、已逾期、推荐课程-------------------------- */}
-          {/* <Authorized
-                authority='stu'
-              >
-                {
-                  item.type === 'course' && item.progress?
-                    <Progress percent={Number(item.progress)} status="active" />
-                  :
-                  null
-                }
-                {
-                  item.type === 'course' && item.days?
-                    <div className={styles.leftDays}><span title={`剩余天数：${item.days}`}>剩余天数：<span style={{color:'red'}}>{item.days}</span></span><Button type="primary">去学习</Button></div>
-                  :
-                  null
-                }
-                {
-                  item.type === 'course' && item.availableTime?
-                    <div className={styles.availableTime}><span title={`课程有效期：${item.availableTime}`}>课程有效期：{item.availableTime}</span><Button type="primary">去学习</Button></div>
-                  :
-                  null
-                }
-                {
-                  item.type === 'exam' && item.endTime?
-                    <div title={`考试截止时间：${item.endTime}`} className={styles.endTime}>考试截止时间：{item.endTime}</div>
-                  :
-                  null
-                }
-                {
-                  item.type === 'exam' && item.days?
-                    <div className={styles.leftDays}><span title={`剩余天数：${item.days}`}>剩余天数：<span style={{color:'red'}}>{item.days}</span></span><Button type="primary">去考试</Button></div>
-                  :
-                  null
-                }
-                {
-                  item.type === 'exam' && item.examEndTime?
-                    <div className={styles.examEndTime}><span title={`考试时间：${item.examEndTime}`}>考试时间：{item.examEndTime}</span><Button type="primary">查看试卷</Button></div>
-                  :
-                  null
-                }
-                {
-                  item.teacher?
-                    <div className={styles.teachAndSuitable}><span title={`授课：${item.teacher}`}>授课：{item.teacher}</span><span title={`适用对象：${item.suitablePerson}`}>适用对象：{item.suitablePerson}</span></div>
-                  :
-                    null
-                }
-              </Authorized> */}
-          {/* --------------------------待完成、已完成、已逾期、推荐课程-------------------------- */}
         </div>
       </Fragment>
     );

@@ -74,7 +74,7 @@ export async function getOtherTrainers(params) {
 // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框提交按钮
 export async function submitAddedData(params) {
   return request(`/api/course/ware/${params.id}/trainmanagers`, {
-    method: 'PUT',
+    method: 'PATCH',
     body: params.data,
   });
 }

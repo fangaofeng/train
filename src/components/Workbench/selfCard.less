@@ -1,49 +1,58 @@
 @import '~antd/lib/style/themes/default.less';
+
 // @color1:#1890ff;
-.Notice_Card{
-    margin-bottom: 25px;
+.Notice_Card {
+  margin-bottom: 25px;
+
+  :global {
+    .ant-card-head {
+      border: none;
+
+      .ant-card-head-wrapper {
+        border-bottom: 1px solid #e8e8e8;
+        height: 47px;
+        align-items: center;
+      }
+    }
+  }
+
+  .notice_title {
+    border-left: 3px solid @primary-color;
+    padding-left: 20px;
+  }
+
+  &.noCardHeaderBorderBottom {
     :global {
-        .ant-card-head{
-            border: none;
-            .ant-card-head-wrapper{
-                border-bottom: 1px solid #e8e8e8;
-                height: 47px;
-                align-items: center;
-            }
+      .ant-card-head {
+        .ant-card-head-wrapper {
+          border: none;
         }
+      }
     }
-    .notice_title{
-        border-left: 3px solid @primary-color;
-        padding-left: 20px;
+  }
+
+  // 上传课件第一个界面的
+  &.noPadding {
+    margin-bottom: 0;
+
+    :global {
+      .ant-card-head,
+      .ant-card-body {
+        padding: 15px 0;
+      }
     }
-    &.noCardHeaderBorderBottom{
-        :global {
-            .ant-card-head{
-                .ant-card-head-wrapper{
-                    border: none;
-                }
-            }
-        }
+  }
+
+  // 上传课件第二个界面的
+  &.noLeftAndRightPadding {
+    margin-bottom: 0;
+
+    :global {
+      .ant-card-head,
+      .ant-card-body {
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
-    // 上传课件第一个界面的
-    &.noPadding{
-        margin-bottom: 0;
-        :global {
-            .ant-card-head,
-            .ant-card-body{
-                padding: 15px 0;
-            }
-        }
-    }
-    // 上传课件第二个界面的
-    &.noLeftAndRightPadding{
-        margin-bottom: 0;
-        :global {
-            .ant-card-head,
-            .ant-card-body{
-                padding-left: 0;
-                padding-right: 0;
-            }
-        }
-    }
+  }
 }

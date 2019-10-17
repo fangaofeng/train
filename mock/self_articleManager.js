@@ -28,20 +28,21 @@ function mockTable(page, size) {
       list.push({
         // id:10,
         id: `${page}${i}`,
-        category: '公开课',
-        article_no: `2018103100${page}${i}`,
-        article_type: '通用文章',
-        cover: `${basicUrl}/${img}`, // 背景图片
-
-        drag_flag: true,
-        description: '介绍反贿赂合规体系涵盖的业务范围和工作要点',
-        title: '反贿赂合规体系的建立与实践',
         status: sta,
-        creater: '刘涛',
-        publish_time: '20190929',
-        avatar: 'http://192.168.101.11:8000/media/teacherimg/string_fhlhg.jpg',
-        content:
-          '介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点',
+        arttype: '文章',
+        comment_status: '打开',
+        thumbnail: `${basicUrl}/${img}`,
+        created: '2019-09-02 23:57:43',
+        modified: '2019-09-08 16:24:20',
+        title: '介绍反贿赂合规体系涵盖的业务范围和工作要点',
+        body:
+          '<p>介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点</p>',
+        description: '介绍反贿赂合规体系涵盖的业务范围和工作要点',
+        pub_time: null,
+        views: 0,
+        article_order: 0,
+        cover: `${basicUrl}/${img}`,
+        category: '公开课',
       });
     }
   }
@@ -57,34 +58,23 @@ function mockTable(page, size) {
   return obj;
 }
 
-// 模拟table表格数据
-function mockTable3(page, size) {
-  let obj = {};
-  const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
-    if (currentTotal <= 58) {
-      list.push({
-        id: `${page}${i}`,
-        user_no: `文章管理-2017050000-${page}-${i}`,
-        name: `文章管理-顾益明-${page}-${i}`,
-        department_name: `文章管理-技术部-${page}-${i}`,
-        created: i % 2 === 0 ? '是' : '否',
-      });
-    }
-  }
-  obj = {
-    status: 'ok',
-    data: {
-      count: 58,
-      next: null,
-      previous: null,
-      results: list,
-    },
-  };
-  return obj;
-}
-
+const article = {
+  status: '草稿',
+  arttype: '文章',
+  comment_status: '打开',
+  thumbnail: `${basicUrl}/003.jpg`,
+  created: '2019-09-02 23:57:43',
+  modified: '2019-09-08 16:24:20',
+  title: '介绍反贿赂合规体系涵盖的业务范围和工作要点',
+  body:
+    '<p>介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点</p>',
+  description: '介绍反贿赂合规体系涵盖的业务范围和工作要点',
+  pub_time: null,
+  views: 0,
+  article_order: 0,
+  cover: `${basicUrl}/003.jpg`,
+  category: '公开课',
+};
 export default {
   // ------------------------------------------------------------------
   /**
@@ -103,45 +93,23 @@ export default {
   'DELETE /api/blog/article/:id': (req, res) => {
     res.send({
       status: 'ok',
-      data: {},
     });
   },
-  // // 系统管理员 ——> 文章管理 ——> 主页，下架文章
-  // 'POST /api/article/detail/offShelf': (req, res) => {
-  //   res.send({
-  //     status: 'ok',
-  //     data:{}
-  //   });
-  // },
-  // // 系统管理员 ——> 文章管理 ——> 主页，归档文章
-  // 'POST /api/article/detail/fileOnArchive': (req, res) => {
-  //   res.send({
-  //     status: 'ok',
-  //     data:{}
-  //   });
-  // },
-  // ------------------------------------------------------------------
+
   /**
    * 接口复用
    * 系统管理员 ——> 文章管理 ——> 文章编辑（拟制中） ——> 获取现有培训管理员的Table表格数据
    * 系统管理员 ——> 文章管理 ——> 文章编辑（拟制中） ——> 增加培训管理员的Table表格数据 有参数exclude=true
    */
-  'GET /api/blog/article/:id': (req, res) => {
-    const params = req.query;
-    const { page, size } = params;
-    const result = mockTable3(page, size);
-    return res.json(result);
-  },
-  // 系统管理员 ——> 文章管理 ——> 文章编辑（拟制中） ——> (单个删除、批量删除)
-  'PATCH /api/blog/article/edit/:id/members': (req, res) => {
-    // 'POST /api//user/list/editTGManagerDel': (req, res) => {
-    res.send({
+  'GET /api/blog/article/:id': (req, res) =>
+    res.json({
       status: 'ok',
-    });
-  },
+      data: article,
+    }),
+  //  res.json(result);
+
   // 系统管理员 ——> 文章管理 ——> 文章编辑（拟制中） ——> 增加培训管理员模态框提交按钮
   'PUT /api/blog/article/:id': (req, res) => {
-    // 'POST /api//user/list/editTGMAddMemberSubmit': (req, res) => {
     res.send({
       status: 'ok',
     });

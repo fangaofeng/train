@@ -1,6 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { Popover, Icon, Tabs, Badge, Spin } from 'antd';
 import classNames from 'classnames';
+import router from 'umi/router';
 import List from './NoticeList';
 import styles from './index.less';
 
@@ -18,6 +19,7 @@ export default class NoticeIcon extends PureComponent {
     locale: {
       emptyText: 'No notifications',
       clear: 'Clear',
+      viewMore: 'More',
     },
     emptyImage: 'https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg',
   };
@@ -27,42 +29,51 @@ export default class NoticeIcon extends PureComponent {
     onItemClick(item, tabProps);
   };
 
+  onViewMore = () => {
+    router.push('/personalCenter/center/articles');
+  };
+
   onTabChange = tabType => {
     const { onTabChange } = this.props;
     onTabChange(tabType);
   };
 
   getNotificationBox() {
-    const { children, loading, locale, onClear, showClear, showViewMore } = this.props;
+    const { children, loading, locale } = this.props;
     if (!children) {
       return null;
     }
     const panes = React.Children.map(children, child => {
-      const title =
-        child.props.list && child.props.list.length > 0
-          ? `${child.props.title} (${child.props.list.length})`
-          : child.props.title;
+      const { list, title, count, emptyText, emptyImage, showClear, showViewMore } = child.props;
+      const len = list && list.length ? list.length : 0;
+      const msgCount = count || count === 0 ? count : len;
+      const localeTitle = locale[title] || title;
+      const tabTitle = msgCount > 0 ? `${localeTitle} (${msgCount})` : localeTitle;
       return (
-        <TabPane tab={title} key={child.props.name}>
+        <TabPane tab={tabTitle} key={title}>
           <List
-            {...child.props}
-            data={child.props.list}
-            onClick={item => this.onItemClick(item, child.props)}
-            onClear={() => onClear(child.props.name)}
-            title={child.props.title}
+            data={list}
+            emptyImage={emptyImage}
+            emptyText={emptyText}
             locale={locale}
+            onClear={() => this.onClear(title)}
+            onClick={item => this.onItemClick(item, child.props)}
+            onViewMore={event => this.onViewMore(child.props, event)}
             showClear={showClear}
             showViewMore={showViewMore}
+            title={title}
           />
         </TabPane>
       );
     });
     return (
-      <Spin spinning={loading} delay={0}>
-        <Tabs className={styles.tabs} onChange={this.onTabChange}>
-          {panes}
-        </Tabs>
-      </Spin>
+      <Fragment>
+        <Spin spinning={loading} delay={0}>
+          <Tabs className={styles.tabs} onChange={this.onTabChange}>
+            {panes}
+          </Tabs>
+        </Spin>
+      </Fragment>
     );
   }
 

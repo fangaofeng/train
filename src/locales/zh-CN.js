@@ -65,6 +65,7 @@ export default {
   'component.globalHeader.event.empty': '你已完成所有待办',
   'component.noticeIcon.clear': '清空',
   'component.noticeIcon.cleared': '清空了',
+  'component.noticeIcon.view-more': 'View More',
   'component.noticeIcon.empty': '暂无数据',
   'menu.home': '首页',
   'menu.home.home1': '首页1',

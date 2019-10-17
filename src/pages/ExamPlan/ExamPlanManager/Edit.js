@@ -5,14 +5,14 @@ import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import ExamBasicInfo from '@/components/CustomComponent/ExamBasicInfo/ExamBasicInfo';
+import ExamBasicInfo from '@/components/ExamBasicInfo';
 import SubmitSuccessCard from '@/components/CustomComponent/SubmitSuccessCard/SubmitSuccessCard';
 import styles from './Common.less';
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
 
-@connect(({ ExamPlanManager, loading }) => ({
+@connect(({ loading }) => ({
   examplanLoading: loading.effects['ExamPlanManager/GetExamplanDetail'],
 }))
 @Form.create()

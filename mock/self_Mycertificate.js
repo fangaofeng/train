@@ -87,14 +87,12 @@ export default {
 
   // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> (单个删除、批量删除)
   'PATCH /api/courseManager/edit/:id/members': (req, res) => {
-    // 'POST /api//user/list/editTGManagerDel': (req, res) => {
     res.send({
       status: 'ok',
     });
   },
   // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框提交按钮
   'PUT /api/trainCertificate/:id': (req, res) => {
-    // 'POST /api//user/list/editTGMAddMemberSubmit': (req, res) => {
     res.send({
       status: 'ok',
     });

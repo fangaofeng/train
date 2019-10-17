@@ -11,7 +11,7 @@ const { Search } = Input;
 @connect(({ ArticleManager, loading }) => ({
   articleList: ArticleManager.articleList,
   // 系统管理员 ——> 文章管理 ——> 主页，获取所有文章的表格数据
-  articleListLoading: loading.effects['ArticleManager/GetArticleListTableData'],
+  articleListLoading: loading.effects['ArticleManager/GetArticleLists'],
 }))
 class articleManager extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class articleManager extends Component {
   getTableData = (page, size) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'ArticleManager/GetArticleListTableData',
+      type: 'ArticleManager/GetArticleLists',
       payload: {
         page, // 页码
         size, // 每页条数
@@ -80,7 +80,7 @@ class articleManager extends Component {
   // -------------------------归档操作-------------------------
   // 归档操作
   fileOnArchive = record => {
-    console.log(record.id);
+    // console.log(record.id);
     this.setState({
       fileOnArchiveVisible: true,
       fileOnArchiveLoading: false,
@@ -90,7 +90,7 @@ class articleManager extends Component {
 
   // 取消归档（关闭模态框）
   fileOnArchiveCancel = () => {
-    console.log('取消按钮');
+    // console.log('取消按钮');
     this.setState({
       fileOnArchiveVisible: false,
       fileOnArchiveLoading: false,
@@ -104,7 +104,7 @@ class articleManager extends Component {
       pagination: { current, pageSize },
     } = this.state;
     const { fileOnArchiveID } = this.state;
-    console.log('id', fileOnArchiveID);
+    // console.log('id', fileOnArchiveID);
     this.setState({
       fileOnArchiveLoading: true,
     });

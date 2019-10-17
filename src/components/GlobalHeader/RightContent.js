@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
-import { FormattedMessage, formatMessage } from 'umi/locale';
-import { Spin, Tag, Menu, Icon, Dropdown, Avatar, Tooltip } from 'antd';
+import { formatMessage } from 'umi/locale';
+import { Tag } from 'antd';
 import moment from 'moment';
-import groupBy from 'lodash/groupBy';
+
 import NoticeIcon from '../NoticeIcon';
 // import HeaderSearch from '../HeaderSearch';
 // import SelectLang from '../SelectLang';
@@ -53,7 +53,6 @@ export default class GlobalHeaderRight extends PureComponent {
       onLogOut,
       onNoticeClear,
       theme,
-      count,
     } = this.props;
     // const menu = (
 
@@ -99,6 +98,7 @@ export default class GlobalHeaderRight extends PureComponent {
           locale={{
             emptyText: formatMessage({ id: 'component.noticeIcon.empty' }),
             clear: formatMessage({ id: 'component.noticeIcon.clear' }),
+            viewMore: formatMessage({ id: 'component.noticeIcon.view-more' }),
           }}
           onClear={onNoticeClear}
           onPopupVisibleChange={onNoticeVisibleChange}

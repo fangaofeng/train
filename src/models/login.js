@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { stringify } from 'qs';
+// import { stringify } from 'qs';
 // import { fakeAccountLogin, getFakeCaptcha } from '@/services/api';
 import { accountLogin } from '@/services/api';
 import { setAuthority } from '@/utils/authority';
@@ -18,11 +18,11 @@ export default {
   effects: {
     // 登录
     *login({ payload }, { call, put }) {
-      const {userName,password,rememberUsername} = payload;
+      const { userName, password, rememberUsername } = payload;
       const param = {
-        username : userName,
-        password
-      }
+        username: userName,
+        password,
+      };
       const response = yield call(accountLogin, param);
       yield put({
         type: 'changeLoginStatus',
@@ -30,14 +30,20 @@ export default {
       });
 
       // Login successfully
-      if(response.hasOwnProperty('token') && response.hasOwnProperty('role')){ // 表示登录成功
-        if(rememberUsername){// 记住用户名
+      if (
+        Object.prototype.hasOwnProperty.call(response, 'token') &&
+        Object.prototype.hasOwnProperty.call(response, 'role')
+      ) {
+        // 表示登录成功
+        if (rememberUsername) {
+          // 记住用户名
           localStorage.setItem('WHLQYHGPXPT_USERNAME', userName);
-        }else{// 不记住用户名
+        } else {
+          // 不记住用户名
           localStorage.removeItem('WHLQYHGPXPT_USERNAME');
         }
-        token.save(response.token);// 保存token
-      // if (response.status === 'ok') {
+        token.save(response.token); // 保存token
+        // if (response.status === 'ok') {
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -65,7 +71,7 @@ export default {
     // 退出登录
     *logout(_, { put }) {
       // remove token
-      token.remove()
+      token.remove();
       yield put({
         type: 'changeLoginStatus',
         payload: {
@@ -97,18 +103,21 @@ export default {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      console.log('changeLoginStatus',payload)
-      let status = '';// ok 还是 error
+      console.log('changeLoginStatus', payload);
+      let status = ''; // ok 还是 error
       // 登录成功
-      if(payload.hasOwnProperty('token') && payload.hasOwnProperty('role')){
-        switch(payload.role){
-          case 0:
+      if (
+        Object.prototype.hasOwnProperty.call(payload, 'token') &&
+        Object.prototype.hasOwnProperty.call(payload, 'role')
+      ) {
+        switch (payload.role) {
+          case '系统管理员':
             setAuthority('admin');
             break;
-          case 1:
+          case '培训管理员':
             setAuthority('user');
             break;
-          case 2:
+          case '员工':
             setAuthority('stu');
             break;
           default:
@@ -117,8 +126,8 @@ export default {
         status = 'ok';
       }
       // 登录失败  或者  退出登录
-      if(payload.hasOwnProperty('status')){
-        status = payload.status;
+      if (Object.prototype.hasOwnProperty.call(payload, 'status')) {
+        ({ status } = payload);
         setAuthority('guest');
       }
       // setAuthority(payload.currentAuthority);

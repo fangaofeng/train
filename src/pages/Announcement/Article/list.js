@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Modal, Avatar, Icon, Button, Input, List, Row, Col } from 'antd';
-import router from 'umi/router';
-import Link from 'umi/link';
+import { Card, Icon, Input, List, Row, Col } from 'antd';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './index.less';
@@ -12,7 +10,7 @@ const { Search } = Input;
 
 @connect(({ ArticleManager, loading }) => ({
   articleList: ArticleManager.articleList, // 系统管理员 ——> 文章管理 ——> 主页，获取所有文章的表格数据
-  articleListloading: loading.effects['ArticleManager/GetArticleListTableData'],
+  articleListloading: loading.effects['ArticleManager/GetArticleLists'],
 }))
 class articleManager extends Component {
   constructor(props) {
@@ -43,7 +41,7 @@ class articleManager extends Component {
   getListData = (page, size) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'ArticleManager/GetArticleListTableData',
+      type: 'ArticleManager/GetArticleLists',
       payload: {
         page, // 页码
         size, // 每页条数
@@ -120,7 +118,7 @@ class articleManager extends Component {
                     ]}
                     extra={
                       <a href={`/announcement/detail/${item.id}`}>
-                        <img width={172} height={172} alt="logo" src={item.thumbnail} />
+                        <img width={172} height={172} alt="" src={item.thumbnail} />
                       </a>
                     }
                   >

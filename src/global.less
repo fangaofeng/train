@@ -31,57 +31,66 @@ ul,
 ol {
   list-style: none;
 }
+
 // 全局上传组件按钮样式
-.uploadContent{
+.uploadContent {
   // :global {
-      .ant-upload.ant-upload-select{
-          display: block;
-          .ant-btn{
-              font-size: 20px;
-              font-weight: 600;
-              height: 70px;
-              // background: #e5f3ff;
-              // border: none;
-              // &:hover{
-              //   color: #fff;
-              //   background:#1890ff;
-              // }
-          }
-      }
+  .ant-upload.ant-upload-select {
+    display: block;
+
+    .ant-btn {
+      font-size: 20px;
+      font-weight: 600;
+      height: 70px;
+      // background: #e5f3ff;
+      // border: none;
+      // &:hover{
+      //   color: #fff;
+      //   background:#1890ff;
+      // }
+    }
+  }
+
   // }
 }
+
 // 全局删除按钮样式
-.ant-btn-del{
+.ant-btn-del {
   color: #fff;
   background-color: #8fc127;
   border-color: #8fc127;
+
   &:hover,
   &:active,
-  &:focus{
+  &:focus {
     color: #fff;
     background: #a4dc2f;
     border-color: #a4dc2f;
   }
 }
+
 // 首页新增公告、上传课件、上传试卷按钮样式
-.ant-btn-upload{
+.ant-btn-upload {
   color: #3c3c3c;
   background-color: #e5f3ff;
   border-color: #e5f3ff;
+
   &:hover,
   &:active,
-  &:focus{
+  &:focus {
     color: #fff;
     background: #1890ff;
     border-color: #1890ff;
   }
 }
+
 // 1、查看培训群组学习详情(超期未完成，超期已完成）表格行样式
 // 2、查看培训群组考试详情（超期未完成，成绩不合格）表格行样式
-.tableRowClassNameErr{
+.tableRowClassNameErr {
   background: #fee8ea;
 }
+
 // 查看培训群组考试详情（已完成，成绩不合格）表格行样式
-.tableRowClassNameWarn{
+.tableRowClassNameWarn {
   background: #fff9e5;
 }

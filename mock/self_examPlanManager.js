@@ -115,7 +115,7 @@ function mockTable3(page, size) {
 
 export default {
   // 考试管理——>主页，分页获取所有的考试计划
-  'GET /api/examplan': (req, res) => {
+  'GET /api/exam/plan': (req, res) => {
     const params = req.query;
     const { page, size } = params;
     const result = mockTable(page, size);
@@ -124,7 +124,7 @@ export default {
 
   // ------------------------------------------------------------------
   // 获取单个计划详情，不包含群组
-  'GET /api/examplan/:id': (req, res) => {
+  'GET /api/exam/plan/:id': (req, res) => {
     res.send({
       status: 'ok',
       data: {
@@ -157,7 +157,7 @@ export default {
     });
   },
   // 考试管理——>发布考试计划——>点击提交按钮
-  'POST /api/examplan': (req, res) => {
+  'POST /api/exam/plan': (req, res) => {
     res.send({
       status: 'ok',
       data: {
@@ -176,7 +176,7 @@ export default {
   // ------------------------------------------------------------------
 
   // 考试管理——>编辑考试计划——>点击提交按钮
-  'PUT /api/examplan/:examPlanID': (req, res) => {
+  'PUT /api/exam/plan/:examPlanID': (req, res) => {
     res.send({
       status: 'ok',
       data: {
@@ -189,14 +189,14 @@ export default {
   },
   // ------------------------------------------------------------------
   // 考试管理——>查看考试计划（获取table表格数据）
-  'GET /api/examplan/:examPlanID/groups': (req, res) => {
+  'GET /api/exam/plan/:examPlanID/groups': (req, res) => {
     const params = req.query;
     const { page, size } = params;
     const result = mockTable2(page, size);
     return res.json(result);
   },
   // 考试管理——>查看考试计划——>查看培训群组学习详情（获取table表格数据）
-  'GET /api/examplan/:examPlanID/group/:trainGroupID': (req, res) => {
+  'GET /api/exam/plan/:examPlanID/group/:trainGroupID': (req, res) => {
     const params = req.query;
     const { page, size } = params;
     const result = mockTable3(page, size);

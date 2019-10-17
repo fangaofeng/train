@@ -17,7 +17,7 @@ export default {
 
   effects: {
     // 系统管理员 ————> 试卷管理 ————> 上传试卷 ————> 获取培训管理员数据
-    *GetTrainerTableData({ payload }, { call, put }) {
+    *GetTrainmanagers({ payload }, { call, put }) {
       const response = yield call(getTrainerTableData, payload);
       yield put({
         type: 'saveTrainerTableData',

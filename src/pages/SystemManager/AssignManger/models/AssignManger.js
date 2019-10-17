@@ -3,7 +3,7 @@ import {
 } from '@/services/systemManager/departmentManager/departmentManager';
 
 export default {
-  namespace: 'DepartmentManager',
+  namespace: 'AssignManger',
 
   state: {},
 

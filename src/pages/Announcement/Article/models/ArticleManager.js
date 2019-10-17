@@ -1,11 +1,11 @@
 import {
-  getArticleListTableData, // 系统管理员 ——> 文章管理 ——> 主页，获取所有文章的表格数据
+  getArticleLists, // 系统管理员 ——> 文章管理 ——> 主页，获取所有文章的表格数据
   delArticle, // 系统管理员 ——> 文章管理 ——> 主页，删除文章
   createArticle, // 系统管理员 ——> 文章管理 ——>创建文章
   editArticle, // 系统管理员 ——> 文章管理 ——> 文章编辑
   changeArticleStatus, // 系统管理员 ——> 文章管理 ——>更改状态，发布or预览
   getArticleDetail, // 系统管理员 ——> 文章管理 ——> 获取文章详情
-  previewArticle, // 系统管理员 ——> 文章管理 ——> 文章预览
+  // previewArticle, // 系统管理员 ——> 文章管理 ——> 文章预览
   delBatch, // 系统管理员 ——> 文章管理 ——> 文章批量删除
 } from '@/services/Announcement/ArticleManager/index';
 
@@ -19,9 +19,9 @@ export default {
   effects: {
     // ------------------------------------------------------------------
     // 系统管理员 ——> 文章管理 ——> 主页，获取所有文章的表格数据
-    *GetArticleListTableData({ payload, config }, { call, put }) {
+    *GetArticleLists({ payload, config }, { call, put }) {
       console.log(config);
-      const response = yield call(getArticleListTableData, payload);
+      const response = yield call(getArticleLists, payload);
       if (response.status === 'ok') {
         console.log('成功');
         yield put({

@@ -2,94 +2,89 @@
 export default {
   // 用户信息
   'GET /api/user/info': {
-    id: 1,
-    username: 'fgf', // 账号
-    name: '刘涛', // 名称
-    user_no: '001', // 编号
-    employee_position: '开发经理', // 职位
-    email: 'fgf@whl.com', // 邮箱
-    role_display: '系统管理员', // 角色
-    thumbnail: 'http://localhost/avatar_default_big_bak.png', // 缩略图
-    department_name: '总经办', // 部门
+    status: 'ok',
+    data: {
+      id: 1,
+      username: 'fgf', // 账号
+      name: '刘涛', // 名称
+      user_no: '001', // 编号
+      employee_position: '开发经理', // 职位
+      email: 'fgf@whl.com', // 邮箱
+      role_display: '系统管理员', // 角色
+      thumbnail: 'http://localhost/avatar_default_big_bak.png', // 缩略图
+      avatar: 'http://localhost/avatar_default_big_bak.png',
+      department_name: '总经办', // 部门
+    },
   },
 
-  // 支持值为 Object 和 Array
-  'GET /api/currentUser': {
-    name: 'Serati Ma',
-    avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-    userid: '00000001',
-    email: 'antdesign@alipay.com',
-    signature: '海纳百川，有容乃大',
-    title: '交互专家',
-    group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
-    tags: [
-      {
-        key: '0',
-        label: '很有想法的',
-      },
-      {
-        key: '1',
-        label: '专注设计',
-      },
-      {
-        key: '2',
-        label: '辣~',
-      },
-      {
-        key: '3',
-        label: '大长腿',
-      },
-      {
-        key: '4',
-        label: '川妹子',
-      },
-      {
-        key: '5',
-        label: '海纳百川',
-      },
-    ],
-    notifyCount: 12,
-    country: 'China',
-    geographic: {
-      province: {
-        label: '浙江省',
-        key: '330000',
-      },
-      city: {
-        label: '杭州市',
-        key: '330100',
-      },
+  'GET /api/user/list': {
+    status: 'ok',
+    data: {
+      count: 4,
+      next: null,
+      previous: null,
+      results: [
+        {
+          id: 1,
+          username: 'stu0',
+          name: '学员',
+          avatar: null,
+          user_no: '201908170021',
+          employee_position: '',
+          email: '',
+          role_display: '员工',
+          role: '员工',
+          info: '',
+          thumbnail: null,
+        },
+        {
+          id: 2,
+          username: 'stu',
+          name: '学员',
+          avatar: null,
+          user_no: '201908170001',
+          employee_position: '',
+          email: '',
+          role_display: '员工',
+          role: '员工',
+          info: '',
+          thumbnail: null,
+        },
+        {
+          id: 3,
+          username: 'st1',
+          name: '学员',
+          avatar: null,
+          user_no: '201908170002',
+          employee_position: 'nvnbbn',
+          email: '',
+          role_display: '员工',
+          role: '员工',
+          info: '',
+          thumbnail: null,
+        },
+        {
+          id: 4,
+          username: 'st2',
+          name: '学员',
+          avatar: null,
+          user_no: '201908170003',
+          employee_position: 'nvnbbn',
+          email: '',
+          role_display: '员工',
+          role: '员工',
+          info: '',
+          thumbnail: null,
+        },
+      ],
     },
-    address: '西湖区工专路 77 号',
-    phone: '0752-268888888',
   },
-  // GET POST 可省略
-  'GET /api/users': [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-    },
-  ],
   'POST /api/auth/login': (req, res) => {
     const { username, password } = req.body;
     if (username === 'fgf' && password === '1234qwer') {
       res.send({
         token: 'a9e85cd0f340b52b7d285af8f41b7f342e771be7', // toekn
-        role: 0, // 角色
+        role: '系统管理员', // 角色
         role_display: '系统管理员',
       });
       return;
@@ -97,7 +92,7 @@ export default {
     if (username === 'tr' && password === '1234qwer') {
       res.send({
         token: 'a9e85cd0f340b52b7d285af8f41b7f342e771be7', // toekn
-        role: 1, // 角色
+        role: '培训管理员', // 角色
         role_display: '培训管理员',
       });
       return;
@@ -105,7 +100,7 @@ export default {
     if (username === 'stu' && password === '1234qwer') {
       res.send({
         token: 'a9e85cd0f340b52b7d285af8f41b7f342e771be7', // toekn
-        role: 2, // 角色
+        role: '员工', // 角色
         role_display: '学员',
       });
       return;

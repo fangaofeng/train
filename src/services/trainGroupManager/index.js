@@ -31,16 +31,12 @@ export async function addTGManagerSubmit(params) {
     body: params,
   });
 }
+// 查看培训群组成员（获取table表格数据）
 export async function getTrainGroupMembers(params) {
-  return request(`/api/train/group/${params.id}/members??${stringify(params)}`);
+  return request(`/api/train/group/${params.id}/members?${stringify(params)}`);
   // return request(`/api//user/list/editTGManager?${stringify(params)}`);
 }
-// ------------------------------------------------------------------
-// 查看培训群组成员（获取table表格数据）
-export async function getViewTrainGroupData(params) {
-  return request(`/api/train/group/${params.id}/members?page=${params.page}&size=${params.size}`);
-  // return request(`/api//user/list/viewTtrainGroupManager?${stringify(params)}`);
-}
+
 // ------------------------------------------------------------------
 // 编辑培训群组（获取现有群组成员的Table表格数据）
 export async function getEditTrainGroupData(params) {
@@ -73,19 +69,14 @@ export async function changeEditTGName(params) {
 }
 // 编辑培训群组（增加群组成员的Table表格数据）
 export async function getEditTGAddData(params) {
-  // return request(`/api//user/list/editTGManagerAddMember?${stringify(params)}`);
   return request(
     `/api/train/group/${params.id}/members?page=${params.page}&size=${params.size}&exclude=true`
   );
 }
 // 编辑培训群组（增加群组成员提交按钮）
 export async function submitEditTGAddMember(params) {
-  // return request('/api//user/list/editTGMAddMemberSubmit', {
-  //   method: 'POST',
-  //   body: params,
-  // });
   return request(`/api/train/group/${params.id}/members`, {
-    method: 'PUT',
+    method: 'PATCH',
     body: params.data,
   });
 }

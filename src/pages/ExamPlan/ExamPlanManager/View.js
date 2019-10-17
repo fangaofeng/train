@@ -4,7 +4,7 @@ import { Card, Badge, Table, Form } from 'antd';
 // import Link from 'umi/link';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import ExamBasicInfo from '@/components/CustomComponent/ExamBasicInfo/ExamBasicInfo';
+import ExamBasicInfo from '@/components/ExamBasicInfo';
 import ModalTable from '@/components/CustomComponent/ModalTable/ModalTable';
 import styles from './Common.less';
 
@@ -196,7 +196,7 @@ class ViewExamPlan extends Component {
   };
 
   // 表格行的类名
-  modalTableRowClassName = (record, index) => {
+  modalTableRowClassName = record => {
     let str;
     if (record.status === '未完成') {
       str = 'tableRowClassNameErr';

@@ -11,6 +11,7 @@ import {
   submitAddedData, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框提交按钮
   changeCourseStatus, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中、已上架、已下架）——> 上架课件、重新上架课件
 } from '@/services/courseware/coursewareManager/index';
+// import Immutable from 'immutable';
 
 export default {
   namespace: 'CourseManager',
@@ -86,6 +87,7 @@ export default {
     },
     // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框Table表格数据
     *GetOtherTrainmanagers({ payload }, { call, put }) {
+      console.log('GetOtherTrainmanagers');
       const response = yield call(getOtherTrainers, payload);
       if (response.status === 'ok') {
         console.log('成功');
@@ -97,8 +99,11 @@ export default {
     },
     // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框提交按钮
     *SubmitAddedData({ payload, callback }, { call }) {
-      console.log(payload);
-      const response = yield call(submitAddedData, payload);
+      const param = { id: payload.id, data: { trainermanagers: payload.selectedKeys } };
+      // param.data.trainermanagers = payload.selectedKeys;
+      // param.id = payload.id;
+      console.log(param);
+      const response = yield call(submitAddedData, param);
       callback(response); // 返回结果
     },
     // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中、已上架、已下架）——> 上架课件、重新上架课件

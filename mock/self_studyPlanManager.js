@@ -227,7 +227,7 @@ export default {
   },
   // ------------------------------------------------------------------
   // 学习计划管理——>查看学习计划（获取table表格数据）
-  'GET /api/getViewSPData/train/group/:studyPlanID': (req, res) => {
+  'GET /api/learn/plan/:id/groups': (req, res) => {
     const params = req.query;
     const { page, size } = params;
     const result = mockTable2(page, size);
@@ -240,9 +240,9 @@ export default {
     const result = mockTable3(page, size);
     return res.json(result);
   },
-  // ------------------------------------------------------------------
+  // // ------------------------------------------------------------------
   // 学习计划管理——>主页，归档学习计划
-  'POST /api/learn/plan/fileOnArchive': (req, res) => {
+  'PATCH /api/learn/plan/:id': (req, res) => {
     res.send({
       status: 'ok',
       data: {},

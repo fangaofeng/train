@@ -67,6 +67,7 @@ export default {
   'component.globalHeader.event.empty': 'You have viewed all events.',
   'component.noticeIcon.clear': 'Clear',
   'component.noticeIcon.cleared': 'Cleared',
+  'component.noticeIcon.view-more': 'View More',
   'component.noticeIcon.empty': 'No notifications',
   'menu.home': 'Home',
   'menu.dashboard': 'Dashboard',

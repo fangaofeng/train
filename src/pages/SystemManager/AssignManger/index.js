@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Card, Tree, Row, Col } from 'antd';
-import router from 'umi/router';
+import { Card, Row, Col } from 'antd';
+
 import SelfCard from '@/components/Workbench/selfCard';
-import Link from 'umi/link';
+
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './index.less';
 import TreeOtherOpration from '@/components/TreeOtherOpration';
 
-const { TreeNode } = Tree;
-
-@connect(({ DepartmentManager }) => ({}))
+@connect(() => ({}))
 class DepartmentManager extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +19,7 @@ class DepartmentManager extends Component {
        * 有部门，没有用户————'noUser' ;
        * 有部门，有用户————'hasUser' ;
        */
-      uploadStatus: 'noDep',
+
       alreadyExistTreeData: [], // 已经存在部门，可以有用户，可以没有用户，树形控件数据
     };
   }
@@ -39,18 +37,12 @@ class DepartmentManager extends Component {
       callback: res => {
         if (res.status === 'ok') {
           console.log('成功', res);
-          if (res.ui === 'onlyupload') {
+          if (res.ui === 'canupload') {
             this.setState({
-              uploadStatus: 'noDep',
-            });
-          } else if (res.ui === 'canupload') {
-            this.setState({
-              uploadStatus: 'noUser',
               alreadyExistTreeData: res.data,
             });
           } else if (res.ui === 'noupload') {
             this.setState({
-              uploadStatus: 'hasUser',
               alreadyExistTreeData: res.data,
             });
           }

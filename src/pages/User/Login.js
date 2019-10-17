@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { formatMessage, FormattedMessage } from 'umi/locale';
-import Link from 'umi/link';
-import { Checkbox, Alert, Icon } from 'antd';
+import { FormattedMessage } from 'umi/locale';
+// import Link from 'umi/link';
+import { Checkbox, Alert } from 'antd';
 import Login from '@/components/Login';
 import loginAvatar from '@/assets/images/Login/Login_avatar.png';
 import styles from './Login.less';
@@ -24,7 +24,7 @@ class LoginPage extends Component {
       const { dispatch } = this.props;
       const { rememberUsername } = this.state;
       const obj = Object.assign({}, values, { rememberUsername });
-      console.log(obj);
+      // console.log(obj);
       dispatch({
         type: 'login/login',
         payload: {
@@ -70,7 +70,7 @@ class LoginPage extends Component {
             <Checkbox checked={rememberUsername} onChange={this.changeRememberUsername}>
               记住用户名
             </Checkbox>
-            <a style={{ float: 'right' }} href="">
+            <a style={{ float: 'right' }} href="/user/register">
               <FormattedMessage id="app.login.forgot-password" />
             </a>
           </div>

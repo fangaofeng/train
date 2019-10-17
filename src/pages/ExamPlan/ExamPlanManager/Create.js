@@ -1,28 +1,15 @@
+/* eslint-disable no-restricted-syntax */
 import React, { Component, Fragment } from 'react';
-import {
-  DatePicker,
-  Card,
-  Button,
-  Table,
-  Divider,
-  Icon,
-  Upload,
-  Row,
-  Col,
-  message,
-  Input,
-  Spin,
-  Form,
-  Avatar,
-} from 'antd';
+import { DatePicker, Card, Button, Table, message, Input, Spin, Form } from 'antd';
 import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import ExamBasicInfo from '@/components/CustomComponent/ExamBasicInfo/ExamBasicInfo';
+import ExamBasicInfo from '@/components/ExamBasicInfo';
 import SubmitSuccessCard from '@/components/CustomComponent/SubmitSuccessCard/SubmitSuccessCard';
 import ModalTable from '@/components/CustomComponent/ModalTable/ModalTable';
 import styles from './Common.less';
+// import TrainGroupMember from '@/pages/TrainGroupManager/ViewTrainGroup';
 
 const { Search } = Input;
 const FormItem = Form.Item;
@@ -32,14 +19,13 @@ const { RangePicker } = DatePicker;
   createGroups: ExamPlanManager.createGroups, // 考试管理——>发布考试计划——>查看培训群组（获取table表格数据）
   createMembers: ExamPlanManager.createMembers, // 考试管理——>发布考试计划——>查看培训群组成员（获取table表格数据）
   paperLoading: loading.effects['ExamPlanManager/GetPaperDetail'],
-  groupsLoading:loading.effects['ExamPlanManager/GetTrainGroups']
+  groupsLoading: loading.effects['ExamPlanManager/GetTrainGroups'],
 }))
 @Form.create()
 class CreateExam extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTestInfo: {},
       /**
        * 默认是'before',用于判断当前进度。
        * 创建前————'before' ;
@@ -84,7 +70,7 @@ class CreateExam extends Component {
 
   // 页面加载完成后
   componentDidMount() {
-    this.getTestInfo();
+    // this.getTestInfo();
     // 默认是获取第一页数据
     const {
       pagination: { current, pageSize },
@@ -93,36 +79,34 @@ class CreateExam extends Component {
   }
 
   // 获取试卷信息
-  getTestInfo = () => {
-    const {
-      dispatch,
-      match: {
-        params: { examID },
-      },
-    } = this.props;
-    dispatch({
-      type: 'ExamPlanManager/GetPaperDetail',
-      payload: {
-        id: examID, // id
-      },
-      callback: res => {
-        if (res.status === 'ok') {
-          // console.log('请求成功');
-          this.setState({
-            currentTestInfo: res.data,
-          });
-        } else {
-          // console.log('请求失败');
-        }
-      },
-    });
-  };
+  // getTestInfo = () => {
+  //   const {
+  //     dispatch,
+  //     match: {
+  //       params: { examID },
+  //     },
+  //   } = this.props;
+  //   dispatch({
+  //     type: 'ExamPlanManager/GetPaperDetail',
+  //     payload: {
+  //       id: examID, // id
+  //     },
+  //     callback: res => {
+  //       if (res.status === 'ok') {
+  //         // console.log('请求成功');
+  //         this.setState({
+  //           currentTestInfo: res.data,
+  //         });
+  //       } else {
+  //         // console.log('请求失败');
+  //       }
+  //     },
+  //   });
+  // };
 
   // 获取table表格数据(指定页码，指定每页条数)
   getTrainGroups = (page, size) => {
-    const {
-      dispatch,
-     } = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'ExamPlanManager/GetTrainGroups',
       payload: {
@@ -184,8 +168,12 @@ class CreateExam extends Component {
 
   // 点击提交按钮
   btnSubmit = () => {
-    const {     match: {
-      params: { examID }},dispatch } = this.props;
+    const {
+      match: {
+        params: { examID },
+      },
+      dispatch,
+    } = this.props;
 
     const { examPlanName, examPlanStartTime, examPlanEndTime, selectedAllKeys } = this.state;
     dispatch({
@@ -252,7 +240,7 @@ class CreateExam extends Component {
     const { modalTableTGID } = this.state;
     const ID = id || modalTableTGID;
     dispatch({
-      type: 'ExamPlanManager/CreateExamGetTrainMembers',
+      type: 'ExamPlanManager/getExamplanGroupMembers',
       payload: {
         page, // 页码
         size, // 每页条数
@@ -291,12 +279,15 @@ class CreateExam extends Component {
   // ------------查看群组成员弹框------------
 
   render() {
-    const { currentTestInfo } = this.state;
     const {
       form: { getFieldDecorator },
       paperLoading,
       createGroups,
       groupsLoading,
+      match: {
+        params: { examID },
+      },
+      dispatch,
     } = this.props;
 
     const {
@@ -341,9 +332,9 @@ class CreateExam extends Component {
         });
       },
       // 用户手动选择/取消选择某行的回调
-      onSelect: (record, selected, selectedRows) => {
+      onSelect: (record, selected) => {
         // console.log(record, selected, selectedRows);
-        const { saveSelectedData } = this.state;
+
         if (selected) {
           // 选中该条数据
           saveSelectedData[record.key] = record;
@@ -358,7 +349,7 @@ class CreateExam extends Component {
       // 用户手动选择/取消选择所有行的回调
       onSelectAll: (selected, selectedRows, changeRows) => {
         // console.log(selected, selectedRows, changeRows);
-        const { saveSelectedData } = this.state;
+
         if (selected) {
           // 全选
           changeRows.forEach(v => {
@@ -377,7 +368,9 @@ class CreateExam extends Component {
     };
 
     // 循环Table数据，添加key
-    const dataSource = createGroups.results.map(value => Object.assign({}, value, { key: value.id }));
+    const dataSource = createGroups.results.map(value =>
+      Object.assign({}, value, { key: value.id })
+    );
 
     const columns = [
       {
@@ -419,7 +412,9 @@ class CreateExam extends Component {
     const filterData = value => {
       const arr = [];
       for (const i in value) {
-        arr.push(value[i]);
+        if (Object.prototype.hasOwnProperty.call(value, i)) {
+          arr.push(value[i]);
+        }
       }
       return arr;
     };
@@ -444,7 +439,9 @@ class CreateExam extends Component {
       showTotal: total => `共 ${total} 条记录`,
     };
     // 循环Table数据，添加key
-    const modalTableDataSource = createMembers.results.map(value => Object.assign({}, value, { key: value.id }));
+    const modalTableDataSource = createMembers.results.map(value =>
+      Object.assign({}, value, { key: value.id })
+    );
     const modalTableColumns = [
       {
         title: '员工编号',
@@ -465,15 +462,16 @@ class CreateExam extends Component {
         render: (text, record) => <span>{record.department_name}</span>,
       },
     ];
+
     // ------------查看群组成员弹框------------
     return (
       <PageHeaderWrapper title={pageHeaderWrapperTitle()}>
         <Spin spinning={paperLoading}>
           <ExamBasicInfo
+            dispatch={dispatch}
+            id={examID}
+            action="ExamPlanManager/GetPaperDetail"
             isShow={currentStatus === 'success'}
-            detailConfig={{
-              ...currentTestInfo,
-            }}
           />
         </Spin>
         <Card
@@ -569,7 +567,7 @@ class CreateExam extends Component {
               dataSource={filterData(saveSelectedData)}
               columns={columns}
               pagination={previewPageConifg}
-              onChange={this.previewTableChange}
+              // onChange={this.previewTableChange}
             />
           </div>
           <div className={styles.foonter_btns}>

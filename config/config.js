@@ -23,27 +23,28 @@ export default {
           default: 'zh-CN', // default zh-CN
           baseNavigator: true, // 为true时，用navigator.language的值作为默认语言 default true, when it is true, will use `navigator.language` overwrite default
         },
-        dynamicImport: {
-          loadingComponent: './components/PageLoading/index',
-        },
+        // dynamicImport: {
+        //   loadingComponent: './components/PageLoading/index',
+        //   webpackChunkName: true,
+        //   level: 3,
+        // },
         ...(!process.env.TEST && os.platform() === 'darwin'
           ? {
               dll: {
                 include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
                 exclude: ['@babel/runtime'],
               },
-              hardSource: true,
             }
           : {}),
       },
     ],
-    [
-      'umi-plugin-ga',
-      {
-        code: 'UA-72788897-6',
-        judge: () => process.env.APP_TYPE === 'site',
-      },
-    ],
+    // [
+    //   'umi-plugin-ga',
+    //   {
+    //     code: 'UA-72788897-6',
+    //     judge: () => process.env.APP_TYPE === 'site',
+    //   },
+    // ],
   ],
   targets: {
     ie: 11,

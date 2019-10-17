@@ -8,6 +8,9 @@ export default [
       { path: '/user/login', component: './User/Login' },
       { path: '/user/register', component: './User/Register' },
       { path: '/user/register-result', component: './User/RegisterResult' },
+      {
+        component: '404',
+      },
     ],
   },
   // 登录后
@@ -59,27 +62,6 @@ export default [
                 // name:'批量导入用户',
                 component: './SystemManager/UserManager/UploadUsers',
               },
-
-              // {
-              //   path:'/systemManager/userManager/upload',
-              //   // name:'批量导入用户',
-              //   routes:[
-              //     {
-              //       path: '/systemManager/userManager/upload',
-              //       redirect: '/systemManager/userManager/upload/step1',
-              //     },
-              //     {
-              //       path:'/systemManager/userManager/upload/step1',
-              //       // name:'批量导入用户',
-              //       component:'/SystemManager/UserManager/UploadUsers/UploadStep1',
-              //     },
-              //     {
-              //       path:'/systemManager/userManager/upload/step2',
-              //       // name:'批量导入用户成功',
-              //       component:'/SystemManager/UserManager/UploadUsers/UploadStep2',
-              //     },
-              //   ]
-              // }
             ],
           },
           {
@@ -95,7 +77,7 @@ export default [
         name: '公告管理',
         icon: 'self_AnnouncementIcon',
         // hideChildrenInMenu: true,
-
+        authority: ['admin'],
         routes: [
           {
             path: '/announcement',
@@ -105,35 +87,40 @@ export default [
             path: '/announcement/article',
             name: '公告列表',
             component: './Announcement/Article/index',
-            authority: ['admin'],
           },
           {
             path: '/announcement/create',
             name: '发布公告',
             component: './Announcement/Article/ArticleMaking',
-            authority: ['admin'],
+            // authority: ['admin'],
           },
           {
             path: '/announcement/edit/:ID',
             // name: '编辑公告',
             component: './Announcement/Article/ArticleMaking',
-            authority: ['admin'],
+            // authority: ['admin'],
           },
           {
             path: '/announcement/detail/:ID',
             // name: '编辑公告',
             component: './Announcement/Article/Detail',
-            authority: ['admin', 'user', 'stu'],
+            // authority: ['admin'],
           },
           {
-            path: '/announcement/viewlist',
+            path: '/announcement/viewlistadmin',
             name: '查看公告',
             component: './Announcement/Article/list',
-            authority: ['admin', 'user', 'stu'],
+            // authority: ['admin'],
           },
         ],
       },
-
+      {
+        path: '/announcementviewlist',
+        name: '查看公告',
+        icon: 'self_AnnouncementIcon',
+        component: './Announcement/Article/list',
+        authority: ['user', 'stu'],
+      },
       {
         path: '/courseware',
         name: '课件管理',
@@ -164,23 +151,23 @@ export default [
                 authority: ['admin'],
               },
               {
-                path: '/courseware/coursewareManager/courseMaking/:ID',
-                name: '课件编辑（拟制中）',
-                component: './Courseware/CoursewareManager/CourseMaking',
+                path: '/courseware/coursewareManager/edit/:ID',
+                name: '课件编辑',
+                component: './Courseware/CoursewareManager/EditConent',
                 authority: ['admin'],
               },
-              {
-                path: '/courseware/coursewareManager/onShelf/:ID',
-                name: '课件编辑（已上架）',
-                component: './Courseware/CoursewareManager/OnShelf',
-                authority: ['admin'],
-              },
-              {
-                path: '/courseware/coursewareManager/OffShelf/:ID',
-                name: '课件编辑（已下架）',
-                component: './Courseware/CoursewareManager/OffShelf',
-                authority: ['admin'],
-              },
+              // {
+              //   path: '/courseware/coursewareManager/onShelf/:ID',
+              //   name: '课件编辑（已上架）',
+              //   component: './Courseware/CoursewareManager/OnShelf',
+              //   authority: ['admin'],
+              // },
+              // {
+              //   path: '/courseware/coursewareManager/OffShelf/:ID',
+              //   name: '课件编辑（已下架）',
+              //   component: './Courseware/CoursewareManager/OffShelf',
+              //   authority: ['admin'],
+              // },
             ],
           },
 
@@ -246,20 +233,20 @@ export default [
                 component: './Exam/ExamManager/Index',
               },
               {
-                path: '/exam/examManager/examMaking/:ID',
-                name: '试卷管理（拟制中）',
-                component: './Exam/ExamManager/ExamMaking',
+                path: '/exam/examManager/edit/:ID',
+                name: '试卷管理',
+                component: './Exam/ExamManager/EditConent',
               },
-              {
-                path: '/exam/examManager/onShelf/:ID',
-                name: '试卷管理（已上架）',
-                component: './Exam/ExamManager/OnShelf',
-              },
-              {
-                path: '/exam/examManager/OffShelf/:ID',
-                name: '试卷管理（已下架）',
-                component: './Exam/ExamManager/OffShelf',
-              },
+              // {
+              //   path: '/exam/examManager/onShelf/:ID',
+              //   name: '试卷管理（已上架）',
+              //   component: './Exam/ExamManager/OnShelf',
+              // },
+              // {
+              //   path: '/exam/examManager/OffShelf/:ID',
+              //   name: '试卷管理（已下架）',
+              //   component: './Exam/ExamManager/OffShelf',
+              // },
             ],
           },
 
@@ -321,12 +308,12 @@ export default [
             component: './TrainGroupManager/AddTrainGroup',
           },
           {
-            path: '/trainGroupManager/editTrainGroup',
+            path: '/trainGroupManager/editTrainGroup/:ID',
             name: '编辑培训群组',
             component: './TrainGroupManager/EditTrainGroup',
           },
           {
-            path: '/trainGroupManager/viewTrainGroup',
+            path: '/trainGroupManager/viewTrainGroup/:ID',
             name: '查看培训群组',
             component: './TrainGroupManager/ViewTrainGroup',
           },
@@ -342,7 +329,7 @@ export default [
           {
             path: '/studyPlan/couser/list',
             name: '查看课程',
-            component: './Courseware/CoursewareManager/viewlist',
+            component: './Courseware/CoursewareManager/viewcourses',
             authority: ['user'],
           },
           {
@@ -431,18 +418,13 @@ export default [
           },
         ],
       },
-      // 培训管理员——>培训证书
+      // 培训管理员——>培训证书 没有实现
       {
         path: '/trainCertificate',
-        name: '培训证书',
+        // name: '培训证书',
         icon: 'self_TrainCertificateIcon',
         authority: ['user'],
         routes: [
-          // {
-          //   path: '/trainCertificate/trainCertificate1',
-          //   name: '制作证书',
-          //   component: './TrainCertificate/index',
-          // },
           {
             path: '/trainCertificate/index',
             name: '证书管理',
@@ -450,10 +432,10 @@ export default [
           },
         ],
       },
-      // 培训管理员——>问卷调查
+      // 培训管理员——>问卷调查  没有实现
       {
         path: '/questionnaire',
-        name: '问卷调查',
+        // name: '问卷调查',
         icon: 'self_QuestionnaireIcon',
         authority: ['user'],
         routes: [
@@ -666,14 +648,14 @@ export default [
                 path: '/personalCenter/center/articles',
                 component: './PersonalCenter/Center/Articles',
               },
-              {
-                path: '/personalCenter/center/applications',
-                component: './PersonalCenter/Center/Applications',
-              },
-              {
-                path: '/personalCenter/center/projects',
-                component: './PersonalCenter/Center/Projects',
-              },
+              // {
+              //   path: '/personalCenter/center/applications',
+              //   component: './PersonalCenter/Center/Applications',
+              // },
+              // {
+              //   path: '/personalCenter/center/projects',
+              //   component: './PersonalCenter/Center/Projects',
+              // },
             ],
           },
           {

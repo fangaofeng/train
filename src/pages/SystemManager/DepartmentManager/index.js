@@ -1,19 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Card,
-  Button,
-  Progress,
-  Tree,
-  Table,
-  Divider,
-  Icon,
-  Upload,
-  Row,
-  Col,
-  message,
-} from 'antd';
-import router from 'umi/router';
-import Link from 'umi/link';
+import { Card, Button, Progress, Icon, Upload, Row, Col, Spin, message } from 'antd';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { getDepartmentUploadurl } from '@/services/uploadUrl/uploadUrl';
@@ -21,7 +7,7 @@ import uploadSuccess from '@/assets/images/upload_success.png';
 import styles from './style.less';
 import TreeEdit from '@/components/TreeEditDynamic';
 
-const { TreeNode } = Tree;
+// const { TreeNode } = Tree;
 
 @connect(({ loading }) => ({
   departmentloading: loading.effects['DepartmentManager/GetOrgsDeparments'],
@@ -127,7 +113,6 @@ class DepartmentManager extends Component {
         fileStatus: 'done',
         treeData: info.file.response.importdata,
         importcount: info.file.response.importcount,
-
       });
     } else if (info.file.status === 'error') {
       // 上传失败
@@ -156,7 +141,7 @@ class DepartmentManager extends Component {
   };
 
   render() {
-    const {departmentloading} = this.props
+    const { departmentloading } = this.props;
     const {
       uploadFileName,
       isFirstUpload,
@@ -200,146 +185,147 @@ class DepartmentManager extends Component {
 
     return (
       <PageHeaderWrapper title={pageHeaderWrapperTitle()}>
-        <spin loading={departmentloading}>
-        <Card className={styles.departmentManagerContent}>
-          {/* -------------有部门，没有用户------------- */}
-          <Row
-            className={styles.deparmentAlreadyExist}
-            style={{ display: uploadStatus === 'noUser' ? 'block' : 'none' }}
-          >
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={{ span: 16, offset: 4 }}
-              xl={{ span: 12, offset: 6 }}
-              xxl={{ span: 8, offset: 8 }}
+        <Spin spinning={departmentloading}>
+          <Card className={styles.departmentManagerContent}>
+            {/* -------------有部门，没有用户------------- */}
+            <Row
+              className={styles.deparmentAlreadyExist}
+              style={{ display: uploadStatus === 'noUser' ? 'block' : 'none' }}
             >
-              <div className={styles.departmentManagerContentTreeDiv}>
-                <div>部门信息:</div>
-                <div>
-                  {/* <Tree showLine>{previewLoop(alreadyExistTreeData)}</Tree> */}
-                  <TreeEdit treeList={alreadyExistTreeData} />
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={{ span: 16, offset: 4 }}
+                xl={{ span: 12, offset: 6 }}
+                xxl={{ span: 8, offset: 8 }}
+              >
+                <div className={styles.departmentManagerContentTreeDiv}>
+                  <div>部门信息:</div>
+                  <div>
+                    {/* <Tree showLine>{previewLoop(alreadyExistTreeData)}</Tree> */}
+                    <TreeEdit treeList={alreadyExistTreeData} />
+                  </div>
                 </div>
-              </div>
-            </Col>
-            <a onClick={this.reUpload}>重新导入部门信息</a>
-          </Row>
-          {/* -------------有部门，有用户------------- */}
-          <Row
-            className={styles.deparmentAlreadyExist}
-            style={{ display: uploadStatus === 'hasUser' ? 'block' : 'none' }}
-          >
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={{ span: 16, offset: 4 }}
-              xl={{ span: 12, offset: 6 }}
-              xxl={{ span: 8, offset: 8 }}
+              </Col>
+              <a onClick={this.reUpload}>重新导入部门信息</a>
+            </Row>
+            {/* -------------有部门，有用户------------- */}
+            <Row
+              className={styles.deparmentAlreadyExist}
+              style={{ display: uploadStatus === 'hasUser' ? 'block' : 'none' }}
             >
-              <div className={styles.departmentManagerContentTreeDiv}>
-                <div>部门信息:</div>
-                <div>
-                  {/* <Tree showLine>{previewLoop(alreadyExistTreeData)}</Tree> */}
-                  <TreeEdit treeList={alreadyExistTreeData} />
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={{ span: 16, offset: 4 }}
+                xl={{ span: 12, offset: 6 }}
+                xxl={{ span: 8, offset: 8 }}
+              >
+                <div className={styles.departmentManagerContentTreeDiv}>
+                  <div>部门信息:</div>
+                  <div>
+                    {/* <Tree showLine>{previewLoop(alreadyExistTreeData)}</Tree> */}
+                    <TreeEdit treeList={alreadyExistTreeData} />
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
-          {/* -------------上传组件Upload------------- */}
-          <Upload
-            showUploadList={false}
-            accept=".xls,.xlsx"
-            name="excelfile"
-            action={uploadurl}
-            // action='//jsonplaceholder.typicode.com/posts/'
-            beforeUpload={this.beforeUpload}
-            onChange={this.uploadOnChange}
-            className="uploadContent"
-            fileList={fileList}
-            {...uploadProps}
-            style={{
-              display: uploadStatus === 'noDep' || uploadStatus === 'uploading' ? 'block' : 'none',
-            }}
-          >
-            <Button type="dashed" style={{ width: '100%' }}>
-              <Icon type="plus" theme="outlined" />
-              {isFirstUpload ? '批量导入部门信息（EXCEL模板）' : '重新导入部门信息（EXCEL模板）'}
-            </Button>
-          </Upload>
-          {/* -------------上传中------------- */}
-          <Row
-            className={styles.uploadingExcelRow}
-            style={{ display: uploadStatus === 'uploading' ? 'block' : 'none' }}
-          >
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={{ span: 16, offset: 4 }}
-              xl={{ span: 12, offset: 6 }}
-              xxl={{ span: 8, offset: 8 }}
+              </Col>
+            </Row>
+            {/* -------------上传组件Upload------------- */}
+            <Upload
+              showUploadList={false}
+              accept=".xls,.xlsx"
+              name="excelfile"
+              action={uploadurl}
+              // action='//jsonplaceholder.typicode.com/posts/'
+              beforeUpload={this.beforeUpload}
+              onChange={this.uploadOnChange}
+              className="uploadContent"
+              fileList={fileList}
+              {...uploadProps}
+              style={{
+                display:
+                  uploadStatus === 'noDep' || uploadStatus === 'uploading' ? 'block' : 'none',
+              }}
             >
-              <div className={styles.uploadingExcel}>
-                <div title={uploadFileName}>
-                  文件名称：
-                  <span>{uploadFileName || 'XXXXXX'}</span>
-                </div>
-                <div>正在导入部门信息......</div>
-                <div>
-                  <Progress
-                    percent={progressPercent}
-                    status={fileStatus === 'error' ? 'exception' : 'active'}
-                  />
-                </div>
-              </div>
-            </Col>
-          </Row>
-          {/* -------------上传成功后------------- */}
-          <div
-            className={styles.uploadSuccessDiv}
-            style={{ display: uploadStatus === 'success' ? 'block' : 'none' }}
-          >
-            <div>
-              <img src={uploadSuccess} alt="上传成功" />
-              <span>部门信息导入成功</span>
-            </div>
-            <div>
-              本次导入部门数：
-              <span>{importcount}个</span>！
-            </div>
-          </div>
-          <Row
-            className={styles.uploadSuccessRow}
-            style={{ display: uploadStatus === 'success' ? 'block' : 'none' }}
-          >
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={{ span: 16, offset: 4 }}
-              xl={{ span: 12, offset: 6 }}
-              xxl={{ span: 8, offset: 8 }}
+              <Button type="dashed" style={{ width: '100%' }}>
+                <Icon type="plus" theme="outlined" />
+                {isFirstUpload ? '批量导入部门信息（EXCEL模板）' : '重新导入部门信息（EXCEL模板）'}
+              </Button>
+            </Upload>
+            {/* -------------上传中------------- */}
+            <Row
+              className={styles.uploadingExcelRow}
+              style={{ display: uploadStatus === 'uploading' ? 'block' : 'none' }}
             >
-              <div className={styles.uploadSuccessPreview}>
-                <div style={{ marginBottom: 30 }}>本次导入部门:</div>
-                {/* <Tree showLine>{previewLoop(treeData)}</Tree> */}
-                <TreeEdit treeList={treeData} />
-              </div>
-            </Col>
-          </Row>
-          {/* -------------完成------------- */}
-          <div className={styles.foonter_btns}>
-            <Button
-              type="primary"
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={{ span: 16, offset: 4 }}
+                xl={{ span: 12, offset: 6 }}
+                xxl={{ span: 8, offset: 8 }}
+              >
+                <div className={styles.uploadingExcel}>
+                  <div title={uploadFileName}>
+                    文件名称：
+                    <span>{uploadFileName || 'XXXXXX'}</span>
+                  </div>
+                  <div>正在导入部门信息......</div>
+                  <div>
+                    <Progress
+                      percent={progressPercent}
+                      status={fileStatus === 'error' ? 'exception' : 'active'}
+                    />
+                  </div>
+                </div>
+              </Col>
+            </Row>
+            {/* -------------上传成功后------------- */}
+            <div
+              className={styles.uploadSuccessDiv}
               style={{ display: uploadStatus === 'success' ? 'block' : 'none' }}
             >
-              <a onClick={this.isAlreadyExist}>完成</a>
-            </Button>
-          </div>
-        </Card>
-        </spin>
+              <div>
+                <img src={uploadSuccess} alt="上传成功" />
+                <span>部门信息导入成功</span>
+              </div>
+              <div>
+                本次导入部门数：
+                <span>{importcount}个</span>！
+              </div>
+            </div>
+            <Row
+              className={styles.uploadSuccessRow}
+              style={{ display: uploadStatus === 'success' ? 'block' : 'none' }}
+            >
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={{ span: 16, offset: 4 }}
+                xl={{ span: 12, offset: 6 }}
+                xxl={{ span: 8, offset: 8 }}
+              >
+                <div className={styles.uploadSuccessPreview}>
+                  <div style={{ marginBottom: 30 }}>本次导入部门:</div>
+                  {/* <Tree showLine>{previewLoop(treeData)}</Tree> */}
+                  <TreeEdit treeList={treeData} />
+                </div>
+              </Col>
+            </Row>
+            {/* -------------完成------------- */}
+            <div className={styles.foonter_btns}>
+              <Button
+                type="primary"
+                style={{ display: uploadStatus === 'success' ? 'block' : 'none' }}
+              >
+                <a onClick={this.isAlreadyExist}>完成</a>
+              </Button>
+            </div>
+          </Card>
+        </Spin>
       </PageHeaderWrapper>
     );
   }

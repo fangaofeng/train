@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { List, Button, Card, Row, Col, Progress, Table, Badge, Tabs } from 'antd';
+import React, { Component } from 'react';
+import { List, Button, Card, Row, Col, Progress, Table, Badge, Tabs, Spin } from 'antd';
 import moment from 'moment';
 // import classNames from 'classnames';
 import Link from 'umi/link';
@@ -23,7 +23,7 @@ import noDataTips3 from '@/assets/images/Workbench/003.png';
 import noDataTips4 from '@/assets/images/Workbench/004.png';
 import styles from './Workbench.less';
 
-const TabPane = Tabs.TabPane;
+const { TabPane } = Tabs;
 
 @connect(({ workbench, loading }) => ({
   announcementList: workbench.getAnnouncement, // 平台公告列表数据
@@ -164,7 +164,7 @@ class Workbench extends Component {
 
   // 跳转页面
   btnChangePage = key => {
-    console.log(key);
+    // console.log(key);
     switch (key) {
       case 'courseware':
         router.push('/courseware/uploadZip');
@@ -175,9 +175,7 @@ class Workbench extends Component {
       case 'announcement':
         router.push('/announcement/create');
         break;
-      // case 'projects':
-      //   router.push(`${match.url}/projects`);
-      //   break;
+
       default:
         break;
     }
@@ -202,7 +200,7 @@ class Workbench extends Component {
       stats,
       statsLoading,
     } = this.props;
-    console.log(stats);
+    // console.log(stats);
     const { currentListItemKey, noDataTips } = this.state;
     const columns = [
       {
@@ -232,9 +230,11 @@ class Workbench extends Component {
           if (record.status === 'warn') {
             return <Progress percent={Number(text)} showInfo={false} strokeColor="#faad14" />;
           }
-          if (record.status === 'normal') {
-            return <Progress percent={Number(text)} showInfo={false} strokeColor="#1890ff" />;
-          }
+          // if (record.status === 'normal') {
+          //   return <Progress percent={Number(text)} showInfo={false} strokeColor="#1890ff" />;
+          // }
+
+          return <Progress percent={Number(text)} showInfo={false} strokeColor="#1890ff" />;
         },
       },
       {
@@ -249,9 +249,10 @@ class Workbench extends Component {
           if (text === 'warn') {
             return <Badge status="warning" text="预警" />;
           }
-          if (text === 'normal') {
-            return <Badge status="processing" text="正常" />;
-          }
+          // if (text === 'normal') {
+          //   return <Badge status="processing" text="正常" />;
+          // }
+          return <Badge status="processing" text="正常" />;
         },
       },
     ];
@@ -389,15 +390,11 @@ class Workbench extends Component {
                   <List.Item>
                     <SelfItemCard>
                       <SelfItemCardImg
-                        // item={item}
                         imgSrc={item.cover}
-                        // showCourseTip
-                        // showExamTip
                         studyTime={`${Number(item.class_hour)}学时`}
                         // btns={<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>发布考试</Link>}
                       />
                       <SelfItemCardDetail
-                        // item={item}
                         title={item.name}
                         adminConfig={{
                           status: item.status,
@@ -439,16 +436,8 @@ class Workbench extends Component {
                 renderItem={item => (
                   <List.Item>
                     <SelfItemCard>
-                      <SelfItemCardImg
-                        // item={item}
-                        imgSrc={item.cover}
-                        // showCourseTip
-                        // showExamTip
-                        // studyTime={`${item.studyTime}学时`}
-                        // btns={<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>发布考试</Link>}
-                      />
+                      <SelfItemCardImg imgSrc={item.cover} />
                       <SelfItemCardDetail
-                        // item={item}
                         title={item.title}
                         adminConfig={{
                           status: item.status,
@@ -480,52 +469,54 @@ class Workbench extends Component {
                 </div>
               </Card>
               <Card bordered={false} className={styles.secondCard}>
-                <Row>
-                  {/* <Col xs={24} sm={12} md={12} lg={12} xl={6}> */}
-                  <Col xs={24} sm={24} md={12} lg={12} xl={6}>
-                    <div className={styles.secondCardCol}>
-                      <img src={imgPlatform1} alt="课件(总数/上架)" />
-                      <div>
-                        <div>课件(总数/新增)</div>
+                <Spin spinning={statsLoading}>
+                  <Row>
+                    {/* <Col xs={24} sm={12} md={12} lg={12} xl={6}> */}
+                    <Col xs={24} sm={24} md={12} lg={12} xl={6}>
+                      <div className={styles.secondCardCol}>
+                        <img src={imgPlatform1} alt="课件(总数/上架)" />
                         <div>
-                          {stats.coursewareCount ? stats.coursewareCount : '*'}
-                          个/
-                          {stats.courserwareonCount ? stats.courserwareonCount : '*'}个
+                          <div>课件(总数/新增)</div>
+                          <div>
+                            {stats.coursewareCount ? stats.coursewareCount : '*'}
+                            个/
+                            {stats.courserwareonCount ? stats.courserwareonCount : '*'}个
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Col>
-                  <Col xs={24} sm={24} md={12} lg={12} xl={6}>
-                    <div className={styles.secondCardCol}>
-                      <img src={imgPlatform2} alt="试卷(总数/上架)" />
-                      <div>
-                        <div>试卷(总数/上架)</div>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={6}>
+                      <div className={styles.secondCardCol}>
+                        <img src={imgPlatform2} alt="试卷(总数/上架)" />
                         <div>
-                          {stats.exampaperCount ? stats.exampaperCount : '*'}/
-                          {stats.exampaperonCount ? stats.exampaperonCount : '*'}个
+                          <div>试卷(总数/上架)</div>
+                          <div>
+                            {stats.exampaperCount ? stats.exampaperCount : '*'}/
+                            {stats.exampaperonCount ? stats.exampaperonCount : '*'}个
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Col>
-                  <Col xs={24} sm={24} md={12} lg={12} xl={6}>
-                    <div className={styles.secondCardCol}>
-                      <img src={imgPlatform3} alt="学员数量" />
-                      <div>
-                        <div>学员数量</div>
-                        <div>{stats.stuCount ? stats.stuCount : '*'}人</div>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={6}>
+                      <div className={styles.secondCardCol}>
+                        <img src={imgPlatform3} alt="学员数量" />
+                        <div>
+                          <div>学员数量</div>
+                          <div>{stats.stuCount ? stats.stuCount : '*'}人</div>
+                        </div>
                       </div>
-                    </div>
-                  </Col>
-                  <Col xs={24} sm={24} md={12} lg={12} xl={6}>
-                    <div className={styles.secondCardCol}>
-                      <img src={imgPlatform4} alt="平台访问次数" />
-                      <div>
-                        <div>平台访问次数</div>
-                        <div>{stats.websiteViews ? stats.websiteViews : '*'}</div>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={6}>
+                      <div className={styles.secondCardCol}>
+                        <img src={imgPlatform4} alt="平台访问次数" />
+                        <div>
+                          <div>平台访问次数</div>
+                          <div>{stats.websiteViews ? stats.websiteViews : '*'}</div>
+                        </div>
                       </div>
-                    </div>
-                  </Col>
-                </Row>
+                    </Col>
+                  </Row>
+                </Spin>
               </Card>
             </div>
           </Authorized>
@@ -854,39 +845,6 @@ class Workbench extends Component {
                       </List.Item>
                     )}
                   />
-                  {/* <List
-                      grid={{ gutter: 4, xs: 1, sm: 1, md: 2, lg: 2, xl: 4, xxl: 4 }}
-                      dataSource={stuOverdueList}
-                      locale={{
-                        emptyText:<div className={styles.noDataTips}><img src={noDataTips.stuOverdue.imgSrc} alt="已逾期" /><span>{noDataTips.stuOverdue.title}</span></div>
-                      }}
-                      renderItem={item => (
-                        <List.Item>
-                          <SelfItemCard>
-                            <SelfItemCardImg
-                              // item={item}
-                              imgSrc={item.imgSrc}
-                              showCourseTip={item.type==='course'}
-                              showExamTip={item.type==='exam'}
-                              studyTime={item.type==='course'?`${item.studyTime}学时`:false}
-                              // btns={<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>发布考试</Link>}
-                            />
-                            <SelfItemCardDetail
-                              // item={item}
-                              title={item.title}
-                              stuUnfinishedConfig={
-                                {
-                                  progress:item.type==='course'?item.progress:null,
-                                  endTime:item.type==='exam'?item.endTime:null,
-                                  days:item.days,
-                                  btns:item.type==='course'?<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>去学习</Link>:<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>去考试</Link>
-                                }
-                              }
-                            />
-                          </SelfItemCard>
-                        </List.Item>
-                      )}
-                    /> */}
                 </TabPane>
               </Tabs>
             </Card>
@@ -895,6 +853,7 @@ class Workbench extends Component {
               <List
                 grid={{ gutter: 4, xs: 1, sm: 1, md: 2, lg: 2, xl: 4, xxl: 4 }}
                 dataSource={recommendCourseList}
+                loading={recommendCourseListLoading}
                 locale={{
                   emptyText: (
                     <div className={styles.noDataTips}>

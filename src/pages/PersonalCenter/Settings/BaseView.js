@@ -1,17 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
-import { Form, Input, Upload, Select, Button, Row, Col, Card, Spin } from 'antd';
+import { Form, Input, Upload, Button, Card } from 'antd';
 import { connect } from 'dva';
-import { cpus } from 'os';
+
 import styles from './BaseView.less';
-import GeographicView from './GeographicView';
-import PhoneView from './PhoneView';
+
 import DescriptionList from '@/components/DescriptionList';
 // import { getTimeDistance } from '@/utils/utils';
 import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl';
 
 const FormItem = Form.Item;
-const { Option } = Select;
+
 const token = localStorage.getItem('WHLQYHGPXPT_TOKEN');
 const uploadProps = {
   headers: {
@@ -37,27 +36,27 @@ const AvatarView = ({ avatar }) => (
   </Fragment>
 );
 
-const validatorGeographic = (rule, value, callback) => {
-  const { province, city } = value;
-  if (!province.key) {
-    callback('Please input your province!');
-  }
-  if (!city.key) {
-    callback('Please input your city!');
-  }
-  callback();
-};
+// const validatorGeographic = (rule, value, callback) => {
+//   const { province, city } = value;
+//   if (!province.key) {
+//     callback('Please input your province!');
+//   }
+//   if (!city.key) {
+//     callback('Please input your city!');
+//   }
+//   callback();
+// };
 
-const validatorPhone = (rule, value, callback) => {
-  const values = value.split('-');
-  if (!values[0]) {
-    callback('Please input your area code!');
-  }
-  if (!values[1]) {
-    callback('Please input your phone number!');
-  }
-  callback();
-};
+// const validatorPhone = (rule, value, callback) => {
+//   const values = value.split('-');
+//   if (!values[0]) {
+//     callback('Please input your area code!');
+//   }
+//   if (!values[1]) {
+//     callback('Please input your phone number!');
+//   }
+//   callback();
+// };
 
 @connect(({ user, loading }) => ({
   currentUser: user.currentUser,
@@ -67,6 +66,10 @@ const validatorPhone = (rule, value, callback) => {
 @Form.create()
 class BaseView extends Component {
   componentDidMount() {
+    // const { dispatch } = this.props;
+    // dispatch({
+    //   type: 'user/fetchCurrent',
+    // });
     this.setBaseInfo();
   }
 
@@ -111,7 +114,7 @@ class BaseView extends Component {
       form: { getFieldDecorator },
       currentUser,
       patchuserinfoLoading,
-      currentUserLoading,
+      // currentUserLoading,
     } = this.props;
 
     return (

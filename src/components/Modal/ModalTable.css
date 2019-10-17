@@ -1,0 +1,16 @@
+.ModalTableContent .searchContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 24px;
+}
+.ModalTableContent .searchContent > div:nth-child button {
+  margin-left: 20px;
+}
+.ModalTableContent .modalHeaderinfo {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed #dcdcdc;
+  margin-bottom: 20px;
+}

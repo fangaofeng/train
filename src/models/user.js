@@ -1,21 +1,16 @@
-import {
-  query as queryUsers,
-  queryCurrent,
-  patchuserinfo,
-  changeuseravatar,
-} from '@/services/user';
+import { getUsers, queryCurrent, patchuserinfo, changeuseravatar } from '@/services/user';
 
 export default {
   namespace: 'user',
 
   state: {
-    list: [],
+    list: { results: [], count: 0 },
     currentUser: {},
   },
 
   effects: {
     *fetch(_, { call, put }) {
-      const response = yield call(queryUsers);
+      const response = yield call(getUsers);
       yield put({
         type: 'save',
         payload: response,

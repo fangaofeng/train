@@ -1,5 +1,6 @@
-import { getTrainerTableData, saveCourseWare } from '@/services/courseware/uploadCourse';
-// import { notification } from 'antd';
+import { saveCourseWare } from '@/services/courseware/uploadCourse';
+
+import { getUsers } from '@/services/user';
 
 export default {
   namespace: 'uploadCourse',
@@ -17,10 +18,10 @@ export default {
 
   effects: {
     // 系统管理员 ————> 课件管理 ————> 上传课件 ————> 获取培训管理员数据
-    *GetTrainerTableData({ payload }, { call, put }) {
-      const response = yield call(getTrainerTableData, payload);
+    *GetTrainmanagers({ payload }, { call, put }) {
+      const response = yield call(getUsers, payload);
       yield put({
-        type: 'saveTrainerTableData',
+        type: 'saveTrainmanagers',
         payload: response,
       });
     },
@@ -75,7 +76,7 @@ export default {
       };
     },
     // 系统管理员 ————> 课件管理 ————> 上传课件 ————> 获取培训管理员数据
-    saveTrainerTableData(state, action) {
+    saveTrainmanagers(state, action) {
       return {
         ...state,
         tableData: action.payload,

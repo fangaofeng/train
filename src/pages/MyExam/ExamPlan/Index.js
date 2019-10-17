@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Card, List, Tabs, Divider, Icon, Button, Input, message } from 'antd';
+import { Card, List, Tabs, Button } from 'antd';
 // import router from 'umi/router';
 import Link from 'umi/link';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import ExamInfo from '@/components/ExamInfo';
+import ExamInfo from '@/components/ExamBasicInfo';
 import styles from './index.less';
 
 import noDataTips4 from '@/assets/images/Workbench/004.png';
@@ -94,11 +94,8 @@ class MyExam extends Component {
 
   // 分页、排序、筛选变化时触发。这边只有分页功能，没有排序和筛选
   handlePageChange = (_current, _pageSize) => {
-    // console.log('-------------------');
-    // console.log(_pagination_);
-    // console.log('-------------------');
     const { paginationNotCompleted, paginationCompleted, paginationOverdu, status } = this.state;
-    console.log(_current, _pageSize);
+
     if (status === 'notcompleted') {
       this.setState({
         paginationNotCompleted: {

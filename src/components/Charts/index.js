@@ -2,7 +2,6 @@ import numeral from 'numeral';
 import './g2';
 import ChartCard from './ChartCard';
 import Bar from './Bar';
-import Pie from './Pie';
 import Radar from './Radar';
 import Gauge from './Gauge';
 import MiniArea from './MiniArea';
@@ -18,7 +17,6 @@ const yuan = val => `¥ ${numeral(val).format('0,0')}`;
 const Charts = {
   yuan,
   Bar,
-  Pie,
   Gauge,
   Radar,
   MiniBar,
@@ -35,7 +33,6 @@ export {
   Charts as default,
   yuan,
   Bar,
-  Pie,
   Gauge,
   Radar,
   MiniBar,

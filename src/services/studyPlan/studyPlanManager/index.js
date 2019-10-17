@@ -12,7 +12,7 @@ export async function submitCreateSP(params) {
 }
 // ------------------------------------------------------------------
 // 学习计划管理——>主页，获取所有的学习计划
-export async function getAllSPTableData(params) {
+export async function getLearnPlan(params) {
   return request(`/api/learn/plan?${stringify(params)}`);
 }
 // ------------------------------------------------------------------
@@ -29,8 +29,11 @@ export async function submitEditSP(params) {
 }
 
 // 学习计划管理——>查看学习计划（获取table表格数据）
-export async function getViewSPGroup(params) {
-  return request(`/api/learn/plan/${params.studyPlanID}/group?${stringify(params)}`);
+export async function getSPGroups(params) {
+  const { studyPlanID } = params;
+  const temp = params;
+  delete temp.studyPlanID;
+  return request(`/api/learn/plan/${studyPlanID}/groups?${stringify(temp)}`);
 }
 // 学习计划管理——>查看学习计划——>查看培训群组学习详情（获取table表格数据）
 export async function getViewSPGroupDetails(params) {

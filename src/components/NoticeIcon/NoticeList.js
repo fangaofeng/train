@@ -63,12 +63,14 @@ export default function NoticeList({
           );
         })}
       </List>
-      {showClear ? (
-        <div className={styles.clear} onClick={onClear}>
-          {locale.clear} {title}
-        </div>
-      ) : null}
-      {showViewMore ? <div onClick={onViewMore}>{locale.viewMore}</div> : null}
+      <div className={styles.bottomBar}>
+        {showClear ? (
+          <div onClick={onClear}>
+            {locale.clear} {locale[title] || title}
+          </div>
+        ) : null}
+        {showViewMore ? <div onClick={onViewMore}>{locale.viewMore}</div> : null}
+      </div>
     </div>
   );
 }

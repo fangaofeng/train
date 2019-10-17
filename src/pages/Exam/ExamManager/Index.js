@@ -344,7 +344,9 @@ class TestPapersManager extends Component {
           if (record.status === '拟制中') {
             dom = (
               <span>
-                <Link to={`/exam/examManager/examMaking/${record.id}`}>编辑</Link>
+                <Link to={`/exam/examManager/edit/${record.id}?currentType=${record.status}`}>
+                  编辑
+                </Link>
                 <Divider type="vertical" />
                 <a onClick={() => this.delFile(record)}>删除</a>
               </span>
@@ -352,7 +354,9 @@ class TestPapersManager extends Component {
           } else if (record.status === '已上架') {
             dom = (
               <span>
-                <Link to={`/exam/examManager/onShelf/${record.id}`}>编辑</Link>
+                <Link to={`/exam/examManager/edit/${record.id}?currentType=${record.status}`}>
+                  编辑
+                </Link>
                 <Divider type="vertical" />
                 <a onClick={() => this.OffShelf(record)}>下架</a>
               </span>
@@ -360,7 +364,9 @@ class TestPapersManager extends Component {
           } else if (record.status === '已下架') {
             dom = (
               <span>
-                <Link to={`/exam/examManager/offShelf/${record.id}`}>编辑</Link>
+                <Link to={`/exam/examManager/edit/${record.id}?currentType=${record.status}`}>
+                  编辑
+                </Link>
                 <Divider type="vertical" />
                 <a onClick={() => this.fileOnArchive(record)}>归档</a>
               </span>

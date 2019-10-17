@@ -72,21 +72,18 @@ function mockTable3(page, size) {
     if (currentTotal <= 58) {
       list.push({
         id: `${page}${i}`,
-        user_no: `课件管理-2017050000-${page}-${i}`,
-        name: `课件管理-顾益明-${page}-${i}`,
+        user_no: `2017050000-${page}-${i}`,
+        name: `课件管理-顾sds明-${page}-${i}`,
         department_name: `课件管理-技术部-${page}-${i}`,
-        created: i % 2 === 0 ? '是' : '否',
+        createdPlan: i % 2 === 0 ? '是' : '否',
       });
     }
   }
   obj = {
-    status: 'ok',
-    data: {
-      count: 58,
-      next: null,
-      previous: null,
-      results: list,
-    },
+    count: 58,
+    next: null,
+    previous: null,
+    results: list,
   };
   return obj;
 }
@@ -144,22 +141,23 @@ export default {
    * 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 获取现有培训管理员的Table表格数据
    * 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员的Table表格数据 有参数exclude=true
    */
-  'GET /api/courseManager/:id/members': (req, res) => {
+  'GET /api/course/ware/:id/trainmanagers': (req, res) => {
     const params = req.query;
     const { page, size } = params;
     const result = mockTable3(page, size);
-    return res.json(result);
+    return res.json({
+      status: 'ok',
+      data: result,
+    });
   },
   // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> (单个删除、批量删除)
-  'PATCH /api/courseManager/:id/members': (req, res) => {
-    // 'POST /api//user/list/editTGManagerDel': (req, res) => {
+  'PATCH /api/course/ware/:id/trainmanagers': (req, res) => {
     res.send({
       status: 'ok',
     });
   },
   // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框提交按钮
-  'PUT /api/courseManager/:id/members': (req, res) => {
-    // 'POST /api//user/list/editTGMAddMemberSubmit': (req, res) => {
+  'PUT /api/course/ware/:id/trainmanagers': (req, res) => {
     res.send({
       status: 'ok',
     });

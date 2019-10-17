@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Card, Modal, Table, Divider, Icon, Button, Input, message } from 'antd';
+import { Card, Modal, Divider, Icon, Button, Input, message } from 'antd';
 // import router from 'umi/router';
 import Link from 'umi/link';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import PageTable from '@/components/PageTable';
 import styles from './Index.less';
 
 const { Search } = Input;
@@ -19,56 +20,13 @@ class StudyPlanManager extends Component {
       visible: false, // 是否显示归档操作的模态框
       confirmLoading: false, // 确定按钮 loading
       fileOnArchiveID: null, // 需要归档的文件id
-      pagination: {
-        // 表格分页信息
-        // total:20,// 数据总数
-        current: 1, // 当前页数
-        pageSize: 10, // 每页条数
-        pageSizeOptions: ['10', '20', '30', '40'], // 指定每页可以显示多少条数据
-        showQuickJumper: true, // 是否可以快速跳转至某页
-        showSizeChanger: true, // 是否可以改变 pageSize
-      },
     };
   }
 
   // 页面加载完成后
   componentDidMount() {
     // 默认是获取第一页数据
-    const {
-      pagination: { current, pageSize },
-    } = this.state;
-    this.getTableData(current, pageSize);
   }
-
-  // 获取table表格数据(指定页码，指定每页条数)
-  getTableData = (page, size) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'StudyPlanManager/GetAllSPTableData',
-      payload: {
-        page, // 页码
-        size, // 每页条数
-      },
-    });
-  };
-
-  // 分页、排序、筛选变化时触发。这边只有分页功能，没有排序和筛选
-  handleTableChange = _pagination_ => {
-    // console.log('-------------------');
-    // console.log(_pagination_);
-    // console.log('-------------------');
-    const { pagination } = this.state;
-    console.log(_pagination_);
-    const { current, pageSize } = _pagination_;
-    this.setState({
-      pagination: {
-        ...pagination,
-        current,
-        pageSize,
-      },
-    });
-    this.getTableData(current, pageSize);
-  };
 
   // 归档操作
   fileOnArchive = record => {
@@ -128,16 +86,7 @@ class StudyPlanManager extends Component {
 
   render() {
     const { allSPTableData, learnplansloading } = this.props;
-    const { pagination, visible, confirmLoading } = this.state;
-    const pageConifg = {
-      ...pagination,
-      total: allSPTableData.count,
-      showTotal: total => `共 ${total} 条记录`,
-    };
-    // 循环Table数据，添加key
-    const dataSource = allSPTableData.results.map(value =>
-      Object.assign({}, value, { key: value.id })
-    );
+    const { visible, confirmLoading } = this.state;
 
     const columns = [
       {
@@ -243,12 +192,12 @@ class StudyPlanManager extends Component {
               />
             </div>
           </div>
-          <Table
-            dataSource={dataSource}
-            loading={learnplansloading}
+          <PageTable
+            {...this.props}
+            data={allSPTableData}
             columns={columns}
-            pagination={pageConifg}
-            onChange={this.handleTableChange}
+            loading={learnplansloading}
+            action="StudyPlanManager/GetAllSPTableData"
           />
         </Card>
         <Modal
