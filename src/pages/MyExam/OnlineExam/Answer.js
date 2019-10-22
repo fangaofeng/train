@@ -6,10 +6,7 @@ import classNames from 'classnames';
 
 import Question from '@/components/Question';
 import router from 'umi/router';
-// import router from 'umi/router';
-// import Link from 'umi/link';
-// import { connect } from 'dva';
-import 'antd/dist/antd.css';
+
 import styles from './Answer.less';
 
 const { Countdown } = Statistic;
@@ -24,6 +21,7 @@ class OnlineExamAnswer extends Component {
     super(props);
     const { questions, count } = props;
     this.state = {
+      deadline: Date.now() + 60 * 1000 * 60,
       visible: false,
       submitSuccess: false,
       score: 0,
@@ -99,7 +97,7 @@ class OnlineExamAnswer extends Component {
 
     const startIndex = (page - 1) * size;
     const endIndex = startIndex + size > total ? total - 1 : startIndex + size;
-    console.log(page, startIndex, endIndex, total);
+    // console.log(page, startIndex, endIndex, total);
     return allSortQuestionAnswers.slice(startIndex, endIndex);
   };
 
@@ -194,7 +192,8 @@ class OnlineExamAnswer extends Component {
       score,
       submitSuccess,
       pagination,
-      pagination: { current, pageSize }, // 所有问题list
+      pagination: { current, pageSize },
+      deadline, // 所有问题list
     } = this.state;
     const tpagination = {
       ...pagination,
@@ -204,7 +203,7 @@ class OnlineExamAnswer extends Component {
       showTotal: total => `共 ${total} 条题目`,
       onChange: this.onChangeQuestion,
     };
-    const deadline = Date.now() + 60 * 1000 * 60;
+
     const questions = this.getCurrentQuestions(current, pageSize);
     // console.log('questions', questions);
     return (
@@ -233,27 +232,6 @@ class OnlineExamAnswer extends Component {
               </List.Item>
             )}
           />
-
-          {/* <div className={styles.answerExamBtns}>
-            <Button
-              type="primary"
-              // disabled={!prevID}
-              // onClick={() => {
-              //   this.getTargetQuestion(prevID);
-              // }}
-            >
-              上一题
-            </Button>
-            <Button
-              type="primary"
-              // disabled={!nextID}
-              // onClick={() => {
-              //   this.getTargetQuestion(nextID);
-              // }}
-            >
-              下一题
-            </Button>
-          </div> */}
         </Card>
         <Card className={classNames(styles.rightContent, styles.commonCardContent)}>
           <div className={styles.rightContentTop}>

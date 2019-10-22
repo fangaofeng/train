@@ -11,38 +11,26 @@ class SelfCard extends Component {
   }
 
   render() {
-    const {
-      title,
-      extra,
-      children,
-      noCardHeaderBorderBottom,
-      nopadding,
-      bordered,
-      noLeftAndRightPadding,
-    } = this.props;
+    const { title, extra, children, noCardHeaderBorderBottom, nopadding, bordered } = this.props;
     return (
       <React.Fragment>
         {nopadding ? (
           <Card
-            bordered={false}
+            bordered={bordered}
             className={classNames(
               styles.Notice_Card,
               styles.nopadding,
               styles[noCardHeaderBorderBottom]
             )}
             title={<span className={styles.notice_title}>{title}</span>}
-            // extra={<Link to="#">{extra}</Link>}
+            extra={<Link to="#">{extra}</Link>}
             {...this.props}
           >
             {children}
           </Card>
         ) : (
           <Card
-            className={classNames(
-              styles.Notice_Card,
-              styles[noCardHeaderBorderBottom],
-              styles[noLeftAndRightPadding]
-            )}
+            className={classNames(styles.Notice_Card)}
             title={<span className={styles.notice_title}>{title}</span>}
             {...this.props}
           >

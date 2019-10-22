@@ -1,21 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Modal,
-  Card,
-  Button,
-  Table,
-  Divider,
-  Popconfirm,
-  Icon,
-  Upload,
-  Row,
-  Col,
-  message,
-  Input,
-  Select,
-  Spin,
-  Avatar,
-} from 'antd';
+import { Button, Divider, Icon, Input, Spin, Avatar } from 'antd';
 // import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
@@ -214,7 +198,6 @@ class LearnPDF extends Component {
             >
               <div className={styles.pdfDocumentContent}>
                 <Document
-                  // file="http://192.168.101.71/1.pdf"
                   // file={web}
                   file={baseInfo.courseSrc}
                   onLoadSuccess={this.onDocumentLoadSuccess}
@@ -305,7 +288,7 @@ class LearnPDF extends Component {
                     </span>
                   </div>{' '}
                   <div className={styles.classHour}>
-                    <span> 课 & emsp; & emsp; 时：</span>{' '}
+                    <span> 课 &emsp; 时：</span>{' '}
                     <span>
                       {' '}
                       {Number(baseInfo.class_hour)}
@@ -331,7 +314,7 @@ class LearnPDF extends Component {
                   </div>{' '}
                   <div className={classNames(styles.studyProgress, ended ? styles.studyEnded : '')}>
                     {' '}
-                    {ended ? '学习完成' : '学习中'}
+                    {ended ? '本次学习完成' : '正在学习中'}
                   </div>{' '}
                   <div className={styles.textAreaBox}>
                     <TextArea

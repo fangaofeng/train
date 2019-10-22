@@ -39,7 +39,7 @@ export default class NoticeIcon extends PureComponent {
   };
 
   getNotificationBox() {
-    const { children, loading, locale } = this.props;
+    const { children, loading, locale, onClear } = this.props;
     if (!children) {
       return null;
     }
@@ -56,7 +56,7 @@ export default class NoticeIcon extends PureComponent {
             emptyImage={emptyImage}
             emptyText={emptyText}
             locale={locale}
-            onClear={() => this.onClear(title)}
+            onClear={() => onClear(title)}
             onClick={item => this.onItemClick(item, child.props)}
             onViewMore={event => this.onViewMore(child.props, event)}
             showClear={showClear}

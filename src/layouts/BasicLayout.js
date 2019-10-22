@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout , BackTop } from 'antd';
+import { Layout, BackTop } from 'antd';
 import DocumentTitle from 'react-document-title';
 import isEqual from 'lodash/isEqual';
 import memoizeOne from 'memoize-one';
@@ -8,7 +8,7 @@ import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import pathToRegexp from 'path-to-regexp';
 import { enquireScreen, unenquireScreen } from 'enquire-js';
-import { formatMessage } from 'umi/locale';
+// import { formatMessage } from 'umi/locale';
 import SiderMenu from '@/components/SiderMenu';
 import Authorized from '@/utils/Authorized';
 import SettingDrawer from '@/components/SettingDrawer';
@@ -22,7 +22,7 @@ import Exception403 from '../pages/Exception/403';
 const { Content } = Layout;
 
 // Conversion router to menu.
-function formatter(data, parentAuthority, parentName) {
+function formatter(data, parentAuthority) {
   return data
     .map(item => {
       if (!item.name || !item.path) {
@@ -54,7 +54,6 @@ function formatter(data, parentAuthority, parentName) {
     })
     .filter(item => item);
 }
-
 
 const memoizeOneFormatter = memoizeOne(formatter, isEqual);
 
@@ -98,8 +97,6 @@ class BasicLayout extends React.PureComponent {
     menuData: this.getMenuData(),
   };
 
-
-  
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -126,11 +123,11 @@ class BasicLayout extends React.PureComponent {
     });
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     const { location } = this.props;
     // 当路由切换时,返回顶部
-    if(location !== nextProps.location){
-        window.scrollTo(0,0)
+    if (location !== nextProps.location) {
+      window.scrollTo(0, 0);
     }
   }
 
@@ -185,13 +182,13 @@ class BasicLayout extends React.PureComponent {
   }
 
   // 新增方法
-  getAllRoutes = (data, parentAuthority) =>{
-    return data
+  getAllRoutes = (data, parentAuthority) =>
+    data
       .map(item => {
         if (!item.path) {
           return null;
         }
-  
+
         const result = {
           ...item,
           // name:item.name || '',
@@ -207,7 +204,6 @@ class BasicLayout extends React.PureComponent {
         return result;
       })
       .filter(item => item);
-  }
 
   // 新增方法
   getAllRoutesToJson() {
@@ -236,9 +232,7 @@ class BasicLayout extends React.PureComponent {
   // 新增方法
   matchParamsPath = pathname => {
     const obj = this.getAllRoutesToJson();
-    const pathKey = Object.keys(obj).find(key =>
-      pathToRegexp(key).test(pathname)
-    );
+    const pathKey = Object.keys(obj).find(key => pathToRegexp(key).test(pathname));
     return obj[pathKey];
   };
 
@@ -250,7 +244,9 @@ class BasicLayout extends React.PureComponent {
       // return 'Ant Design Pro';
       return '南京博纳德网络科技有限公司';
     }
-    const message = currRouterData.name ? `${currRouterData.name} - 南京博纳德网络科技有限公司`:'南京博纳德网络科技有限公司';
+    const message = currRouterData.name
+      ? `${currRouterData.name} - 南京博纳德网络科技有限公司`
+      : '南京博纳德网络科技有限公司';
     // return `${message} - Ant Design Pro`;
     // return `${message} - 南京博纳德网络科技有限公司`;
     return message;
@@ -310,7 +306,7 @@ class BasicLayout extends React.PureComponent {
     // Do not render SettingDrawer in production
     // unless it is deployed in preview.pro.ant.design as demo
     const { rendering } = this.state;
-    if ((rendering || process.env.NODE_ENV === 'production') && APP_TYPE !== 'site') {
+    if ((rendering || process.env.NODE_ENV === 'production') && process.env.APP_TYPE !== 'site') {
       return null;
     }
     return <SettingDrawer />;

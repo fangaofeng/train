@@ -1,19 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Divider, Progress } from 'antd';
 import moment from 'moment';
 import styles from './LearnInfo.less';
 import ImgWord from '@/components/ImageWord';
 
-class LearnInfo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
+class LearnInfo extends PureComponent {
   render() {
     const { detail } = this.props;
-    // console.log(isShow);
-    // console.log(detailConfig);
     return (
       <div className={styles.detailContent}>
         <div className={styles.leftContent}>

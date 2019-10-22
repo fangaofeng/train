@@ -71,7 +71,7 @@ export default {
     },
 
     // 考试计划管理——>查看考试计划——>查看培训群组考试详情（获取table表格数据）
-    *getExamplanGroups({ payload }, { call, put }) {
+    *GetExamplanGroups({ payload }, { call, put }) {
       const response = yield call(getExamplanGroups, payload);
       if (response.status === 'ok') {
         console.log('成功');

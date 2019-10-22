@@ -7,9 +7,10 @@ import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import ExamBasicInfo from '@/components/ExamBasicInfo';
 import SubmitSuccessCard from '@/components/CustomComponent/SubmitSuccessCard/SubmitSuccessCard';
-import ModalTable from '@/components/CustomComponent/ModalTable/ModalTable';
+
+import PageTable from '@/components/PageTable';
+import TraingroupsModal from '@/pages/TrainGroupManager/ViewTrainGroupModal';
 import styles from './Common.less';
-// import TrainGroupMember from '@/pages/TrainGroupManager/ViewTrainGroup';
 
 const { Search } = Input;
 const FormItem = Form.Item;
@@ -41,16 +42,16 @@ class CreateExam extends Component {
       examPlanEndTime: '', // 考试计划结束时间
 
       selectedAllKeys: [], // 选中的数据组成的数组（只包含key值）
-      saveSelectedData: {}, // 保存选中的数据
-      pagination: {
-        // 表格分页信息
-        // total:20,// 数据总数
-        current: 1, // 当前页数
-        pageSize: 10, // 每页条数
-        pageSizeOptions: ['10', '20', '30', '40'], // 指定每页可以显示多少条数据
-        showQuickJumper: true, // 是否可以快速跳转至某页
-        showSizeChanger: true, // 是否可以改变 pageSize
-      },
+      selectedData: {}, // 保存选中的数据
+      // pagination: {
+      //   // 表格分页信息
+      //   // total:20,// 数据总数
+      //   current: 1, // 当前页数
+      //   pageSize: 10, // 每页条数
+      //   pageSizeOptions: ['10', '20', '30', '40'], // 指定每页可以显示多少条数据
+      //   showQuickJumper: true, // 是否可以快速跳转至某页
+      //   showSizeChanger: true, // 是否可以改变 pageSize
+      // },
 
       showModalTable: false, // 是否显示查看群组成员模态框
       modalTableTGID: null, // 要显示群组成员的培训群组的ID
@@ -72,65 +73,22 @@ class CreateExam extends Component {
   componentDidMount() {
     // this.getTestInfo();
     // 默认是获取第一页数据
-    const {
-      pagination: { current, pageSize },
-    } = this.state;
-    this.getTrainGroups(current, pageSize);
+    // const {
+    //   pagination: { current, pageSize },
+    // } = this.state;
+    // this.getTrainGroups(current, pageSize);
   }
 
-  // 获取试卷信息
-  // getTestInfo = () => {
-  //   const {
-  //     dispatch,
-  //     match: {
-  //       params: { examID },
-  //     },
-  //   } = this.props;
-  //   dispatch({
-  //     type: 'ExamPlanManager/GetPaperDetail',
-  //     payload: {
-  //       id: examID, // id
-  //     },
-  //     callback: res => {
-  //       if (res.status === 'ok') {
-  //         // console.log('请求成功');
-  //         this.setState({
-  //           currentTestInfo: res.data,
-  //         });
-  //       } else {
-  //         // console.log('请求失败');
-  //       }
-  //     },
-  //   });
-  // };
-
-  // 获取table表格数据(指定页码，指定每页条数)
-  getTrainGroups = (page, size) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'ExamPlanManager/GetTrainGroups',
-      payload: {
-        page, // 页码
-        size, // 每页条数
-      },
+  handleSelectRows = rows => {
+    this.setState({
+      selectedAllKeys: rows,
     });
   };
 
-  // 分页、排序、筛选变化时触发。这边只有分页功能，没有排序和筛选
-  handleTableChange = _pagination_ => {
-    // console.log('-------------------');
-    // console.log(_pagination_);
-    // console.log('-------------------');
-    const { pagination } = this.state;
-    const { current, pageSize } = _pagination_;
+  handleOnSelect = selectData => {
     this.setState({
-      pagination: {
-        ...pagination,
-        current,
-        pageSize,
-      },
+      selectedData: selectData,
     });
-    this.getTrainGroups(current, pageSize);
   };
 
   // 点击下一步
@@ -276,7 +234,25 @@ class CreateExam extends Component {
       },
     });
   };
+
   // ------------查看群组成员弹框------------
+  viewModalTable = record => {
+    this.setState({
+      showModalTable: true,
+      modalTableTGID: record.id,
+      modalTableTGNumber: record.group_no, // 要显示群组成员的模态框的群组编号
+      modalTableTGName: record.name, // 要显示群组成员的模态框的群组名称
+    });
+  };
+
+  // 查看培训群组成员。分页、排序、筛选变化时触发。这边只有分页功能，没有排序和筛选
+  // ------------查看群组成员弹框------------
+  modalcallback = (visible, refresh = false) => {
+    console.log('modalcallback', refresh);
+    this.setState({
+      showModalTable: visible,
+    });
+  };
 
   render() {
     const {
@@ -290,13 +266,7 @@ class CreateExam extends Component {
       dispatch,
     } = this.props;
 
-    const {
-      currentStatus,
-      selectedAllKeys,
-      pagination,
-      saveSelectedData,
-      previewPagination,
-    } = this.state;
+    const { currentStatus, selectedAllKeys, selectedData, previewPagination } = this.state;
     const {
       maxNameLength,
       nameLengthLeft,
@@ -316,61 +286,6 @@ class CreateExam extends Component {
       }
       return title;
     };
-    const pageConifg = {
-      ...pagination,
-      total: createGroups.count,
-      showTotal: total => `共 ${total} 条记录`,
-    };
-    // 选中的表格行
-    const rowSelection = {
-      selectedRowKeys: selectedAllKeys,
-      // 选中项发生变化时的回调
-      onChange: (selectedRowKeys, selectedRows) => {
-        console.log(selectedRowKeys, selectedRows);
-        this.setState({
-          selectedAllKeys: selectedRowKeys,
-        });
-      },
-      // 用户手动选择/取消选择某行的回调
-      onSelect: (record, selected) => {
-        // console.log(record, selected, selectedRows);
-
-        if (selected) {
-          // 选中该条数据
-          saveSelectedData[record.key] = record;
-        } else {
-          // 取消选中该条数据
-          delete saveSelectedData[record.key];
-        }
-        this.setState({
-          saveSelectedData,
-        });
-      },
-      // 用户手动选择/取消选择所有行的回调
-      onSelectAll: (selected, selectedRows, changeRows) => {
-        // console.log(selected, selectedRows, changeRows);
-
-        if (selected) {
-          // 全选
-          changeRows.forEach(v => {
-            saveSelectedData[v.key] = v;
-          });
-        } else {
-          // 取消全选
-          changeRows.forEach(v => {
-            delete saveSelectedData[v.key];
-          });
-        }
-        this.setState({
-          saveSelectedData,
-        });
-      },
-    };
-
-    // 循环Table数据，添加key
-    const dataSource = createGroups.results.map(value =>
-      Object.assign({}, value, { key: value.id })
-    );
 
     const columns = [
       {
@@ -422,47 +337,12 @@ class CreateExam extends Component {
     // 预览数据的Table分页参数
     const previewPageConifg = {
       ...previewPagination,
-      total: filterData(saveSelectedData).length,
+      total: filterData(selectedData).length,
       showTotal: total => `共 ${total} 条记录`,
     };
     // ------------查看群组成员弹框------------
-    const { createMembers } = this.props;
-    const {
-      showModalTable,
-      modalTablePagination,
-      modalTableTGNumber,
-      modalTableTGName,
-    } = this.state;
-    const modalTablePageConifg = {
-      ...modalTablePagination,
-      total: createMembers.count,
-      showTotal: total => `共 ${total} 条记录`,
-    };
-    // 循环Table数据，添加key
-    const modalTableDataSource = createMembers.results.map(value =>
-      Object.assign({}, value, { key: value.id })
-    );
-    const modalTableColumns = [
-      {
-        title: '员工编号',
-        dataIndex: 'user_number',
-        key: 'user_number',
-        render: (text, record) => <span>{record.user_no}</span>,
-      },
-      {
-        title: '姓名',
-        dataIndex: 'user_name',
-        key: 'user_name',
-        render: (text, record) => <span>{record.name}</span>,
-      },
-      {
-        title: '归属部门',
-        dataIndex: 'user_department',
-        key: 'user_department',
-        render: (text, record) => <span>{record.department_name}</span>,
-      },
-    ];
 
+    const { showModalTable, modalTableTGID, modalTableTGNumber, modalTableTGName } = this.state;
     // ------------查看群组成员弹框------------
     return (
       <PageHeaderWrapper title={pageHeaderWrapperTitle()}>
@@ -524,7 +404,7 @@ class CreateExam extends Component {
                 <Search placeholder="输入群组编号或名称过滤" style={{ width: 300 }} />
               </div>
             </div>
-            <Table
+            {/* <Table
               bordered
               loading={groupsLoading}
               dataSource={dataSource}
@@ -532,6 +412,16 @@ class CreateExam extends Component {
               pagination={pageConifg}
               onChange={this.handleTableChange}
               rowSelection={rowSelection}
+            /> */}
+            <PageTable
+              {...this.props}
+              data={createGroups}
+              columns={columns}
+              loading={groupsLoading}
+              onSelectRow={this.handleSelectRows}
+              action="ExamPlanManager/GetTrainGroups"
+              selectedRows={selectedAllKeys}
+              onSelectData={this.handleOnSelect}
             />
           </div>
           <div className={styles.foonter_btns}>
@@ -564,7 +454,7 @@ class CreateExam extends Component {
             </div>
             <Table
               bordered
-              dataSource={filterData(saveSelectedData)}
+              dataSource={filterData(selectedData)}
               columns={columns}
               pagination={previewPageConifg}
               // onChange={this.previewTableChange}
@@ -594,7 +484,14 @@ class CreateExam extends Component {
             </Fragment>
           }
         />
-        <ModalTable
+        <TraingroupsModal
+          visible={showModalTable}
+          id={modalTableTGID}
+          visiblecallback={this.modalcallback}
+          num={modalTableTGNumber}
+          name={modalTableTGName}
+        />
+        {/* <ModalTable
           modalTableVisible={showModalTable}
           modalTitle="查看培训群组"
           trainGroupNumber={modalTableTGNumber}
@@ -604,7 +501,7 @@ class CreateExam extends Component {
           pagination={modalTablePageConifg}
           onChange={this.modalTablePageChange}
           handleTableCancel={this.cancelViewModalTable}
-        />
+        /> */}
       </PageHeaderWrapper>
     );
   }

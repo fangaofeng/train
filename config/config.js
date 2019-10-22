@@ -1,5 +1,5 @@
 // https://umijs.org/config/
-import os from 'os';
+// import os from 'os';
 import pageRoutes from './router.config';
 import webpackPlugin from './plugin.config';
 // import defaultSettings from '../src/defaultSettings';
@@ -28,14 +28,14 @@ export default {
         //   webpackChunkName: true,
         //   level: 3,
         // },
-        ...(!process.env.TEST && os.platform() === 'darwin'
-          ? {
-              dll: {
-                include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
-                exclude: ['@babel/runtime'],
-              },
-            }
-          : {}),
+        // ...(!process.env.TEST && os.platform() === 'darwin'
+        //   ? {
+        //       dll: {
+        //         include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
+        //         exclude: ['@babel/runtime'],
+        //       },
+        //     }
+        //   : {}),
       },
     ],
     // [
@@ -112,7 +112,7 @@ export default {
   },
 
   chainWebpack: webpackPlugin,
-  cssnano: {
-    mergeRules: false,
-  },
+  // cssnano: {
+  //   mergeRules: false,
+  // },
 };

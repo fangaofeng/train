@@ -47,13 +47,13 @@
           align-items: center;
           width: 100%;
 
-          >div {
+          > div {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
 
             &:nth-child(1) {
-              width: calc(~"100% - 140px");
+              width: calc(~'100% - 140px');
             }
 
             &:nth-child(2) {
@@ -68,7 +68,7 @@
         background: #f0faff;
 
         .ant-list-item-content {
-          >div:nth-child(1) {
+          > div:nth-child(1) {
             span {
               background: @primary-color;
             }
@@ -81,8 +81,8 @@
       cursor: pointer;
       background: #f0faff;
 
-      >div {
-        >div:nth-child(1) {
+      > div {
+        > div:nth-child(1) {
           span {
             background: @primary-color;
           }
@@ -124,7 +124,7 @@
 .adminPlatformConent {
   :global {
     .ant-row {
-      >div {
+      > div {
         margin-bottom: 10px;
       }
     }
@@ -169,8 +169,8 @@
         margin-right: 35px;
       }
 
-      >div {
-        >div {
+      > div {
+        > div {
           &:nth-child(1) {
             color: #979797;
             font-size: 14px;
@@ -201,14 +201,13 @@
     .secondCard {
       :global {
         .ant-row {
-          >div:nth-child(2n) {
-            >div {
+          > div:nth-child(2n) {
+            > div {
               border: none;
             }
           }
         }
       }
-
     }
   }
 }
@@ -218,14 +217,13 @@
     .secondCard {
       :global {
         .ant-row {
-          >div:nth-child(4) {
-            >div {
+          > div:nth-child(4) {
+            > div {
               border: none;
             }
           }
         }
       }
-
     }
   }
 }
@@ -238,7 +236,7 @@
 
   :global {
     .ant-card-body {
-      padding-top: 5px;
+      // padding-top: 5px;
 
       .ant-tabs {
         overflow: unset;

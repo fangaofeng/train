@@ -22,10 +22,10 @@ function mockTable(page, size) {
       const idt = `${page}${i}`;
       if (idt % 2 === 1) {
         fileType = 'MP4';
-        courseSrc = 'http://media.w3.org/2010/05/bunny/movie.mp4'; // 课件资源路径
+        courseSrc = 'http://localhost/test.mp4'; // 课件资源路径
       } else {
         fileType = 'PDF';
-        courseSrc = 'http://192.168.101.71/1.pdf'; // 课件资源路径
+        courseSrc = 'http://localhost/test.pdf'; // 课件资源路径
       }
       list.push({
         id: idt,
@@ -94,10 +94,10 @@ export default {
     let fileType;
     if (id % 2 === 1) {
       fileType = 'MP4';
-      courseSrc = 'http://media.w3.org/2010/05/bunny/movie.mp4'; // 课件资源路径
+      courseSrc = 'http://localhost/test.mp4'; // 课件资源路径
     } else {
       fileType = 'PDF';
-      courseSrc = 'http://192.168.101.71/1.pdf'; // 课件资源路径
+      courseSrc = 'http://localhost/test.pdf'; // 课件资源路径
     }
     res.send({
       status: 'ok',

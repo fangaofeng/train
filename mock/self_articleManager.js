@@ -38,7 +38,7 @@ function mockTable(page, size) {
         body:
           '<p>介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点</p>',
         description: '介绍反贿赂合规体系涵盖的业务范围和工作要点',
-        pub_time: null,
+        pub_time: '2019-09-02 23:57:43',
         views: 0,
         article_order: 0,
         cover: `${basicUrl}/${img}`,
@@ -69,7 +69,7 @@ const article = {
   body:
     '<p>介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点介绍反贿赂合规体系涵盖的业务范围和工作要点</p>',
   description: '介绍反贿赂合规体系涵盖的业务范围和工作要点',
-  pub_time: null,
+  pub_time: '2019-09-02 23:57:43',
   views: 0,
   article_order: 0,
   cover: `${basicUrl}/003.jpg`,

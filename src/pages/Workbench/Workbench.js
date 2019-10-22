@@ -314,12 +314,19 @@ class Workbench extends Component {
       }
       return url;
     };
+    const currentUserFlag = getAuthority();
     return (
       <GridContent>
         <div>
           <SelfCard
             title="平台公告"
-            extra={<Link to="/announcement/viewlist">查看更多&gt;&gt;</Link>}
+            extra={
+              currentUserFlag[0] === 'admin' ? (
+                <Link to="/announcement/viewlist">查看更多&gt;&gt;</Link>
+              ) : (
+                <Link to="/announcementviewlist">查看更多&gt;&gt;</Link>
+              )
+            }
           >
             <div className={styles.Notice_Card_contend}>
               <div className={styles.notice_left}>
@@ -538,10 +545,7 @@ class Workbench extends Component {
                   <List.Item>
                     <SelfItemCard>
                       <SelfItemCardImg
-                        // item={item}
                         imgSrc={item.cover}
-                        // showCourseTip
-                        // showExamTip
                         studyTime={`${Number(item.class_hour)}学时`}
                         btns={
                           <Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>
@@ -691,36 +695,6 @@ class Workbench extends Component {
                       </List.Item>
                     )}
                   />
-                  {/* <List
-                      grid={{ gutter: 4, xs: 1, sm: 1, md: 2, lg: 2, xl: 4, xxl: 4 }}
-                      dataSource={stuUnFinishedList}
-                      renderItem={item => (
-                        <List.Item>
-                          <SelfItemCard>
-                            <SelfItemCardImg
-                              // item={item}
-                              imgSrc={item.imgSrc}
-                              showCourseTip={item.type==='course'}
-                              showExamTip={item.type==='exam'}
-                              studyTime={item.type==='course'?`${item.studyTime}学时`:false}
-                              // btns={<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>发布考试</Link>}
-                            />
-                            <SelfItemCardDetail
-                              // item={item}
-                              title={item.title}
-                              stuUnfinishedConfig={
-                                {
-                                  progress:item.type==='course'?item.progress:null,
-                                  endTime:item.type==='exam'?item.endTime:null,
-                                  days:item.days,
-                                  btns:item.type==='course'?<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>去学习</Link>:<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>去考试</Link>
-                                }
-                              }
-                            />
-                          </SelfItemCard>
-                        </List.Item>
-                      )}
-                    /> */}
                 </TabPane>
                 <TabPane tab="已完成" key="2">
                   <List
@@ -748,7 +722,6 @@ class Workbench extends Component {
                                 ? `${Number(item.plan.course.class_hour)}学时`
                                 : false
                             }
-                            // btns={<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>发布考试</Link>}
                           />
                           <SelfItemCardDetail
                             // item={item}
@@ -866,7 +839,6 @@ class Workbench extends Component {
                   <List.Item>
                     <SelfItemCard>
                       <SelfItemCardImg
-                        // item={item}
                         imgSrc={item.cover}
                         // showCourseTip
                         // showExamTip

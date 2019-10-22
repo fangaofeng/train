@@ -131,17 +131,17 @@ export default {
         name: `反贿赂合规培训`,
         start_time: `2018-10-10 10:30:00`,
         end_time: `2019-10-20 10:50:00`,
-        exam: {
+        exampaper: {
           // 试卷编号
           number: `20181031000199`,
           // 试卷名称
           name: '反贿赂合规体系的建立与实践考试',
           // 考试时长
-          time: 60,
+          duration: 60,
           // 试卷总分
-          score: 100,
+          total_score: 100,
           // 合格分数
-          passScore: 60,
+          passing_score: 60,
           // 适用对象
           applicablePerson: '财务管理人员',
           // 试卷介绍

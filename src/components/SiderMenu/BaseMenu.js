@@ -23,28 +23,28 @@ import {
   MyExamIcon,
   MyQuestionnaireIcon,
   MyTrainIcon,
-  MyCertificateIcon
-} from './SideBarSVGIcon'
+  MyCertificateIcon,
+} from './SideBarSVGIcon';
 
 const SVGIcon = {
-  WorkbenchIcon:<WorkbenchIcon />,
-  SystemManagerIcon:<SystemManagerIcon />,
-  AnnouncementIcon:<AnnouncementIcon />,
-  CoursewareIcon:<CoursewareIcon />,
-  TestResourceIcon:<TestResourceIcon />,
-  PersonalCenterIcon:<PersonalCenterIcon />,
-  StuManagerIcon:<StuManagerIcon />,
-  StudyPlanIcon:<StudyPlanIcon />,
-  ExamPlanIcon:<ExamPlanIcon />,
-  TrainCertificateIcon:<TrainCertificateIcon />,
-  QuestionnaireIcon:<QuestionnaireIcon />,
-  StatisticalAnalysisIcon:<StatisticalAnalysisIcon />,
-  MyStudyIcon:<MyStudyIcon />,
-  MyExamIcon:<MyExamIcon />,
-  MyQuestionnaireIcon:<MyQuestionnaireIcon />,
-  MyTrainIcon:<MyTrainIcon />,
-  MyCertificateIcon:<MyCertificateIcon />
-}
+  WorkbenchIcon: <WorkbenchIcon />,
+  SystemManagerIcon: <SystemManagerIcon />,
+  AnnouncementIcon: <AnnouncementIcon />,
+  CoursewareIcon: <CoursewareIcon />,
+  TestResourceIcon: <TestResourceIcon />,
+  PersonalCenterIcon: <PersonalCenterIcon />,
+  StuManagerIcon: <StuManagerIcon />,
+  StudyPlanIcon: <StudyPlanIcon />,
+  ExamPlanIcon: <ExamPlanIcon />,
+  TrainCertificateIcon: <TrainCertificateIcon />,
+  QuestionnaireIcon: <QuestionnaireIcon />,
+  StatisticalAnalysisIcon: <StatisticalAnalysisIcon />,
+  MyStudyIcon: <MyStudyIcon />,
+  MyExamIcon: <MyExamIcon />,
+  MyQuestionnaireIcon: <MyQuestionnaireIcon />,
+  MyTrainIcon: <MyTrainIcon />,
+  MyCertificateIcon: <MyCertificateIcon />,
+};
 const { SubMenu } = Menu;
 
 // Allow menu.js config icon as string or ReactNode

@@ -4,7 +4,7 @@ import { Card, List, Tabs, Button } from 'antd';
 import Link from 'umi/link';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import ExamInfo from '@/components/ExamBasicInfo';
+import ExamBasicInfo from '@/components/ExamBasicInfo';
 import styles from './index.less';
 
 import noDataTips4 from '@/assets/images/Workbench/004.png';
@@ -195,11 +195,11 @@ class MyExam extends Component {
                   <List.Item
                     actions={[
                       <Link to={`/myExam/onlineExam/${item.id}`}>
-                        <Button>开始考试</Button>
+                        <Button type="danger">开始考试</Button>
                       </Link>,
                     ]}
                   >
-                    <ExamInfo detail={item} />
+                    <ExamBasicInfo ExamInfo={item.plan.exampaper} noCard />
                   </List.Item>
                 )}
               />
@@ -225,7 +225,7 @@ class MyExam extends Component {
                       </Link>,
                     ]}
                   >
-                    <ExamInfo detail={item} />
+                    <ExamBasicInfo ExamInfo={item.plan.exampaper} noCard />
                   </List.Item>
                 )}
               />
@@ -253,7 +253,7 @@ class MyExam extends Component {
                       // </Link>,
                     ]}
                   >
-                    <ExamInfo detail={item} />
+                    <ExamBasicInfo ExamInfo={item.plan.exampaper} noCard />
                   </List.Item>
                 )}
               />

@@ -120,6 +120,13 @@ export default [
         icon: 'self_AnnouncementIcon',
         component: './Announcement/Article/list',
         authority: ['user', 'stu'],
+        hideChildrenInMenu: true,
+        routes: [
+          {
+            path: '/announcement/detail/:ID',
+            component: './Announcement/Article/Detail',
+          },
+        ],
       },
       {
         path: '/courseware',
@@ -156,18 +163,6 @@ export default [
                 component: './Courseware/CoursewareManager/EditConent',
                 authority: ['admin'],
               },
-              // {
-              //   path: '/courseware/coursewareManager/onShelf/:ID',
-              //   name: '课件编辑（已上架）',
-              //   component: './Courseware/CoursewareManager/OnShelf',
-              //   authority: ['admin'],
-              // },
-              // {
-              //   path: '/courseware/coursewareManager/OffShelf/:ID',
-              //   name: '课件编辑（已下架）',
-              //   component: './Courseware/CoursewareManager/OffShelf',
-              //   authority: ['admin'],
-              // },
             ],
           },
 

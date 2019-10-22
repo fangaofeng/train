@@ -22,6 +22,16 @@ class ExamBasicInfo extends PureComponent {
     }
   }
 
+  static getDerivedStateFromProps(nextProps) {
+    // clean state
+    if (nextProps.ExamInfo) {
+      return {
+        currentTestInfo: nextProps.ExamInfo,
+      };
+    }
+    return null;
+  }
+
   // 获取试卷信息
   getTestPapersInfo = () => {
     console.log(this.props);
@@ -46,64 +56,74 @@ class ExamBasicInfo extends PureComponent {
 
   render() {
     const {
-      isShow, // true——隐藏，false——显示
+      isShow,
+      noCard, // true——隐藏，false——显示
     } = this.props;
     const { currentTestInfo } = this.state;
-    console.log(currentTestInfo);
+    const info = (
+      <Row>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={14}>
+          <div className={styles.leftContent}>
+            <div className={styles.imgLeft}>
+              <img src={currentTestInfo.cover} alt="" />
+            </div>
+            <div className={styles.imgRight}>
+              <div className={styles.msgDetail}>
+                <span>试卷名称：</span>
+                <span className={styles.msgDetailOverflow} title={currentTestInfo.name}>
+                  {currentTestInfo.name}
+                </span>
+              </div>
+              <div className={styles.msgDetail}>
+                <span>适用对象：</span>
+                <span className={styles.msgDetailOverflow} title={currentTestInfo.applicable_user}>
+                  {currentTestInfo.applicable_user}
+                </span>
+              </div>
+              <div>
+                <span>
+                  试卷总分：
+                  {currentTestInfo.total_score}分
+                </span>
+                <Divider type="vertical" />
+                <span>
+                  合格分数：
+                  {currentTestInfo.passing_score}分
+                </span>
+                <Divider type="vertical" />
+                <span>
+                  考试时长：
+                  {currentTestInfo.duration}
+                  分钟
+                </span>
+              </div>
+            </div>
+          </div>
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
+          <div className={styles.rightContent}>
+            <div className={styles.introduceName}>试卷介绍：</div>
+            <div className={styles.introduceInfo}>{currentTestInfo.introduce}</div>
+          </div>
+        </Col>
+      </Row>
+    );
+    if (noCard) {
+      return (
+        <div
+          className={classNames(styles.examInfoContent, isShow ? styles.hiddenExamInfoContent : '')}
+        >
+          {info}
+        </div>
+      );
+    }
+
     return (
       <div
         className={classNames(styles.examInfoContent, isShow ? styles.hiddenExamInfoContent : '')}
       >
-        <SelfCard title="试卷信息">
-          <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={14}>
-              <div className={styles.leftContent}>
-                <div className={styles.imgLeft}>
-                  <img src={currentTestInfo.cover} alt="" />
-                </div>
-                <div className={styles.imgRight}>
-                  <div className={styles.msgDetail}>
-                    <span>试卷名称：</span>
-                    <span className={styles.msgDetailOverflow} title={currentTestInfo.name}>
-                      {currentTestInfo.name}
-                    </span>
-                  </div>
-                  <div className={styles.msgDetail}>
-                    <span>适用对象：</span>
-                    <span
-                      className={styles.msgDetailOverflow}
-                      title={currentTestInfo.applicable_user}
-                    >
-                      {currentTestInfo.applicable_user}
-                    </span>
-                  </div>
-                  <div>
-                    <span>
-                      试卷总分：
-                      {currentTestInfo.total_score}分
-                    </span>
-                    <Divider type="vertical" />
-                    <span>
-                      合格分数：
-                      {currentTestInfo.passing_score}分
-                    </span>
-                    <Divider type="vertical" />
-                    <span>
-                      考试时长：
-                      {currentTestInfo.duration}
-                      分钟
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
-              <div className={styles.rightContent}>
-                <div className={styles.introduceName}>试卷介绍：</div>
-                <div className={styles.introduceInfo}>{currentTestInfo.introduce}</div>
-              </div>
-            </Col>
-          </Row>
+        <SelfCard title="试卷信息" nopadding>
+          {info}
         </SelfCard>
       </div>
     );

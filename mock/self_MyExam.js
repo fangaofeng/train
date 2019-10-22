@@ -33,24 +33,28 @@ function mockTable(page, size) {
           exam_name: '反贿赂合规培训',
           start_time: '2018-10-26 12:50:00',
           end_time: '2018-11-25 12:50:00',
-          exam: {
+          exampaper: {
             id: 1,
             // 试卷编号
             number: `201810310001${page}${i}`,
             // 试卷名称
-            title: '反贿赂合规体系的建立与实践考试',
+            name: '反贿赂合规体系的建立与实践考试',
             // 考试时长
-            time: 60,
+            duration: 60,
             // 试卷总分
-            score: 100,
+            total_score: 100,
             // 合格分数
-            passScore: 60,
+            passing_score: 60,
             // 适用对象
-            suitablePerson: '财务管理人员',
+            applicablePerson: '财务管理人员',
             // 试卷介绍
             introduce: '考查反贿赂合规体系涵盖的业务范围和工作要点',
             // 封面
-            cover: 'http://localhost/004.jpg', // 背景图片
+            cover: 'http://localhost/001.jpg',
+            // 适用课程编号，不是必填
+            applicableCourseNumber: `20181031000110`,
+            // 适用课程名称，不是必填
+            applicableCourseName: '反贿赂合规体系的建立与实践',
           },
         },
       });
@@ -154,24 +158,28 @@ export default {
           exam_name: '反贿赂合规培训',
           start_time: '2018-10-26 12:50:00',
           end_time: '2018-11-25 12:50:00',
-          exam: {
+          exampaper: {
             id: 1,
             // 试卷编号
-            number: `201810310001`,
+            number: `20181031000199`,
             // 试卷名称
-            title: '反贿赂合规体系的建立与实践考试',
+            name: '反贿赂合规体系的建立与实践考试',
             // 考试时长
-            time: 60,
+            duration: 60,
             // 试卷总分
-            score: 100,
+            total_score: 100,
             // 合格分数
-            passScore: 60,
+            passing_score: 60,
             // 适用对象
-            suitablePerson: '财务管理人员',
+            applicablePerson: '财务管理人员',
             // 试卷介绍
             introduce: '考查反贿赂合规体系涵盖的业务范围和工作要点',
             // 封面
-            cover: 'http://localhost/004.jpg', // 背景图片
+            cover: 'http://localhost/001.jpg',
+            // 适用课程编号，不是必填
+            applicableCourseNumber: `20181031000110`,
+            // 适用课程名称，不是必填
+            applicableCourseName: '反贿赂合规体系的建立与实践',
           },
         },
       },
@@ -233,8 +241,7 @@ export default {
 
   'POST /api/exam/progress/:id': (req, res) => {
     // const params = req.query;
-    const { params } = req;
-    const { id } = params;
+
     res.send({
       status: 'ok',
     });

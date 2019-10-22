@@ -196,6 +196,9 @@ class CommonConent extends Component {
       location: {
         query: { currentType },
       },
+      match: {
+        params: { ID },
+      },
       currenttrainmanagersLoading,
       detailLoading,
     } = this.props;
@@ -280,7 +283,13 @@ class CommonConent extends Component {
     return (
       <PageHeaderWrapper title={`试卷编辑（${currentType}）`}>
         <Spin spinning={detailLoading}>
-          <ExamBasicInfo loading={detailLoading} isShow={false} {...this.props} />
+          <ExamBasicInfo
+            loading={detailLoading}
+            action="ExamManager/GetPaperDetail"
+            id={ID}
+            isShow={false}
+            {...this.props}
+          />
         </Spin>
         <Card className={styles.listManagerContent}>
           <div className={styles.tableContent}>
