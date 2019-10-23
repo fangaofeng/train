@@ -77,7 +77,7 @@ export default [
         name: '公告管理',
         icon: 'self_AnnouncementIcon',
         // hideChildrenInMenu: true,
-        authority: ['admin'],
+        authority: ['admin', 'user', 'stu'],
         routes: [
           {
             path: '/announcement',
@@ -86,48 +86,54 @@ export default [
           {
             path: '/announcement/article',
             name: '公告列表',
+            authority: ['admin'],
             component: './Announcement/Article/index',
           },
           {
             path: '/announcement/create',
             name: '发布公告',
             component: './Announcement/Article/ArticleMaking',
-            // authority: ['admin'],
+            authority: ['admin'],
           },
           {
             path: '/announcement/edit/:ID',
             // name: '编辑公告',
             component: './Announcement/Article/ArticleMaking',
-            // authority: ['admin'],
+            authority: ['admin'],
           },
           {
             path: '/announcement/detail/:ID',
-            // name: '编辑公告',
             component: './Announcement/Article/Detail',
-            // authority: ['admin'],
+            authority: ['admin', 'user', 'stu'],
           },
           {
-            path: '/announcement/viewlistadmin',
+            path: '/announcement/viewlist',
             name: '查看公告',
             component: './Announcement/Article/list',
-            // authority: ['admin'],
+            authority: ['admin', 'user', 'stu'],
           },
         ],
       },
-      {
-        path: '/announcementviewlist',
-        name: '查看公告',
-        icon: 'self_AnnouncementIcon',
-        component: './Announcement/Article/list',
-        authority: ['user', 'stu'],
-        hideChildrenInMenu: true,
-        routes: [
-          {
-            path: '/announcement/detail/:ID',
-            component: './Announcement/Article/Detail',
-          },
-        ],
-      },
+      // {
+      //   path: '/announcement/viewlist',
+      //   name: '查看公告',
+      //   component: './Announcement/Article/list',
+      //   authority: ['user', 'stu'],
+      // },
+      // {
+      //   path: '/announcements',
+      //   name: '查看公告',
+      //   icon: 'self_AnnouncementIcon',
+      //   component: './Announcement/Article/list',
+      //   authority: ['user', 'stu'],
+      //   hideChildrenInMenu: true,
+      //   routes: [
+      //     {
+      //       path: '/announcements/detail/:ID',
+      //       component: './Announcement/Article/Detail',
+      //     },
+      //   ],
+      // },
       {
         path: '/courseware',
         name: '课件管理',

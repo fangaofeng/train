@@ -5,26 +5,15 @@ import GlobalFooter from '@/components/GlobalFooter';
 import styles from './UserLayout.less';
 // import logo from '../assets/logo.svg';
 import logo from '@/assets/images/Login/login_logo.png';
-import config from '@/components/global';
+import { company } from '../defaultSettings';
 
 const copyright = (
   <Fragment>
-    Copyright <Icon type="copyright" /> {config.copyright}
+    Copyright <Icon type="copyright" /> {company}
   </Fragment>
 );
 
 class UserLayout extends React.PureComponent {
-  // @TODO title
-  // getPageTitle() {
-  //   const { routerData, location } = this.props;
-  //   const { pathname } = location;
-  //   let title = 'Ant Design Pro';
-  //   if (routerData[pathname] && routerData[pathname].name) {
-  //     title = `${routerData[pathname].name} - Ant Design Pro`;
-  //   }
-  //   return title;
-  // }
-
   render() {
     const { children } = this.props;
     return (

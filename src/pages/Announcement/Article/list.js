@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Icon, Input, List, Row, Col } from 'antd';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import Link from 'umi/link';
 import styles from './index.less';
 import moment from 'moment';
 import ArticleListContent from '@/components/ArticleListContent';
@@ -124,9 +125,9 @@ class articleManager extends Component {
                   >
                     <List.Item.Meta
                       // avatar={<Avatar src={item.avatar} />}
-                      title={<a href={`/announcement/detail/${item.id}`}>{item.title}</a>}
+                      title={<Link to={`/announcement/detail/${item.id}`}>{item.title} </Link>}
                       description={
-                        <a href={`/announcement/detail/${item.id}`}>{item.description}</a>
+                        <Link to={`/announcement/detail/${item.id}`}>{item.description} </Link>
                       }
                     />
                     <ArticleListContent data={item} />

@@ -7,4 +7,10 @@ module.exports = {
   autoHideHeader: false, // auto hide header
   fixSiderbar: false, // sticky siderbar
   pageSizeOptions: ['10', '20', '30', '40'],
+  menu: {
+    disableLocal: false,
+  },
+  title: '博纳德网络培训平台',
+  company: '2019 南京博纳德网络科技有限公司',
+  pwa: false,
 };

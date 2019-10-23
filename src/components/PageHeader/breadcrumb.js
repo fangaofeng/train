@@ -55,10 +55,10 @@ export default class BreadcrumbView extends PureComponent {
 
   // Generated according to props
   conversionFromProps = () => {
-    const { breadcrumbList, breadcrumbSeparator, itemRender, linkElement = 'a' } = this.props;
+    const { breadcrumbList, itemRender, linkElement = 'a' } = this.props;
     return (
       // <Breadcrumb className={styles.breadcrumb} separator={breadcrumbSeparator}>
-      <Breadcrumb className={styles.breadcrumb} separator='>'>
+      <Breadcrumb className={styles.breadcrumb} separator=">">
         {breadcrumbList.map(item => {
           const title = itemRender ? itemRender(item) : item.title;
           return (
@@ -80,7 +80,7 @@ export default class BreadcrumbView extends PureComponent {
   };
 
   conversionFromLocation = (routerLocation, breadcrumbNameMap) => {
-    const { breadcrumbSeparator, home, itemRender, linkElement = 'a' } = this.props;
+    const { home, itemRender, linkElement = 'a' } = this.props;
     // Convert the url to an array
     const pathSnippets = urlToList(routerLocation.pathname);
     // Loop data mosaic routing
@@ -115,7 +115,7 @@ export default class BreadcrumbView extends PureComponent {
     );
     return (
       // <Breadcrumb className={styles.breadcrumb} separator={breadcrumbSeparator}>
-      <Breadcrumb className={styles.breadcrumb} separator='>'>
+      <Breadcrumb className={styles.breadcrumb} separator=">">
         {extraBreadcrumbItems}
       </Breadcrumb>
     );
@@ -126,7 +126,7 @@ export default class BreadcrumbView extends PureComponent {
    * Convert parameters into breadcrumbs
    */
   conversionBreadcrumbList = () => {
-    const { breadcrumbList, breadcrumbSeparator } = this.props;
+    const { breadcrumbList } = this.props;
     const { routes, params, routerLocation, breadcrumbNameMap } = this.getBreadcrumbProps();
     if (breadcrumbList && breadcrumbList.length) {
       return this.conversionFromProps();
@@ -141,7 +141,7 @@ export default class BreadcrumbView extends PureComponent {
           params={params}
           itemRender={this.itemRender}
           // separator={breadcrumbSeparator}
-          separator='>'
+          separator=">"
         />
       );
     }

@@ -108,42 +108,6 @@ export default {
     res.send({
       status: 'error',
     });
-    // const { password, userName, type } = req.body;
-    // if (password === '888888' && userName === 'admin') {
-    //   res.send({
-    //     key:'sfsafaskfsafaslfljljljlj',// toekn
-    //     role:'0',// 角色
-    //     status: 'ok',
-    //     type,
-    //     currentAuthority: 'admin',
-    //   });
-    //   return;
-    // }
-    // if (password === '123456' && userName === 'user') {
-    //   res.send({
-    //     key:'sfsafaskfsafaslfljljljlj',// toekn
-    //     role:'1',// 角色
-    //     status: 'ok',
-    //     type,
-    //     currentAuthority: 'user',
-    //   });
-    //   return;
-    // }
-    // if (password === '123456' && userName === 'stu') {
-    //   res.send({
-    //     key:'sfsafaskfsafaslfljljljlj',// toekn
-    //     role:'2',// 角色
-    //     status: 'ok',
-    //     type,
-    //     currentAuthority: 'stu',
-    //   });
-    //   return;
-    // }
-    // res.send({
-    //   status: 'error',
-    //   type,
-    //   currentAuthority: 'guest',
-    // });
   },
   'POST /api/register': (req, res) => {
     res.send({ status: 'ok', currentAuthority: 'user' });

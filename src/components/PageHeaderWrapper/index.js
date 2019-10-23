@@ -1,36 +1,95 @@
 import React from 'react';
-import { FormattedMessage } from 'umi/locale';
+import { FormattedMessage } from 'umi-plugin-react/locale';
 import Link from 'umi/link';
-import PageHeader from '@/components/PageHeader';
+import { PageHeader, Tabs, Typography } from 'antd';
 import { connect } from 'dva';
+import classNames from 'classnames';
 import GridContent from './GridContent';
 import styles from './index.less';
 import MenuContext from '@/layouts/MenuContext';
+import { conversionBreadcrumbList } from './breadcrumb';
 
-const PageHeaderWrapper = ({ children, contentWidth, wrapperClassName, top, ...restProps }) => (
-  // <div style={{ margin: '-24px -24px 0' }} className={wrapperClassName}>
-  <div style={{ margin: '-20px -20px 0' }} className={wrapperClassName}>
+const { Title } = Typography;
+
+/**
+ * render Footer tabList
+ * In order to be compatible with the old version of the PageHeader
+ * basically all the functions are implemented.
+ */
+const renderFooter = ({ tabList, tabActiveKey, onTabChange, tabBarExtraContent }) =>
+  tabList && tabList.length ? (
+    <Tabs
+      className={styles.tabs}
+      activeKey={tabActiveKey}
+      onChange={key => {
+        if (onTabChange) {
+          onTabChange(key);
+        }
+      }}
+      tabBarExtraContent={tabBarExtraContent}
+    >
+      {tabList.map(item => (
+        <Tabs.TabPane tab={item.tab} key={item.key} />
+      ))}
+    </Tabs>
+  ) : null;
+
+const PageHeaderWrapper = ({
+  children,
+  contentWidth,
+  wrapperClassName,
+  top,
+  title,
+  content,
+  logo,
+  extraContent,
+  hiddenBreadcrumb,
+  ...restProps
+}) => (
+  <div style={{ margin: '-24px -24px 0' }} className={classNames(wrapperClassName, styles.main)}>
     {top}
     <MenuContext.Consumer>
       {value => (
         <PageHeader
           wide={contentWidth === 'Fixed'}
-          home={<FormattedMessage id="menu.home" defaultMessage="Home" />}
-          {...value}
+          title={
+            <Title
+              level={4}
+              style={{
+                marginBottom: 0,
+              }}
+            >
+              {title}
+            </Title>
+          }
           key="pageheader"
           {...restProps}
+          breadcrumb={
+            !hiddenBreadcrumb &&
+            conversionBreadcrumbList({
+              ...value,
+              ...restProps,
+              home: <FormattedMessage id="menu.home" defaultMessage="Home" />,
+            })
+          }
+          className={styles.pageHeader}
           linkElement={Link}
-          itemRender={item => {
-            if (item.locale) {
-              return <FormattedMessage id={item.locale} defaultMessage={item.name} />;
-            }
-            return item.name;
-          }}
-        />
+          footer={renderFooter(restProps)}
+        >
+          <div className={styles.detail}>
+            {logo && <div className={styles.logo}>{logo}</div>}
+            <div className={styles.main}>
+              <div className={styles.row}>
+                {content && <div className={styles.content}>{content}</div>}
+                {extraContent && <div className={styles.extraContent}>{extraContent}</div>}
+              </div>
+            </div>
+          </div>
+        </PageHeader>
       )}
     </MenuContext.Consumer>
     {children ? (
-      <div className={styles.content}>
+      <div className={styles['children-content']}>
         <GridContent>{children}</GridContent>
       </div>
     ) : null}
