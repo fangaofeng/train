@@ -79,7 +79,7 @@ class ModalTable extends Component {
     pagination.total = data.count;
 
     // 循环Table数据，添加key(准备添加的培训管理员)
-    const dataSource = data.results.map(value => Object.assign({}, value, { key: value.id }));
+    // const dataSource = data.results.map(value => Object.assign({}, value, { key: value.id }));
     return (
       <Modal
         visible={visible}
@@ -105,7 +105,8 @@ class ModalTable extends Component {
             </div>
             <Table
               bordered
-              dataSource={dataSource}
+              dataSource={data.results}
+              rowKey="id"
               columns={columns}
               pagination={pagination}
               onChange={this.handleTableChange}

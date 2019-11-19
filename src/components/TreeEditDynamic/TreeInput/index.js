@@ -16,7 +16,9 @@ export default class TreeInput extends Component {
   }
 
   onBlur() {
-    this.props.blurInput(this.state.value);
+    const { blurInput } = this.props;
+    const { value } = this.state;
+    blurInput(value);
   }
 
   render() {

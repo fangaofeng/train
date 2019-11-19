@@ -322,7 +322,7 @@ class Workbench extends Component {
             title="平台公告"
             extra={
               currentUserFlag[0] === 'admin' ? (
-                <Link to="/announcement/viewlist">查看更多&gt;&gt;</Link>
+                <Link to="/announcement/ViewPage">查看更多&gt;&gt;</Link>
               ) : (
                 <Link to="/announcementviewlist">查看更多&gt;&gt;</Link>
               )
@@ -445,7 +445,7 @@ class Workbench extends Component {
                     <SelfItemCard>
                       <SelfItemCardImg imgSrc={item.cover} />
                       <SelfItemCardDetail
-                        title={item.title}
+                        title={item.name}
                         adminConfig={{
                           status: item.status,
                           btns: <Link to={`/exam/examManager/examMaking/${item.id}`}>编辑</Link>,
@@ -548,9 +548,11 @@ class Workbench extends Component {
                         imgSrc={item.cover}
                         studyTime={`${Number(item.class_hour)}学时`}
                         btns={
-                          <Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>
-                            创建学习计划
-                          </Link>
+                          <Button type="primary">
+                            <Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>
+                              创建学习计划
+                            </Link>
+                          </Button>
                         }
                       />
                       <SelfItemCardDetail
@@ -589,7 +591,9 @@ class Workbench extends Component {
                         // showExamTip
                         studyTime={`考试时长：${item.class_hour}分钟`}
                         btns={
-                          <Link to={`/examPlan/examPlanManager/create/${item.id}`}>发布考试</Link>
+                          <Button type="primary">
+                            <Link to={`/examPlan/examPlanManager/create/${item.id}`}>发布考试</Link>
+                          </Button>
                         }
                       />
                       <SelfItemCardDetail
@@ -646,7 +650,6 @@ class Workbench extends Component {
                       <List.Item>
                         <SelfItemCard>
                           <SelfItemCardImg
-                            // item={item}
                             imgSrc={item.plan.course.cover}
                             showCourseTip={item.type === 'course'}
                             showExamTip={item.type === 'exam'}
@@ -658,7 +661,6 @@ class Workbench extends Component {
                             // btns={<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>发布考试</Link>}
                           />
                           <SelfItemCardDetail
-                            // item={item}
                             title={item.plan.name}
                             stuUnfinishedConfig={{
                               status: item.status,
@@ -844,13 +846,15 @@ class Workbench extends Component {
                         // showExamTip
                         studyTime={`${item.class_hour}学时`}
                         btns={
-                          <Link
-                            to={`/myStudy/learnPlan/${item.file_type === 'MP4' ? 'video' : 'pdf'}/${
-                              item.id
-                            }`}
-                          >
-                            去学习
-                          </Link>
+                          <Button type="primary">
+                            <Link
+                              to={`/myStudy/learnPlan/${
+                                item.file_type === 'MP4' ? 'video' : 'pdf'
+                              }/${item.id}`}
+                            >
+                              去学习
+                            </Link>
+                          </Button>
                         }
                       />
                       <SelfItemCardDetail

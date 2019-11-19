@@ -88,7 +88,7 @@ class UploadZip2 extends Component {
       },
       callback: res => {
         if (res) {
-          if (res.status === 'ok') {
+          if (res && res.status === 'ok') {
             // message.success('保存成功')
             this.setState({
               visible: true,
@@ -115,7 +115,7 @@ class UploadZip2 extends Component {
         ...obj,
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           message.success('上架成功');
           this.saveSelectedTableData();
           router.push('/courseware/uploadZip/uploadZip3');
@@ -135,7 +135,7 @@ class UploadZip2 extends Component {
   getTrainmanagers = (page, size) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'uploadCourse/GetTrainmanagers',
+      type: 'TrainGroupManage/GetTrainmanagers',
       payload: {
         page, // 页码
         size, // 每页条数
@@ -215,10 +215,10 @@ class UploadZip2 extends Component {
         const { saveSelectedData } = this.state;
         if (selected) {
           // 选中该条数据
-          saveSelectedData[record.key] = record;
+          saveSelectedData[record.id] = record;
         } else {
           // 取消选中该条数据
-          delete saveSelectedData[record.key];
+          delete saveSelectedData[record.id];
         }
         this.setState({
           saveSelectedData,
@@ -231,12 +231,12 @@ class UploadZip2 extends Component {
         if (selected) {
           // 全选
           changeRows.forEach(v => {
-            saveSelectedData[v.key] = v;
+            saveSelectedData[v.id] = v;
           });
         } else {
           // 取消全选
           changeRows.forEach(v => {
-            delete saveSelectedData[v.key];
+            delete saveSelectedData[v.id];
           });
         }
         this.setState({

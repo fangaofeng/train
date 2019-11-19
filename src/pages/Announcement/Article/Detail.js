@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { message, Card } from 'antd';
 import { connect } from 'dva';
@@ -11,11 +10,10 @@ class Detail extends Component {
     this.state = { body: '', title: '', cover: '' };
   }
 
-  // 页面渲染完成前
-  componentWillMount() {
+  componentDidMount() {
     const {
       match: {
-        params: { ID },
+        params: { id },
       },
       dispatch,
     } = this.props;
@@ -23,12 +21,10 @@ class Detail extends Component {
     dispatch({
       type: 'ArticleManager/GetArticleDetail',
       payload: {
-        id: ID,
+        id,
       },
       callback: res => {
-        if (res.status === 'ok') {
-          // const { body, title, description, pubTime, cover, status } = res.data;
-          // this.setState({body, title, description, pubTime, cover, status});
+        if (res && res.status === 'ok') {
           this.setState({ ...res.data });
         } else {
           message('获取数据失败');

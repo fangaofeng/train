@@ -1,17 +1,16 @@
 import {
   getTrainGroups, // 培训群组管理（获取table表格数据）
-  // delTGManager, // 培训群组管理（删除）
-  batchDelTGManager, // 培训群组管理（批量删除）
-  addTGManagerSubmit, // 增加培训群组(点击提交按钮)
+  // delTrainGroups, // 培训群组管理（删除）
+  delTrainGroups, // 培训群组管理（批量删除）
+  addTrainGroup, // 增加培训群组(点击提交按钮)
   getTrainGroupMembers, // 查看培训群组（获取table表格数据）
-  delEditTGManager, // 编辑培训群组（删除）
-  batchDelEditTGManager, // 编辑培训群组（批量删除）
-  changeEditTGName, // 编辑培训群组（修改群组名称）
-  getEditTGAddData, // 编辑培训群组（增加群组成员的Table表格数据）
-  submitEditTGAddMember, // 编辑培训群组（增加群组成员提交按钮）
+  delTgMembers, // 编辑培训群组（删除）
+  changeTgName, // 编辑培训群组（修改群组名称）
+  getTgOutUsers, // 编辑培训群组（增加群组成员的Table表格数据）
+  addTgMember, // 编辑培训群组（增加群组成员提交按钮）
 } from '@/services/trainGroupManager/index';
 
-import { getUsers } from '@/services/user';
+import { getUsers } from '@/services/userManager';
 
 export default {
   namespace: 'trainGroupManager',
@@ -20,7 +19,7 @@ export default {
     trainGroups: { results: [], count: 0 }, // 培训群组管理（获取table表格数据）
     addUsers: { results: [] }, // 增加培训群组（获取table表格数据）
     trainGroupMembers: { results: [], count: 0 }, // 查看培训群组（获取table表格数据）
-    EditAddMemberTableData: { results: [] }, // 编辑培训群组（增加群组成员的Table表格数据）
+    AddMember: { results: [] }, // 编辑培训群组（增加群组成员的Table表格数据）
   },
 
   effects: {
@@ -33,16 +32,10 @@ export default {
         payload: response.data,
       });
     },
-    // 培训群组管理（删除）
-    // *DelTGManager({ payload, callback }, { call }) {
-    //   console.log(payload);
-    //   const response = yield call(delTGManager, payload);
-    //   callback(response); // 返回结果
-    // },
-    // 培训群组管理（批量删除）
-    *BatchDelTraingroups({ payload, callback }, { call }) {
-      console.log(payload);
-      const response = yield call(batchDelTGManager, payload);
+
+    *DelTraingroups({ payload, callback }, { call }) {
+      const params = { traingroups: payload.data };
+      const response = yield call(delTrainGroups, params);
       callback(response); // 返回结果
     },
     // ------------------------------------------------------------------
@@ -55,9 +48,9 @@ export default {
       });
     },
     // 增加培训群组(点击提交按钮)
-    *AddTGManagerSubmit({ payload, callback }, { call }) {
+    *addTrainGroup({ payload, callback }, { call }) {
       console.log(payload);
-      const response = yield call(addTGManagerSubmit, payload);
+      const response = yield call(addTrainGroup, payload);
       callback(response); // 返回结果
     },
     // ------------------------------------------------------------------
@@ -71,35 +64,30 @@ export default {
     },
     // ------------------------------------------------------------------
     // 编辑培训群组（删除）
-    *DelEditTGManager({ payload, callback }, { call }) {
-      console.log(payload);
-      const response = yield call(delEditTGManager, payload);
+    *delTgMembers({ payload, callback }, { call }) {
+      const params = payload;
+      params.data = { traines: payload.data };
+      const response = yield call(delTgMembers, params);
       callback(response); // 返回结果
     },
-    // 编辑培训群组（批量删除）
-    *BatchDelEditTGManager({ payload, callback }, { call }) {
-      console.log(payload);
-      const response = yield call(batchDelEditTGManager, payload);
-      callback(response); // 返回结果
-    },
+
     // 编辑培训群组（修改群组名称）
-    *ChangeEditTGName({ payload, callback }, { call }) {
-      console.log(payload);
-      const response = yield call(changeEditTGName, payload);
+    *changeTgName({ payload, callback }, { call }) {
+      const response = yield call(changeTgName, payload);
       callback(response); // 返回结果
     },
     // 编辑培训群组（增加群组成员的Table表格数据）
-    *GetEditTGAddData({ payload }, { call, put }) {
-      const response = yield call(getEditTGAddData, payload);
+    *getTgOutUsers({ payload }, { call, put }) {
+      const response = yield call(getTgOutUsers, payload);
       yield put({
         type: 'saveEditTGAddData',
         payload: response.data,
       });
     },
     // 编辑培训群组（增加群组成员提交按钮）
-    *SubmitEditTGAddMember({ payload, callback }, { call }) {
+    *addTgMember({ payload, callback }, { call }) {
       console.log(payload);
-      const response = yield call(submitEditTGAddMember, payload);
+      const response = yield call(addTgMember, payload);
       callback(response); // 返回结果
     },
     // ------------------------------------------------------------------
@@ -139,7 +127,7 @@ export default {
     saveEditTGAddData(state, action) {
       return {
         ...state,
-        EditAddMemberTableData: action.payload,
+        AddMember: action.payload,
       };
     },
   },

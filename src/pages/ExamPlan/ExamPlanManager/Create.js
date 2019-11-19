@@ -6,7 +6,7 @@ import router from 'umi/router';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import ExamBasicInfo from '@/components/ExamBasicInfo';
-import SubmitSuccessCard from '@/components/CustomComponent/SubmitSuccessCard/SubmitSuccessCard';
+import SubmitSuccessCard from '@/components/SubmitSuccessCard';
 
 import PageTable from '@/components/PageTable';
 import TraingroupsModal from '@/pages/TrainGroupManager/ViewTrainGroupModal';
@@ -18,7 +18,7 @@ const { RangePicker } = DatePicker;
 
 @connect(({ ExamPlanManager, loading }) => ({
   createGroups: ExamPlanManager.createGroups, // 考试管理——>发布考试计划——>查看培训群组（获取table表格数据）
-  createMembers: ExamPlanManager.createMembers, // 考试管理——>发布考试计划——>查看培训群组成员（获取table表格数据）
+  // createMembers: ExamPlanManager.createMembers, // 考试管理——>发布考试计划——>查看培训群组成员（获取table表格数据）
   paperLoading: loading.effects['ExamPlanManager/GetPaperDetail'],
   groupsLoading: loading.effects['ExamPlanManager/GetTrainGroups'],
 }))
@@ -43,41 +43,16 @@ class CreateExam extends Component {
 
       selectedAllKeys: [], // 选中的数据组成的数组（只包含key值）
       selectedData: {}, // 保存选中的数据
-      // pagination: {
-      //   // 表格分页信息
-      //   // total:20,// 数据总数
-      //   current: 1, // 当前页数
-      //   pageSize: 10, // 每页条数
-      //   pageSizeOptions: ['10', '20', '30', '40'], // 指定每页可以显示多少条数据
-      //   showQuickJumper: true, // 是否可以快速跳转至某页
-      //   showSizeChanger: true, // 是否可以改变 pageSize
-      // },
 
       showModalTable: false, // 是否显示查看群组成员模态框
       modalTableTGID: null, // 要显示群组成员的培训群组的ID
       modalTableTGNumber: '', // 要显示群组成员的模态框的群组编号
       modalTableTGName: '', // 要显示群组成员的模态框的群组名称
-      modalTablePagination: {
-        // 模态框表格分页信息
-        // total:20,// 数据总数
-        current: 1, // 当前页数
-        pageSize: 10, // 每页条数
-        pageSizeOptions: ['10', '20', '30', '40'], // 指定每页可以显示多少条数据
-        showQuickJumper: true, // 是否可以快速跳转至某页
-        showSizeChanger: true, // 是否可以改变 pageSize
-      },
     };
   }
 
   // 页面加载完成后
-  componentDidMount() {
-    // this.getTestInfo();
-    // 默认是获取第一页数据
-    // const {
-    //   pagination: { current, pageSize },
-    // } = this.state;
-    // this.getTrainGroups(current, pageSize);
-  }
+  componentDidMount() {}
 
   handleSelectRows = rows => {
     this.setState({
@@ -144,7 +119,7 @@ class CreateExam extends Component {
         exampaper: examID,
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           message.success('提交成功');
           this.setState({
             testName: res.data.name, // 课件名称
@@ -180,46 +155,19 @@ class CreateExam extends Component {
   // ------------查看群组成员弹框------------
   // 点击“查看”按钮
   viewModalTable = record => {
-    const {
-      modalTablePagination: { current, pageSize },
-    } = this.state;
+    // const {
+    //   modalTablePagination: { current, pageSize },
+    // } = this.state;
     this.setState({
       showModalTable: true,
       modalTableTGID: record.id,
       modalTableTGNumber: record.group_no, // 要显示群组成员的模态框的群组编号
       modalTableTGName: record.name, // 要显示群组成员的模态框的群组名称
     });
-    this.getModalTableTGMembers(current, pageSize, record.id);
+    // this.getModalTableTGMembers(current, pageSize, record.id);
   };
 
   // 查看培训群组成员。获取table表格数据(指定页码，指定每页条数)
-  getModalTableTGMembers = (page, size, id) => {
-    const { dispatch } = this.props;
-    const { modalTableTGID } = this.state;
-    const ID = id || modalTableTGID;
-    dispatch({
-      type: 'ExamPlanManager/getExamplanGroupMembers',
-      payload: {
-        page, // 页码
-        size, // 每页条数
-        id: ID, // 培训群组id
-      },
-    });
-  };
-
-  // 查看培训群组成员。分页、排序、筛选变化时触发。这边只有分页功能，没有排序和筛选
-  modalTablePageChange = _pagination_ => {
-    const { modalTablePagination } = this.state;
-    const { current, pageSize } = _pagination_;
-    this.setState({
-      modalTablePagination: {
-        ...modalTablePagination,
-        current,
-        pageSize,
-      },
-    });
-    this.getModalTableTGMembers(current, pageSize);
-  };
 
   // 点击“返回”按钮
   cancelViewModalTable = () => {
@@ -228,20 +176,10 @@ class CreateExam extends Component {
       modalTableTGID: null,
       modalTableTGNumber: '', // 要显示群组成员的模态框的群组编号
       modalTableTGName: '', // 要显示群组成员的模态框的群组名称
-      modalTablePagination: {
-        current: 1,
-        pageSize: 10,
-      },
-    });
-  };
-
-  // ------------查看群组成员弹框------------
-  viewModalTable = record => {
-    this.setState({
-      showModalTable: true,
-      modalTableTGID: record.id,
-      modalTableTGNumber: record.group_no, // 要显示群组成员的模态框的群组编号
-      modalTableTGName: record.name, // 要显示群组成员的模态框的群组名称
+      // modalTablePagination: {
+      //   current: 1,
+      //   pageSize: 10,
+      // },
     });
   };
 
@@ -404,15 +342,7 @@ class CreateExam extends Component {
                 <Search placeholder="输入群组编号或名称过滤" style={{ width: 300 }} />
               </div>
             </div>
-            {/* <Table
-              bordered
-              loading={groupsLoading}
-              dataSource={dataSource}
-              columns={columns}
-              pagination={pageConifg}
-              onChange={this.handleTableChange}
-              rowSelection={rowSelection}
-            /> */}
+
             <PageTable
               {...this.props}
               data={createGroups}
@@ -467,6 +397,7 @@ class CreateExam extends Component {
             <Button onClick={this.btnBack}>返回</Button>
           </div>
         </Card>
+
         <SubmitSuccessCard
           successFlag={currentStatus}
           title="提交考试计划成功"
@@ -477,7 +408,6 @@ class CreateExam extends Component {
           }}
           btns={
             <Fragment>
-              {/* <Button disabled>增加考试计划</Button> */}
               <Button type="primary" onClick={() => router.push('/examPlan/examPlanManager/index')}>
                 完成
               </Button>
@@ -491,17 +421,6 @@ class CreateExam extends Component {
           num={modalTableTGNumber}
           name={modalTableTGName}
         />
-        {/* <ModalTable
-          modalTableVisible={showModalTable}
-          modalTitle="查看培训群组"
-          trainGroupNumber={modalTableTGNumber}
-          trainGroupName={modalTableTGName}
-          dataSource={modalTableDataSource}
-          columns={modalTableColumns}
-          pagination={modalTablePageConifg}
-          onChange={this.modalTablePageChange}
-          handleTableCancel={this.cancelViewModalTable}
-        /> */}
       </PageHeaderWrapper>
     );
   }

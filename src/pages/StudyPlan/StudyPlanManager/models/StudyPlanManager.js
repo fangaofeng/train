@@ -6,7 +6,7 @@ import {
   submitEditSP, // 学习计划管理——>编辑学习计划——>点击提交按钮
   getSPGroups, // 学习计划管理——>查看学习计划（获取table表格数据）
   getViewSPGroupDetails, // 学习计划管理——>查看学习计划——>查看培训群组学习详情（获取table表格数据）\
-  fileOnArchive, // 学习计划管理——>主页，归档学习计划
+  changeStatus, // 学习计划管理——>主页，归档学习计划
 } from '@/services/studyPlan/studyPlanManager/index';
 
 import { getCourseTeacherInfo } from '@/services/courseware/coursewareManager/index';
@@ -19,7 +19,7 @@ export default {
     createSPData: { results: [], count: 0 }, // 学习计划管理——>创建学习计划（获取table表格数据）
     viewTGMembersData: { results: [], count: 0 }, // 学习计划管理——>创建学习计划——>查看培训群组成员（获取table表格数据）
 
-    allSPTableData: { results: [], count: 0 }, // 学习计划管理——>主页，获取所有的学习计划
+    studyPlans: { results: [], count: 0 }, // 学习计划管理——>主页，获取所有的学习计划
 
     viewSPData: { results: [], count: 0 }, // 学习计划管理——>查看学习计划（获取table表格数据）
     viewSPDataDetails: { results: [], count: 0 }, // 学习计划管理——>查看学习计划——>查看培训群组学习详情（获取table表格数据）
@@ -57,11 +57,10 @@ export default {
     },
     // ------------------------------------------------------------------
     // 学习计划管理——>主页，获取所有的学习计划
-    *GetAllSPTableData({ payload }, { call, put }) {
+    *GetLearnPlans({ payload }, { call, put }) {
       const response = yield call(getLearnPlan, payload);
-      // console.log(response);
-      if (response.status === 'ok') {
-        // console.log('成功');
+      console.log(response);
+      if (response && response.status === 'ok') {
         yield put({
           type: 'saveAllSPTableData',
           payload: response.data,
@@ -84,7 +83,7 @@ export default {
     // 学习计划管理——>查看学习计划（获取table表格数据）
     *GetViewSPData({ payload }, { call, put }) {
       const response = yield call(getSPGroups, payload);
-      if (response.status === 'ok') {
+      if (response && response.status === 'ok') {
         // console.log('成功');
         yield put({
           type: 'saveViewSPData',
@@ -95,7 +94,7 @@ export default {
     // 学习计划管理——>查看学习计划——>查看培训群组学习详情（获取table表格数据）
     *GetViewSPDataDetails({ payload }, { call, put }) {
       const response = yield call(getViewSPGroupDetails, payload);
-      if (response.status === 'ok') {
+      if (response && response.status === 'ok') {
         // console.log('成功');
         yield put({
           type: 'saveViewSPDataDetails',
@@ -105,8 +104,8 @@ export default {
     },
     // ------------------------------------------------------------------
     // 学习计划管理——>主页，归档学习计划
-    *FileOnArchive({ payload, callback }, { call }) {
-      const response = yield call(fileOnArchive, payload);
+    *ChangeStatus({ payload, callback }, { call }) {
+      const response = yield call(changeStatus, payload);
       callback(response); // 返回结果
     },
     // ------------------------------------------------------------------
@@ -133,7 +132,7 @@ export default {
     saveAllSPTableData(state, action) {
       return {
         ...state,
-        allSPTableData: action.payload,
+        studyPlans: action.payload,
       };
     },
     // ------------------------------------------------------------------

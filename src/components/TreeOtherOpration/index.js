@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Tree, Modal, Row, Col } from 'antd';
-import _ from 'lodash';
-import TreeIcon from './TreeIcon';
-import TreeInput from './TreeInput';
+import { Tree } from 'antd';
+// import _ from 'lodash'
+// import TreeIcon from './TreeIcon'
+// import TreeInput from './TreeInput'
 
 import styles from './index.less';
 
@@ -18,29 +18,26 @@ export default class TreeEdit extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    // 这里处理store数据，处理成与antd Tree格式一样的，保存至state中
-    if (!_.isEqual(this.props.treeList, nextProps.treeList)) {
-      const treeData = this.formatData(nextProps.treeList);
-      this.setState({ treeData });
+  static getDerivedStateFromProps(props, state) {
+    if (props.treeList) {
+      const treeData = this.formatData(props.treeList);
+      return { ...state, treeData };
     }
+    return state;
   }
 
   /**
    * 处理后台的数据
    * @param treeData
    */
-  formatData = treeData => {
-    treeData.map(mItem => {
-      mItem.title = mItem.name;
-      mItem.copyTitle = mItem.name;
-      mItem.key = mItem.id;
-      if (mItem.children) {
-        this.formatData(mItem.children);
+  formatData = treeData =>
+    treeData.map(item => {
+      const mItem = { ...item, title: item.name, copyTitle: item.name, key: item.id };
+      if (item.children) {
+        mItem.children = this.formatData(item.children);
       }
+      return mItem;
     });
-    return treeData;
-  };
 
   /**
    * 渲染树节点
@@ -64,10 +61,12 @@ export default class TreeEdit extends Component {
    */
   resetTreeNodes = treeData => {
     treeData.map(mItem => {
-      mItem.title = mItem.copyTitle;
-      if (mItem.children) {
-        this.resetTreeNodes(mItem.children);
+      const TmItem = mItem;
+      TmItem.title = TmItem.copyTitle;
+      if (TmItem.children) {
+        this.resetTreeNodes(TmItem.children);
       }
+      return TmItem;
     });
     return treeData;
   };
@@ -79,16 +78,18 @@ export default class TreeEdit extends Component {
    * @param type 'add' 'del' 'edit'  'blur'
    */
   handleTreeData = (treeData, key, type) => {
-    treeData.map((mItem, mIndex) => {
-      mItem.title = mItem.copyTitle;
-      if (String(mItem.key) === String(key)) {
-      } else {
-        // 递归
-        if (mItem.children) {
-          this.handleTreeData(mItem.children, key, type);
-        }
+    treeData.map(mItem => {
+      const TmItem = mItem;
+      TmItem.title = TmItem.copyTitle;
+
+      if (TmItem.children) {
+        this.handleTreeData(TmItem.children, key, type);
       }
+
+      return mItem;
     });
+    const { onSelect } = this.props;
+    onSelect(key);
     return treeData;
   };
 
@@ -109,9 +110,10 @@ export default class TreeEdit extends Component {
    */
   onSelect = selectedKeys => {
     let { treeData } = this.state;
+    const { expandedKeys } = this.state;
     treeData = this.resetTreeNodes(treeData);
     treeData = this.handleTreeData(treeData, selectedKeys[0], 'select');
-    this.setState({ treeData, expandedKeys: [...this.state.expandedKeys, selectedKeys[0]] });
+    this.setState({ treeData, expandedKeys: [...expandedKeys, selectedKeys[0]] });
   };
 
   /**

@@ -15,12 +15,13 @@ export async function delExamplan(params) {
   });
 }
 // 培训管理员 ——> 考试管理 ——> 主页，修改考试计划
-export async function editPatchExamplan(params) {
+export async function editExamplan(params) {
   return request(`/api/exam/plan/${params.id}`, {
     method: 'PATCH',
     body: params.data,
   });
 }
+
 // 培训管理员 ——> 考试管理 ——> 主页，修改考试计划
 export async function editPutExamplan(params) {
   return request(`/api/exam/plan/${params.id}`, {
@@ -52,9 +53,7 @@ export async function getExamplanGroups(params) {
 // 考试管理——>查看考试计划——>查看单个培训群组考试详情（获取table表格数据）
 export async function getExamplanGroupMembers(params) {
   return request(
-    `/api/exam/plan/${params.id}/group/${params.trainGroupID}?page=${params.page}&size=${
-      params.size
-    }`
+    `/api/exam/plan/${params.id}/group/${params.trainGroupID}?page=${params.page}&size=${params.size}`
   );
 }
 // ------------------------------------------------------------------

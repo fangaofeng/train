@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button } from 'antd';
+// import { Button } from 'antd';
 import classNames from 'classnames';
 // import Authorized from '@/utils/Authorized';
 import styles from './selfItemCardImg.less';
@@ -37,7 +37,9 @@ class SelfItemCardImg extends Component {
         )}
         {btns && (
           <div className={styles.list_item_card_hover}>
-            <Button type="primary">{btns}</Button>
+            {/* <Button type="primary">{btns}</Button>
+             */}
+            {btns}
           </div>
         )}
       </div>

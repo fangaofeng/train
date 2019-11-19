@@ -22,9 +22,9 @@ export default class GlobalHeaderRight extends PureComponent {
       if (newNotice.timestamp) {
         newNotice.datetime = moment(notice.timestamp).fromNow();
       }
-      if (newNotice.id) {
-        newNotice.key = newNotice.id;
-      }
+      // if (newNotice.id) {
+      //   newNotice.key = newNotice.id;
+      // }
       if (newNotice.verb && newNotice.level) {
         const color = {
           info: '',

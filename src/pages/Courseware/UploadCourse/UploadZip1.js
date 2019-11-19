@@ -1,4 +1,8 @@
-import React, { Component, Fragment } from 'react';
+/* eslint-disable prefer-destructuring */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-nested-ternary */
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Card, Button, Icon, Upload, Row, Col, message, Input, Select, Form, Avatar } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -9,6 +13,7 @@ import router from 'umi/router';
 import Link from 'umi/link';
 import styles from './UploadZip1.less';
 import { getUploadCouserurl } from '@/services/uploadUrl/uploadUrl';
+import storetoken from '@/utils/token';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -43,29 +48,39 @@ class UploadZipNew extends Component {
   }
 
   componentDidMount() {
-    const isNewPage = this.props.match.params;
+    const {
+      match: {
+        params: { isNewPage },
+      },
+      zipInfo,
+      zipFileName,
+      zipfileResponse,
+      form,
+    } = this.props;
     // 如果是从返回进来的页面
     if (isNewPage && isNewPage.isBack === 'Y') {
-      if (Object.keys(this.props.zipInfo).length === 0) {
+      if (Object.keys(zipInfo).length === 0) {
         return;
       }
       this.setState({
-        zipFileName: this.props.zipFileName, // zip文件名
+        zipFileName, // zip文件名
         isUploadDone: true, // 判断文件是否上传成功
         isFirstUpload: false, // 是否是首次上传
-        zipInfo: this.props.zipInfo,
-        zipfileResponse: this.props.zipfileResponse,
+        zipInfo,
+        zipfileResponse,
       });
-      console.log(this.props.zipInfo);
-      for (const i in this.props.zipInfo) {
-        this.props.form.setFieldsValue({
-          [i]: this.props.zipInfo[i],
-        });
-        if (i === 'KJMC' || i === 'KJJS' || i === 'SYDX' || i === 'JSJS') {
-          const maxLen = `${i}MaxLength`;
-          const lenleft = `${i}LengthLeft`;
-          const value = this.props.zipInfo[i];
-          this.setFormLengthLeft(maxLen, lenleft, value);
+
+      for (const key in zipInfo) {
+        if (Object.prototype.hasOwnProperty.call(zipInfo, key)) {
+          form.setFieldsValue({
+            [key]: zipInfo[key],
+          });
+          if (key === 'KJMC' || key === 'KJJS' || key === 'SYDX' || key === 'JSJS') {
+            const maxLen = `${key}MaxLength`;
+            const lenleft = `${key}LengthLeft`;
+            const value = zipInfo[key];
+            this.setFormLengthLeft(maxLen, lenleft, value);
+          }
         }
       }
     }
@@ -73,46 +88,50 @@ class UploadZipNew extends Component {
 
   // 表单提交
   handleSubmit = () => {
-    if (this.state.isFirstUpload) {
+    const { isFirstUpload, isUploadDone, zipFileName, zipfileResponse } = this.state;
+    if (isFirstUpload) {
       message.warning('请上传课件包');
       return false;
     }
     // 测试关闭
-    const isUploadDone = this.state.isUploadDone;
+
     if (!isUploadDone) {
       message.warning('请课件包上传成功后再点击下一步');
       return false;
     }
-    const { dispatch,form:{validateFieldsAndScroll} } = this.props;
-      validateFieldsAndScroll((err, values) => {
+    const {
+      dispatch,
+      form: { validateFieldsAndScroll },
+    } = this.props;
+    validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('表单值', values);
         dispatch({
           type: 'uploadCourse/saveZipInfo',
           param: {
             formData: values,
-            zipFileName: this.state.zipFileName,
-            zipfileResponse: this.state.zipfileResponse,
+            zipFileName,
+            zipfileResponse,
           },
         });
         router.push('/courseware/uploadZip/uploadZip2');
       }
     });
+    return true;
   };
 
   // 解析config.ini文件，生成对应的json
   parseINIString = data => {
     const regex = {
       section: /^\s*\[\s*([^\]]*)\s*\]\s*$/,
-      param: /^\s*([\w\.\-\_]+)\s*=\s*(.*?)\s*$/,
+      param: /^\s*([w.\-_]+)\s*=\s*(.*?)\s*$/,
       comment: /^\s*;.*$/,
     };
     const value = {};
     const lines = data.split(/\r\n|\r|\n/);
     let section = null;
     lines.forEach(line => {
-      if (regex.comment.test(line)) {
-      } else if (regex.param.test(line)) {
+      if (regex.param.test(line)) {
         const match = line.match(regex.param);
         if (section) {
           value[section][match[1]] = match[2];
@@ -123,7 +142,7 @@ class UploadZipNew extends Component {
         const match = line.match(regex.section);
         value[match[1]] = {};
         section = match[1];
-      } else if (line.length == 0 && section) {
+      } else if (line.length === 0 && section) {
         section = null;
       }
     });
@@ -137,44 +156,31 @@ class UploadZipNew extends Component {
   // beforeUpload会调用
   unzipHandler = file => {
     const zip = new JSZip();
-    return (
-      zip
-        .loadAsync(file)
-        .then(zipObject => zipObject.files)
-        .then(files => {
-          console.log('files');
-          // for (var fileName in files) {
-          //   if (fileName.indexOf(".ini") >= 0 && files.hasOwnProperty(fileName)) {
-          //     return fileName;
-          //   }
-          // }
-          return Promise.all([
-            zip.file('config.ini').async('string'),
-            zip.file('fb.jpg').async('base64'),
-            zip.file('fhlhg.jpg').async('base64'),
-          ]);
-        })
-        //   .then((fileName) => {
-        //   console.log(fileName);
-        //   //return zip.file(fileName).async ('string')
-        //   return Promise.all([zip.file('config.ini').async('string'),zip.file("fb.jpg").async("base64"),zip.file("fhlhg.jpg").async("base64")])
-        // })
-        .then(contentlist => {
-          const content = contentlist[0];
-          console.log(content);
-          const objInfo = this.parseINIString(content);
-          console.log(objInfo);
-          objInfo.JSZP = `data:image/png;base64,${contentlist[1]}`;
-          objInfo.KJFM = `data:image/png;base64,${contentlist[2]}`;
-          return objInfo;
-        })
-    );
+    return zip
+      .loadAsync(file)
+      .then(zipObject => zipObject.files)
+      .then(() => {
+        return Promise.all([
+          zip.file('config.ini').async('string'),
+          zip.file('fb.jpg').async('base64'),
+          zip.file('fhlhg.jpg').async('base64'),
+        ]);
+      })
+
+      .then(contentlist => {
+        const content = contentlist[0];
+        console.log(content);
+        const objInfo = this.parseINIString(content);
+        console.log(objInfo);
+        objInfo.JSZP = `data:image/png;base64,${contentlist[1]}`;
+        objInfo.KJFM = `data:image/png;base64,${contentlist[2]}`;
+        return objInfo;
+      });
   };
 
   // Upload组件beforeUpload调用的方法
   beforeUpload = file => {
     const filetype = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
-    console.log(filetype);
     if (filetype !== 'zip') {
       message.warning('请根据模板上传zip课件包');
       return false;
@@ -184,40 +190,30 @@ class UploadZipNew extends Component {
     });
     const obj = this.unzipHandler(file)
       .then(data => {
-        console.log(data);
+        const { form } = this.props;
+        const { zipInfo } = this.state;
         this.setState({
-          // ...this.state,
           zipInfo: data,
         });
         // this.props.form.setFieldsValue({
         //     KJBH: this.state.zipInfo.KJBH
         //   });
-        for (const i in this.state.zipInfo) {
-          this.props.form.setFieldsValue({
-            [i]: this.state.zipInfo[i],
+        for (const i in zipInfo) {
+          form.setFieldsValue({
+            [i]: zipInfo[i],
           });
           if (i === 'KJMC' || i === 'KJJS' || i === 'SYDX' || i === 'JSJS') {
             const maxLen = `${i}MaxLength`;
             const lenleft = `${i}LengthLeft`;
-            const value = this.state.zipInfo[i];
+            const value = zipInfo[i];
             this.setFormLengthLeft(maxLen, lenleft, value);
           }
         }
-        console.log(this.state.zipInfo);
-
-        //    return new Promise(function(resolve,reject) {
-        //             if(1===1){
-        //               resolve(infoPlsitFile)
-        //             } else {
-        //                              reject('body.message')
-        //             }
-        // })
       })
       .catch(error => {
         console.log(error);
       });
     return obj;
-
   };
 
   // Upload组件OnChange调用的方法
@@ -254,6 +250,7 @@ class UploadZipNew extends Component {
 
   // 为表单赋值同时修改剩余多少字
   setFormLengthLeft = (maxLen, lenleft, value) => {
+    // eslint-disable-next-line react/destructuring-assignment
     const lengthLeft = this.state[maxLen] - value.length; // 剩余多少字
     this.setState({
       [lenleft]: lengthLeft <= 0 ? 0 : lengthLeft,
@@ -270,7 +267,10 @@ class UploadZipNew extends Component {
 
   render() {
     // const { pageHeaderWrapperTittle } = this.state;
-    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    const {
+      form: { getFieldDecorator },
+    } = this.props;
+    const { isFirstUpload, fileList, zipFileName, zipInfo } = this.state;
     const {
       KJMCMaxLength,
       KJMCLengthLeft,
@@ -281,7 +281,7 @@ class UploadZipNew extends Component {
       JSJSMaxLength,
       JSJSLengthLeft,
     } = this.state;
-    const token = localStorage.getItem('WHLQYHGPXPT_TOKEN');
+    const token = storetoken.get();
     const uploadProps = {
       headers: {
         Authorization: `Token ${token}`,
@@ -291,7 +291,7 @@ class UploadZipNew extends Component {
     return (
       <PageHeaderWrapper title="上传课件">
         <Card className={styles.uploadZipContent}>
-          <div className={this.state.isFirstUpload ? ' ' : styles.uploadZipStep}>
+          <div className={isFirstUpload ? ' ' : styles.uploadZipStep}>
             <Row>
               <Col
                 xs={24}
@@ -309,41 +309,32 @@ class UploadZipNew extends Component {
                   onChange={this.uploadOnChange}
                   // className={styles.uploadContent}
                   className="uploadContent"
-                  fileList={this.state.fileList}
+                  fileList={fileList}
                   {...uploadProps}
                 >
-                  <Button
-                    disabled={!(this.state.fileList.length < 1)}
-                    type="dashed"
-                    style={{ width: '100%' }}
-                  >
+                  <Button disabled={!(fileList.length < 1)} type="dashed" style={{ width: '100%' }}>
                     <Icon type="plus" theme="outlined" />
-                    {this.state.isFirstUpload
-                      ? '上传课件包（ZIP）文件'
-                      : '重新上传课件包（ZIP）文件'}
+                    {isFirstUpload ? '上传课件包（ZIP）文件' : '重新上传课件包（ZIP）文件'}
                   </Button>
                 </Upload>
                 <div
                   style={{
                     marginTop: '20px',
                     marginBottom: '20px',
-                    display: this.state.isFirstUpload ? 'none' : 'block',
+                    display: isFirstUpload ? 'none' : 'block',
                   }}
                 >
                   课件包：
-                  {this.state.zipFileName ? (
+                  {zipFileName ? (
                     <span>
                       <Icon type="paper-clip" theme="outlined" />
-                      {this.state.zipFileName}
+                      {zipFileName}
                     </span>
                   ) : null}
                   {/* <span><Icon type="paper-clip" theme="outlined" />反贿赂合规.zip</span> */}
                 </div>
-                <Form
-                  hideRequiredMark
-                  style={{ display: this.state.isFirstUpload ? 'none' : 'block' }}
-                >
-                  <SelfCard title="课程信息" noPadding="true">
+                <Form hideRequiredMark style={{ display: isFirstUpload ? 'none' : 'block' }}>
+                  <SelfCard title="课程信息" nopadding="true">
                     <FormItem label="课件编号：" className={styles.selfFormItem}>
                       {getFieldDecorator('KJBH', {
                         rules: [
@@ -353,9 +344,7 @@ class UploadZipNew extends Component {
                           },
                         ],
                       })(<Input disabled style={{ display: 'none' }} />)}
-                      <div>
-                        {this.state.zipInfo.KJBH ? this.state.zipInfo.KJBH : 'XXXXXXXXXXXXXX'}
-                      </div>
+                      <div>{zipInfo.KJBH ? zipInfo.KJBH : 'XXXXXXXXXXXXXX'}</div>
                     </FormItem>
                     <FormItem label="课件名称：" className={styles.selfFormItem}>
                       {getFieldDecorator('KJMC', {
@@ -502,9 +491,9 @@ class UploadZipNew extends Component {
                               <Option value="1">MP4</Option>
                             </Select>
                           )}
-                          {!this.state.zipInfo.KJWJLX ? (
+                          {!zipInfo.KJWJLX ? (
                             <div>PDF/MP4</div>
-                          ) : this.state.zipInfo.KJWJLX == '0' ? (
+                          ) : zipInfo.KJWJLX === '0' ? (
                             <div>PDF</div>
                           ) : (
                             <div>MP4</div>
@@ -541,14 +530,14 @@ class UploadZipNew extends Component {
                           },
                         ],
                       })(<Input style={{ display: 'none' }} />)}
-                      {this.state.zipInfo.KJFM ? (
-                        <img src={this.state.zipInfo.KJFM} alt="课件封面" height="130" />
+                      {zipInfo.KJFM ? (
+                        <img src={zipInfo.KJFM} alt="课件封面" height="130" />
                       ) : (
                         <div style={{ width: '230px', height: '130px', background: '#ccc' }} />
                       )}
                     </FormItem>
                   </SelfCard>
-                  <SelfCard title="讲师信息" noPadding="true">
+                  <SelfCard title="讲师信息" nopadding="true">
                     <div className={styles.teacherInfo}>
                       <div className={styles.teacherInfoLeft}>
                         <FormItem className={styles.selfFormItem}>
@@ -560,12 +549,7 @@ class UploadZipNew extends Component {
                               },
                             ],
                           })(<Input style={{ display: 'none' }} />)}
-                          <Avatar
-                            size={100}
-                            src={this.state.zipInfo.JSZP}
-                            alt="老师头像"
-                            icon="user"
-                          />
+                          <Avatar size={100} src={zipInfo.JSZP} alt="老师头像" icon="user" />
                           {/* <Avatar size={100} src={require('@/assets/images/SiderMenu/avatar_default_big.png')} alt="老师头像" icon='user' /> */}
                         </FormItem>
                       </div>

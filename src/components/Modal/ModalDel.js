@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Icon, message, Modal } from 'antd';
-// import router from 'umi/router';
-// import Link from 'umi/link';
-// import styles from './Common.less';
 
 class CommonConent extends Component {
   constructor(props) {
@@ -18,28 +15,18 @@ class CommonConent extends Component {
   // ---------------批量删除---------------
   // 批量删除确认按钮
   delHandleOk = () => {
-    const {
-      dispatch,
-      match: {
-        params: { ID },
-      },
-      selectedAllKeys,
-      delAtiontype,
-      visiblecallback,
-    } = this.props;
+    const { dispatch, id, selectedAllKeys, delAtiontype, visiblecallback } = this.props;
     this.setState({
       delConfirmLoading: true,
     });
     dispatch({
       type: delAtiontype,
       payload: {
-        id: ID, // 课件id
-        data: {
-          trainmanagers: selectedAllKeys,
-        },
+        id, //
+        data: selectedAllKeys,
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           message.success('批量删除成功');
           visiblecallback(false, true);
         } else {

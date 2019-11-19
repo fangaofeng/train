@@ -12,7 +12,6 @@ export default {
   effects: {
     // 学员——>我的考试——>我的考试计划——>在线考试——>获取试卷信息
     *GetOnlineExamBasicInfo({ payload, callback }, { call }) {
-      // console.log('rtrt');
       const response = yield call(getOnlineExamBasicInfo, payload);
       callback(response); // 返回结果
     },

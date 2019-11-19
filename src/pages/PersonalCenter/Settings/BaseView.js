@@ -1,40 +1,37 @@
-import React, { Component, Fragment } from 'react';
-import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
-import { Form, Input, Upload, Button, Card } from 'antd';
+import React, { Component } from 'react';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { Form, Input, Button, Card } from 'antd';
 import { connect } from 'dva';
+// import storetoken from '@/utils/token'
 
 import styles from './BaseView.less';
 
 import DescriptionList from '@/components/DescriptionList';
 // import { getTimeDistance } from '@/utils/utils';
-import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl';
+// import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl'
+import AvatarView from '@/components/AvatarView';
 
 const FormItem = Form.Item;
 
-const token = localStorage.getItem('WHLQYHGPXPT_TOKEN');
-const uploadProps = {
-  headers: {
-    Authorization: `Token ${token}`,
-  },
-};
-const uploadurl = getUploadAvatarurl();
+// const token = storetoken.get()
+
 const { Description } = DescriptionList;
 // 头像组件 方便以后独立，增加裁剪之类的功能
-const AvatarView = ({ avatar }) => (
-  <Fragment>
-    <div className={styles.avatar_title}>个人图像</div>
-    <div className={styles.avatar}>
-      <img src={avatar} alt="avatar" />
-    </div>
-    <Upload action={uploadurl} {...uploadProps}>
-      <div className={styles.button_view}>
-        <Button icon="upload">
-          <FormattedMessage id="app.settings.basic.change-avatar" defaultMessage="Change avatar" />
-        </Button>
-      </div>
-    </Upload>
-  </Fragment>
-);
+// const AvatarView = ({ avatar }) => (
+//   <Fragment>
+//     <div className={styles.avatar_title}>个人图像</div>
+//     <div className={styles.avatar}>
+//       <img src={avatar} alt="avatar" />
+//     </div>
+//     <Upload name="avatar" action={uploadurl} {...uploadProps}>
+//       <div className={styles.button_view}>
+//         <Button icon="upload">
+//           <FormattedMessage id="app.settings.basic.change-avatar" defaultMessage="Change avatar" />
+//         </Button>
+//       </div>
+//     </Upload>
+//   </Fragment>
+// );
 
 // const validatorGeographic = (rule, value, callback) => {
 //   const { province, city } = value;
@@ -58,18 +55,14 @@ const AvatarView = ({ avatar }) => (
 //   callback();
 // };
 
-@connect(({ user, loading }) => ({
-  currentUser: user.currentUser,
-  currentUserLoading: loading.effects['user/fetchCurrent'],
-  patchuserinfoLoading: loading.effects['user/patchuserinfo'],
+@connect(({ account, loading }) => ({
+  currentUser: account.currentUser,
+  currentUserLoading: loading.effects['account/fetchCurrent'],
+  patchuserinfoLoading: loading.effects['account/patchuserinfo'],
 }))
 @Form.create()
 class BaseView extends Component {
   componentDidMount() {
-    // const { dispatch } = this.props;
-    // dispatch({
-    //   type: 'user/fetchCurrent',
-    // });
     this.setBaseInfo();
   }
 
@@ -102,7 +95,7 @@ class BaseView extends Component {
       if (!error) {
         // submit the values
         dispatch({
-          type: 'user/patchuserinfo',
+          type: 'account/patchuserinfo',
           payload: values,
         });
       }
@@ -252,7 +245,7 @@ class BaseView extends Component {
               </Form>
             </div>
             <div className={styles.right}>
-              <AvatarView avatar={this.getAvatarURL()} />
+              <AvatarView avatar={currentUser.avatar} />
             </div>
           </div>
         </Card>

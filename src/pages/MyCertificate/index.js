@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Card, List, Button, Input } from 'antd';
-import AvatarList from '@/components/AvatarList';
-import router from 'umi/router';
+import { Card, List, Button } from 'antd';
+// import router from 'umi/router';
 import Link from 'umi/link';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import SelfCard from '@/components/Workbench/selfCard';
+// import SelfCard from '@/components/Workbench/selfCard';
 import SelfItemCard from '@/components/Workbench/selfItemCard';
 import SelfItemCardImg from '@/components/Workbench/selfItemCardImg';
 import SelfItemCardDetail from '@/components/Workbench/selfItemCardDetail';
@@ -76,7 +75,7 @@ class myTrainCertificatesList extends Component {
       ...pagination,
       total: MyTrainCertificates.count,
       showTotal: total => `共 ${total} 条记录`,
-      onChange:this.handlePageChange
+      onChange: this.handlePageChange,
     };
     // 循环Table数据，添加key
     const dataSource = MyTrainCertificates.results.map(value =>
@@ -86,8 +85,6 @@ class myTrainCertificatesList extends Component {
     return (
       <PageHeaderWrapper title="我的证书">
         <Card className={styles.managerContent}>
-
-
           <List
             grid={{ gutter: 4, xs: 1, sm: 1, md: 2, lg: 2, xl: 4, xxl: 4 }}
             dataSource={dataSource}
@@ -104,18 +101,20 @@ class myTrainCertificatesList extends Component {
                     // showCourseTip
                     // showExamTip
                     studyTime={`${Number(item.class_hour)}学时`}
-                    btns={<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>查看详情</Link>}
+                    btns={
+                      <Button type="primary">
+                        <Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>查看详情</Link>
+                      </Button>
+                    }
                   />
                   <SelfItemCardDetail
                     // item={item}
                     title={<Link to={`/courseware/view/${item.id}`}>{item.name}</Link>}
-                    stuRecommendedCourse={
-                      {
-                        teacher:item.teachername,
-                        suitablePerson:item.applicable_user,
-                        btns:<Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>编辑</Link>
-                      }
-                    }
+                    stuRecommendedCourse={{
+                      teacher: item.teachername,
+                      suitablePerson: item.applicable_user,
+                      btns: <Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>编辑</Link>,
+                    }}
                   />
                 </SelfItemCard>
               </List.Item>

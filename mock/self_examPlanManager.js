@@ -143,7 +143,7 @@ export default {
           // 合格分数
           passing_score: 60,
           // 适用对象
-          applicablePerson: '财务管理人员',
+          applicable_user: '财务管理人员',
           // 试卷介绍
           introduce: '考查反贿赂合规体系涵盖的业务范围和工作要点',
           // 封面
@@ -177,6 +177,18 @@ export default {
 
   // 考试管理——>编辑考试计划——>点击提交按钮
   'PUT /api/exam/plan/:examPlanID': (req, res) => {
+    res.send({
+      status: 'ok',
+      data: {
+        examName: '反贿赂合规体系的建立与实践',
+        name: '反贿赂合规培训',
+        start_time: '2018-10-26',
+        end_time: '2018-11-25',
+      },
+    });
+  },
+
+  'PATCH /api/exam/plan/:examPlanID': (req, res) => {
     res.send({
       status: 'ok',
       data: {

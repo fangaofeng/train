@@ -5,7 +5,7 @@ import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import SubmitSuccessCard from '@/components/CustomComponent/SubmitSuccessCard/SubmitSuccessCard';
+import SubmitSuccessCard from '@/components/SubmitSuccessCard';
 
 import CourseBasicInfo from '@/components/CourseBasicInfo';
 import PageTable from '@/components/PageTable';
@@ -104,7 +104,7 @@ class CreateSP extends Component {
     const { dispatch } = this.props;
     const {
       match: {
-        params: { courseID },
+        params: { courseid },
       },
     } = this.props;
     const { studyPlanName, studyPlanStartTime, studyPlanEndTime, selectedAllKeys } = this.state;
@@ -115,10 +115,10 @@ class CreateSP extends Component {
         start_time: studyPlanStartTime,
         end_time: studyPlanEndTime,
         traingroups: selectedAllKeys,
-        course: courseID,
+        course: courseid,
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           message.success('提交成功');
           this.setState({
             courseName: res.data.course_name, // 课件名称
@@ -188,6 +188,10 @@ class CreateSP extends Component {
       createSPData,
       courseTeacherInfoLoading,
       membersLoading,
+      match: {
+        params: { courseid },
+      },
+      dispatch,
     } = this.props;
 
     const { currentStatus, selectedAllKeys, selectedData } = this.state;
@@ -266,11 +270,13 @@ class CreateSP extends Component {
       <PageHeaderWrapper title={pageHeaderWrapperTitle()}>
         <Spin spinning={courseTeacherInfoLoading}>
           <CourseBasicInfo
-            {...this.props}
+            dispatch={dispatch}
+            courseid={courseid}
             action="StudyPlanManager/GetCourseTeacherInfo"
-            isShow={false}
+            isShow={currentStatus === 'success'}
           />
         </Spin>
+
         <Card
           className={styles.detailSP}
           style={{ display: currentStatus === 'before' ? 'block' : 'none' }}
@@ -378,7 +384,6 @@ class CreateSP extends Component {
           }}
           btns={
             <Fragment>
-              <Button disabled>增加考试计划</Button>
               <Button
                 type="primary"
                 onClick={() => router.push('/studyPlan/studyPlanManager/index')}

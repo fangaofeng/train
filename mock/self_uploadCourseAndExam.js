@@ -39,7 +39,7 @@ export default {
    * 1、系统管理员 ————> 课件管理 ————> 上传课件 ————> 获取培训管理员数据
    * 2、系统管理员 ————> 试卷管理 ————> 上传试卷 ————> 获取培训管理员数据
    */
-  'GET /api/user/list?role=培训管理员': (req, res) => {
+  'GET /api/user?role=培训管理员': (req, res) => {
     const params = req.query;
     const { page, size } = params;
     const result = fakeList(page, size);

@@ -1,13 +1,15 @@
 export default [
   // 登录、注册、忘记密码等页面
   {
-    path: '/user',
+    path: '/auth',
     component: '../layouts/UserLayout',
     routes: [
-      { path: '/user', redirect: '/user/login' },
-      { path: '/user/login', component: './User/Login' },
-      { path: '/user/register', component: './User/Register' },
-      { path: '/user/register-result', component: './User/RegisterResult' },
+      { path: '/auth', redirect: 'auth/login' },
+      { path: '/auth/login', component: './Auth/Login' },
+      { path: '/auth/register', component: './Auth/Register' },
+      { path: '/auth/forgetpassword', component: './Auth/Forgetpassword' },
+
+      { path: '/auth/register-result', component: './Auth/RegisterResult' },
       {
         component: '404',
       },
@@ -33,44 +35,66 @@ export default [
       },
       // 系统管理员——>系统管理
       {
-        path: '/systemManager',
-        name: '系统管理',
-        icon: 'self_SystemManagerIcon',
+        path: '/DepartmentManager',
+        name: '部门管理',
+        icon: 'apartment',
         authority: ['admin'],
         routes: [
           {
-            path: '/systemManager/department',
-            name: '部门管理',
-            component: './SystemManager/DepartmentManager',
+            path: '/DepartmentManager/index',
+            name: '部门查看',
+            component: './DepartmentManager/index',
           },
           {
-            path: '/systemManager/userManager',
-            name: '用户管理',
-            hideChildrenInMenu: true,
-            routes: [
-              {
-                path: '/systemManager/userManager',
-                redirect: '/systemManager/userManager/index',
-              },
-              {
-                path: '/systemManager/userManager/index',
-                // name:'用户管理',
-                component: './SystemManager/UserManager/index',
-              },
-              {
-                path: '/systemManager/userManager/upload',
-                // name:'批量导入用户',
-                component: './SystemManager/UserManager/UploadUsers',
-              },
-            ],
-          },
-          {
-            path: '/systemManager/assignManger',
+            path: '/DepartmentManager/assignManger',
             name: '培训管理员分配',
-            component: './SystemManager/AssignManger',
+            component: './DepartmentManager/AssignManger',
+          },
+          {
+            path: '/DepartmentManager/import',
+            hideInMenu: true,
+            name: '导入部门信息',
+            component: './DepartmentManager/Import',
           },
         ],
       },
+      {
+        path: '/userManager',
+        name: '用户管理',
+        icon: 'user',
+        hideChildrenInMenu: true,
+        authority: ['admin'],
+
+        routes: [
+          {
+            path: '/userManager',
+            redirect: '/userManager/index',
+          },
+          {
+            path: '/userManager/index',
+            name: '用户列表',
+            component: './UserManager/index',
+          },
+          {
+            path: '/userManager/upload',
+            name: '批量导入用户',
+            component: './UserManager/UploadUsers',
+          },
+          {
+            path: '/userManager/edit/:id',
+            hideInMenu: true,
+            name: '修改用户信息',
+            component: './UserManager/Edit',
+          },
+          {
+            path: '/userManager/create',
+
+            name: '添加用户',
+            component: './UserManager/create',
+          },
+        ],
+      },
+
       // 系统管理员——>公告管理
       {
         path: '/announcement',
@@ -96,44 +120,26 @@ export default [
             authority: ['admin'],
           },
           {
-            path: '/announcement/edit/:ID',
+            path: '/announcement/edit/:id',
             // name: '编辑公告',
             component: './Announcement/Article/ArticleMaking',
             authority: ['admin'],
           },
           {
-            path: '/announcement/detail/:ID',
+            path: '/announcement/detail/:id',
+            name: '公告详情',
+            hideInMenu: true,
             component: './Announcement/Article/Detail',
             authority: ['admin', 'user', 'stu'],
           },
           {
-            path: '/announcement/viewlist',
+            path: '/announcement/articles',
             name: '查看公告',
             component: './Announcement/Article/list',
             authority: ['admin', 'user', 'stu'],
           },
         ],
       },
-      // {
-      //   path: '/announcement/viewlist',
-      //   name: '查看公告',
-      //   component: './Announcement/Article/list',
-      //   authority: ['user', 'stu'],
-      // },
-      // {
-      //   path: '/announcements',
-      //   name: '查看公告',
-      //   icon: 'self_AnnouncementIcon',
-      //   component: './Announcement/Article/list',
-      //   authority: ['user', 'stu'],
-      //   hideChildrenInMenu: true,
-      //   routes: [
-      //     {
-      //       path: '/announcements/detail/:ID',
-      //       component: './Announcement/Article/Detail',
-      //     },
-      //   ],
-      // },
       {
         path: '/courseware',
         name: '课件管理',
@@ -142,34 +148,21 @@ export default [
         routes: [
           {
             path: '/courseware',
-            redirect: '/courseware/coursewareManager',
+            redirect: '/courseware/coursewareManager/index',
           },
 
           {
-            path: '/courseware/coursewareManager',
-            name: '课件管理',
-            // component:'./Courseware/coursewareManager',
+            path: '/courseware/coursewareManager/index',
+            name: '课件列表',
+            component: './Courseware/CoursewareManager/index',
             authority: ['admin'],
-            hideChildrenInMenu: true,
-            routes: [
-              {
-                path: '/courseware/coursewareManager',
-                redirect: '/courseware/coursewareManager/index',
-                authority: ['admin'],
-              },
-              {
-                path: '/courseware/coursewareManager/index',
-                // name:'课件管理',
-                component: './Courseware/CoursewareManager/Index',
-                authority: ['admin'],
-              },
-              {
-                path: '/courseware/coursewareManager/edit/:ID',
-                name: '课件编辑',
-                component: './Courseware/CoursewareManager/EditConent',
-                authority: ['admin'],
-              },
-            ],
+          },
+          {
+            path: '/courseware/coursewareManager/edit/:id',
+            name: '课件编辑',
+            hideInMenu: true,
+            component: './Courseware/CoursewareManager/Edit',
+            authority: ['admin'],
           },
 
           {
@@ -216,39 +209,18 @@ export default [
         routes: [
           {
             path: '/exam',
-            redirect: '/exam/examManager',
+            redirect: '/exam/examManager/index',
           },
           {
-            path: '/exam/examManager',
-            name: '试卷管理',
-            authority: ['admin'],
-            hideChildrenInMenu: true,
-            routes: [
-              {
-                path: '/exam/examManager',
-                redirect: '/exam/examManager/index',
-              },
-              {
-                path: '/exam/examManager/index',
-                // name:'试卷管理',
-                component: './Exam/ExamManager/Index',
-              },
-              {
-                path: '/exam/examManager/edit/:ID',
-                name: '试卷管理',
-                component: './Exam/ExamManager/EditConent',
-              },
-              // {
-              //   path: '/exam/examManager/onShelf/:ID',
-              //   name: '试卷管理（已上架）',
-              //   component: './Exam/ExamManager/OnShelf',
-              // },
-              // {
-              //   path: '/exam/examManager/OffShelf/:ID',
-              //   name: '试卷管理（已下架）',
-              //   component: './Exam/ExamManager/OffShelf',
-              // },
-            ],
+            path: '/exam/examManager/index',
+            name: '试卷列表',
+            component: './Exam/ExamManager/index',
+          },
+          {
+            path: '/exam/examManager/edit/:id',
+            hideInMenu: true,
+            name: '试卷修改',
+            component: './Exam/ExamManager/Edit',
           },
 
           {
@@ -309,12 +281,12 @@ export default [
             component: './TrainGroupManager/AddTrainGroup',
           },
           {
-            path: '/trainGroupManager/editTrainGroup/:ID',
+            path: '/trainGroupManager/editTrainGroup/:id',
             name: '编辑培训群组',
-            component: './TrainGroupManager/EditTrainGroup',
+            component: './TrainGroupManager/Edit',
           },
           {
-            path: '/trainGroupManager/viewTrainGroup/:ID',
+            path: '/trainGroupManager/viewTrainGroup/:id',
             name: '查看培训群组',
             component: './TrainGroupManager/ViewTrainGroup',
           },
@@ -347,7 +319,7 @@ export default [
                 component: './StudyPlan/StudyPlanManager/Index',
               },
               {
-                path: '/studyPlan/studyPlanManager/create/:courseID',
+                path: '/studyPlan/studyPlanManager/create/:courseid',
                 name: '创建学习计划',
                 component: './StudyPlan/StudyPlanManager/CreateSP',
               },
@@ -479,46 +451,55 @@ export default [
 
       // 学员——>我的学习
       {
+        path: '/publicCourse',
+        name: '公开课',
+        icon: 'calendar',
+        component: './MyStudy/publicCourse/publicourse',
+      },
+      {
         path: '/myStudy',
         name: '我的学习',
         icon: 'self_MyStudyIcon',
         authority: ['stu'],
         routes: [
           {
-            path: '/myStudy/learnPlan',
-            name: '我的学习计划',
-            hideChildrenInMenu: true,
-            routes: [
-              {
-                path: '/myStudy/learnPlan',
-                redirect: '/myStudy/learnPlan/index',
-              },
-              {
-                path: '/myStudy/learnPlan/index',
-                component: './MyStudy/LearnPlan/Index',
-              },
-              {
-                path: '/myStudy/learnPlan/video/:id',
-                name: '课程学习',
-                component: './MyStudy/LearnPlan/LearnVideo',
-              },
-              {
-                path: '/myStudy/learnPlan/pdf/:id',
-                name: '课程学习',
-                component: './MyStudy/LearnPlan/LearnPDF',
-              },
-            ],
+            path: '/myStudy',
+            redirect: '/myStudy/LearnPlan/notcompleted',
           },
           {
-            path: '/myStudy/publicCourse',
-            name: '我的公开课',
+            path: '/myStudy/LearnPlan/notcompleted',
+            name: '待完成课程',
+            component: './MyStudy/LearnPlan/Index',
+
+            routes: [],
+          },
+          {
+            path: '/myStudy/LearnPlan/progress/:id',
+            hideInMenu: true,
+            name: '课程学习',
+            component: './MyStudy/LearnPlan/Learn',
+          },
+          {
+            path: '/myStudy/LearnPlan/completed',
+            name: '完成课程',
+            component: './MyStudy/LearnPlan/completed',
+          },
+          {
+            path: '/myStudy/overdue',
+            name: '逾期课程',
+            component: './MyStudy/LearnPlan/overdue',
+          },
+          {
+            path: '/myStudy/publicprogress/index',
+            name: '自学课程',
             component: './MyStudy/publicCourse/index',
           },
-          // {
-          //   path: '/myStudy/myStudy3',
-          //   name: '我的提问',
-          //   component: './MyStudy/MyStudy3',
-          // },
+          {
+            path: '/myStudy/publicprogress/:id',
+            hideInMenu: true,
+            name: '自学课程学习',
+            component: './MyStudy/publicCourse/learn',
+          },
         ],
       },
       // 学员——>我的考试
@@ -530,22 +511,23 @@ export default [
         routes: [
           {
             path: '/myExam/examPlan',
-            name: '我的考试计划',
-            hideChildrenInMenu: true,
-            routes: [
-              {
-                path: '/myExam/examPlan',
-                redirect: '/myExam/examPlan/index',
-              },
-              {
-                path: '/myExam/examPlan/index',
-                component: './MyExam/ExamPlan/Index',
-              },
-            ],
+            name: '待参加考试',
+            component: './MyExam/ExamPlan/Index',
+          },
+          {
+            path: '/myExam/completed',
+            name: '完成的考试',
+            component: './MyExam/ExamPlan/completed',
+          },
+          {
+            path: '/myExam/overdue',
+            name: '逾期的考试',
+            component: './MyExam/ExamPlan/overdue',
           },
           {
             path: '/myExam/onlineExam/:id',
-
+            hideInMenu: true,
+            name: '参加考试中',
             component: './MyExam/OnlineExam/Index',
 
             routes: [
@@ -631,7 +613,7 @@ export default [
       // 个人中心
       {
         name: '个人中心',
-        icon: 'self_PersonalCenterIcon',
+        icon: 'self_SystemManagerIcon',
         authority: ['admin', 'user', 'stu'],
         path: '/personalCenter',
 
@@ -649,14 +631,6 @@ export default [
                 path: '/personalCenter/center/articles',
                 component: './PersonalCenter/Center/Articles',
               },
-              // {
-              //   path: '/personalCenter/center/applications',
-              //   component: './PersonalCenter/Center/Applications',
-              // },
-              // {
-              //   path: '/personalCenter/center/projects',
-              //   component: './PersonalCenter/Center/Projects',
-              // },
             ],
           },
           {

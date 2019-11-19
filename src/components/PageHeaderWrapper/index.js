@@ -29,7 +29,7 @@ const renderFooter = ({ tabList, tabActiveKey, onTabChange, tabBarExtraContent }
       tabBarExtraContent={tabBarExtraContent}
     >
       {tabList.map(item => (
-        <Tabs.TabPane tab={item.tab} key={item.key} />
+        <Tabs.TabPane tab={item.tab} key={item.id} />
       ))}
     </Tabs>
   ) : null;

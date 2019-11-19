@@ -1,0 +1,64 @@
+.managerContent {
+  .searchContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+
+    .TreeSelect {
+      width: 250px;
+      margin-right: 20px;
+    }
+
+    .Search {
+      width: 300px;
+    }
+
+    > div:nth-child(2) {
+      button {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .formContent {
+    border-bottom: 1px dashed #dcdcdc;
+
+    :global {
+      .ant-form-item {
+        margin-bottom: 24px;
+      }
+
+      .ant-form-item-with-help {
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  .tableContent {
+    padding-bottom: 30px;
+    border-bottom: 1px dashed #dcdcdc;
+  }
+
+  .foonter_btns {
+    padding: 34px 0 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    :global {
+      .ant-btn {
+        margin: 0 5px;
+      }
+    }
+  }
+
+  .editorStyle {
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+
+  .image {
+    max-width: 600px;
+  }
+}

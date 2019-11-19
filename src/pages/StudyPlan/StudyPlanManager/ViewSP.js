@@ -53,7 +53,7 @@ class ViewSP extends Component {
         id: studyPlanID, // id
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           console.log('请求成功', res);
           this.setState({
             courserTeacherInfo: res.data.course, // 课件名称

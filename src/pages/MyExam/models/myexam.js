@@ -19,7 +19,7 @@ export default {
     // 学员获取待完成、已完成、已逾期
     *getExamProgress({ payload }, { call, put }) {
       const response = yield call(getExamProgress, payload);
-      if (response.status === 'ok') {
+      if (response && response.status === 'ok') {
         if (payload.status === 'notcompleted') {
           yield put({
             type: 'saveTodoes',

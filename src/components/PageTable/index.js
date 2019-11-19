@@ -98,10 +98,10 @@ class PageTable extends PureComponent {
     const { saveSelectedData } = this.state;
     if (selected) {
       // 选中该条数据
-      saveSelectedData[record.key] = record;
+      saveSelectedData[record.id] = record;
     } else {
       // 取消选中该条数据
-      delete saveSelectedData[record.key];
+      delete saveSelectedData[record.id];
     }
     this.setState({
       saveSelectedData,
@@ -119,12 +119,12 @@ class PageTable extends PureComponent {
     if (selected) {
       // 全选
       changeRows.forEach(v => {
-        saveSelectedData[v.key] = v;
+        saveSelectedData[v.id] = v;
       });
     } else {
       // 取消全选
       changeRows.forEach(v => {
-        delete saveSelectedData[v.key];
+        delete saveSelectedData[v.id];
       });
     }
     this.setState({
@@ -170,7 +170,7 @@ class PageTable extends PureComponent {
 
     const { results, count } = data;
 
-    const dataSource = results.map(value => Object.assign({}, value, { key: value.id }));
+    // const dataSource = results.map(value => Object.assign({}, value, { key: value.id }));
     const pageConifg = {
       ...pagination,
       total: count,
@@ -204,9 +204,9 @@ class PageTable extends PureComponent {
         <Table
           bordered
           loading={loading}
-          rowKey={rowKey || 'key'}
+          rowKey={rowKey || 'id'}
           rowSelection={rowSelection}
-          dataSource={dataSource}
+          dataSource={results}
           columns={columns}
           pagination={pageConifg}
           onChange={this.handleTableChange}
@@ -217,8 +217,8 @@ class PageTable extends PureComponent {
         <Table
           bordered
           loading={loading}
-          rowKey={rowKey || 'key'}
-          dataSource={dataSource}
+          rowKey={rowKey || 'id'}
+          dataSource={results}
           columns={columns}
           pagination={pageConifg}
           onChange={this.handleTableChange}

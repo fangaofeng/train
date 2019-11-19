@@ -54,7 +54,7 @@ class BasicLayout extends React.PureComponent {
       route: { routes, path, authority },
     } = this.props;
     dispatch({
-      type: 'user/fetchCurrent',
+      type: 'account/fetchCurrent',
     });
     dispatch({
       type: 'setting/getSetting',
@@ -68,13 +68,13 @@ class BasicLayout extends React.PureComponent {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { location } = this.props;
-    // 当路由切换时,返回顶部
-    if (location !== nextProps.location) {
-      window.scrollTo(0, 0);
-    }
-  }
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //   const { location } = this.props;
+  //   // 当路由切换时,返回顶部
+  //   if (location !== nextProps.location) {
+  //     window.scrollTo(0, 0);
+  //   }
+  // }
 
   componentWillUnmount() {
     // cancelAnimationFrame(this.renderRef);
@@ -188,11 +188,11 @@ class BasicLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ global, setting, menu: menuModel, user }) => ({
+export default connect(({ global, setting, menu: menuModel, account }) => ({
   collapsed: global.collapsed,
   layout: setting.layout,
   menuData: menuModel.menuData,
   breadcrumbNameMap: menuModel.breadcrumbNameMap,
-  currentUser: user.currentUser,
+  currentUser: account.currentUser,
   ...setting,
 }))(BasicLayout);

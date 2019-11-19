@@ -16,9 +16,9 @@ export default {
     // ------------------------------------------------------------------
     // 系统管理员 ——> 课件管理 ——> 主页，获取所有课件的表格数据
     *getTrainCertificateListData({ payload }, { call, put }) {
-      console.log(payload);
       const response = yield call(getTrainCertificateListData, payload);
-      if (response.status === 'ok') {
+
+      if (response && response.status === 'ok') {
         console.log('成功');
         yield put({
           type: 'saveTrainCertificates',

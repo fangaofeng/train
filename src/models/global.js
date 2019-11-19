@@ -16,7 +16,7 @@ export default {
         payload: res.data,
       });
       yield put({
-        type: 'user/changeNotifyCount',
+        type: 'account/changeNotifyCount',
         payload: res.data.count,
       });
     },
@@ -27,7 +27,7 @@ export default {
       });
       const count = yield select(state => state.global.notices.length);
       yield put({
-        type: 'user/changeNotifyCount',
+        type: 'account/changeNotifyCount',
         payload: count,
       });
     },

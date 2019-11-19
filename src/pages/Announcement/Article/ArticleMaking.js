@@ -31,18 +31,18 @@ class FormDemo extends React.Component {
   componentDidMount() {
     const {
       match: {
-        params: { ID },
+        params: { id },
       },
       dispatch,
       form,
     } = this.props;
     // 异步设置编辑器内容
-    if (ID) {
+    if (id) {
       dispatch({
         type: 'ArticleManager/GetArticleDetail',
-        payload: { id: ID },
+        payload: { id },
         callback: res => {
-          if (res.status === 'ok') {
+          if (res && res.status === 'ok') {
             const { body, thumbnail, title, description, status, pubTime, cover } = res.data;
             console.log('请求成功');
             form.setFieldsValue({
@@ -102,7 +102,7 @@ class FormDemo extends React.Component {
       form,
       dispatch,
       match: {
-        params: { ID },
+        params: { id },
       },
     } = this.props;
 
@@ -117,15 +117,15 @@ class FormDemo extends React.Component {
           data.append('cover', values.cover[0].originFileObj, values.cover[0].name);
         }
 
-        if (ID) {
+        if (id) {
           dispatch({
             type: 'ArticleManager/EditArticle',
             payload: {
-              id: ID,
+              id,
               data,
             },
             callback: res => {
-              if (res.status === 'ok') {
+              if (res && res.status === 'ok') {
                 console.log('请求成功');
               } else {
                 console.log('请求失败');
@@ -139,7 +139,7 @@ class FormDemo extends React.Component {
             payload: data,
 
             callback: res => {
-              if (res.status === 'ok') {
+              if (res && res.status === 'ok') {
                 console.log('请求成功');
               } else {
                 console.log('请求失败');
@@ -162,26 +162,6 @@ class FormDemo extends React.Component {
 
   handleUploadChange = info => {
     console.log('handleUploadChange:', info);
-    // if (info.file.status === 'uploading') {
-    //   this.setState({ loading: true });
-    //   return;
-    // }
-
-    // if (info.file.status === 'done') {
-    //   // Get this url from response in real world.
-    //   getBase64(info.file.originFileObj, previewImage =>
-    //     this.setState({
-    //       previewImage,
-    //       loading: false,
-    //     })
-    //   );
-    // }
-    // if (info.file.status === 'error') {
-    //   message.error(`${info.file.name}上传失败`);
-    //   this.setState({
-    //     loading: false,
-    //   });
-    // }
   };
 
   normFile = e => {
@@ -231,7 +211,7 @@ class FormDemo extends React.Component {
     const { previewImage } = this.state;
     return (
       <PageHeaderWrapper title="发布公告">
-        <Card className={styles.ArticleManagerContent}>
+        <Card className={styles.managerContent}>
           <Form onSubmit={this.handleSubmit} className={styles.formContent}>
             <FormItem label="文章标题">
               {getFieldDecorator('title', {

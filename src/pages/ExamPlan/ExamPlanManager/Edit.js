@@ -6,7 +6,7 @@ import router from 'umi/router';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import ExamBasicInfo from '@/components/ExamBasicInfo';
-import SubmitSuccessCard from '@/components/CustomComponent/SubmitSuccessCard/SubmitSuccessCard';
+import SubmitSuccessCard from '@/components/SubmitSuccessCard';
 import styles from './Common.less';
 
 const FormItem = Form.Item;
@@ -54,7 +54,7 @@ class EditExamPlan extends Component {
         id: examPlanID, // id
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           console.log('请求成功');
           this.setState({
             currentTestInfo: res.data.exampaper,
@@ -123,7 +123,7 @@ class EditExamPlan extends Component {
         },
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           message.success('提交成功');
           this.setState({
             examPlanName, // 考试计划名称
@@ -173,12 +173,7 @@ class EditExamPlan extends Component {
     return (
       <PageHeaderWrapper title={pageHeaderWrapperTitle()}>
         <Spin spinning={examplanLoading}>
-          <ExamBasicInfo
-            isShow={currentStatus === 'success'}
-            detailConfig={{
-              ...currentTestInfo,
-            }}
-          />
+          <ExamBasicInfo isShow={currentStatus === 'success'} ExamInfo={currentTestInfo} />
         </Spin>
         <Card
           className={styles.testInfoDetail}

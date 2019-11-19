@@ -1,0 +1,78 @@
+.batchImportUsersContent {
+  // -----------上传中-----------
+  .uploadingExcelRow {
+    padding: 25px 0;
+
+    .uploadingExcel {
+      > div:nth-child(1) {
+        padding: 15px 0;
+        font-size: 16px;
+        font-weight: bolder;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      > div:nth-child(2) {
+        padding: 20px 0;
+      }
+    }
+  }
+
+  // -----------提交成功后-----------
+  .uploadSuccessDiv {
+    text-align: center;
+    border-bottom: 1px dashed #dcdcdc;
+
+    > div:nth-child(1) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 35px 0;
+
+      > img {
+        margin-right: 20px;
+      }
+
+      > span {
+        display: inline-block;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+
+    > div:nth-child(2) {
+      padding-bottom: 55px;
+      font-size: 16px;
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .uploadSuccessRow {
+    padding: 45px 0;
+
+    .uploadSuccessPreview {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  // -----------提交成功后-----------
+  .foonter_btns {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+
+    :global {
+      .ant-btn {
+        margin: 0 5px;
+      }
+    }
+  }
+}

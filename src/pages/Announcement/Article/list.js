@@ -3,9 +3,9 @@ import { Card, Icon, Input, List, Row, Col } from 'antd';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Link from 'umi/link';
-import styles from './index.less';
 import moment from 'moment';
 import ArticleListContent from '@/components/ArticleListContent';
+import styles from '@/components/styles.less';
 
 const { Search } = Input;
 
@@ -52,9 +52,6 @@ class articleManager extends Component {
 
   // 分页、排序、筛选变化时触发。这边只有分页功能，没有排序和筛选
   handleTableChange = _pagination_ => {
-    // console.log('-------------------');
-    // console.log(_pagination_);
-    // console.log('-------------------');
     const { pagination } = this.state;
     const { current, pageSize } = _pagination_;
     this.setState({
@@ -81,14 +78,10 @@ class articleManager extends Component {
         {text}
       </span>
     );
-    // 循环List数据，添加key
-    const dataSource = articleList.results.map(value =>
-      Object.assign({}, value, { key: value.id })
-    );
 
     return (
       <PageHeaderWrapper title="公告列表">
-        <Card className={styles.ArticleManagerContent}>
+        <Card className={styles.managerContent}>
           <div className={styles.searchContent}>
             <div className="">
               <Search
@@ -104,7 +97,7 @@ class articleManager extends Component {
                 itemLayout="vertical"
                 size="large"
                 pagination={pageConifg}
-                dataSource={dataSource}
+                dataSource={articleList.results}
                 loading={articleListloading}
                 renderItem={item => (
                   <List.Item
@@ -119,7 +112,7 @@ class articleManager extends Component {
                     ]}
                     extra={
                       <a href={`/announcement/detail/${item.id}`}>
-                        <img width={172} height={172} alt="" src={item.thumbnail} />
+                        <img height={172} alt="" src={item.thumbnail} />
                       </a>
                     }
                   >

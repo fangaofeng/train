@@ -26,7 +26,7 @@ function mockTable(page, size) {
         start_time: '2019-08-10',
         end_time: '2019-09-12',
         score: 80,
-        days_remaining: 0,
+        days_remaining: 3,
         plan: {
           id: 1,
           name: '反贿赂合规体系的建立与实践',
@@ -46,7 +46,7 @@ function mockTable(page, size) {
             // 合格分数
             passing_score: 60,
             // 适用对象
-            applicablePerson: '财务管理人员',
+            applicable_user: '财务管理人员',
             // 试卷介绍
             introduce: '考查反贿赂合规体系涵盖的业务范围和工作要点',
             // 封面

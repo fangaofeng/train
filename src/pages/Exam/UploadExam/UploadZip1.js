@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import {
@@ -25,6 +26,7 @@ import router from 'umi/router';
 import Link from 'umi/link';
 import styles from './UploadZip1.less';
 import { getUploadExamurl } from '@/services/uploadUrl/uploadUrl';
+import storetoken from '@/utils/token';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
@@ -86,6 +88,7 @@ class UploadExamStepFirst extends Component {
       testInfo,
       testDetails,
       zipfileid,
+      form,
     } = this.props;
     // 如果是从返回进来的页面
     if (params && params.isBack === 'Y') {
@@ -104,22 +107,24 @@ class UploadExamStepFirst extends Component {
       });
 
       for (const i in testInfo) {
-        let v = testInfo[i];
-        v = v === undefined || v === null || v === '' ? '' : v;
-        this.props.form.setFieldsValue({
-          [i]: v,
-        });
-        if (
-          i === 'name' ||
-          i === 'applicablePerson' ||
-          i === 'introduce' ||
-          i === 'applicableCourseNumber' ||
-          i === 'applicableCourseName'
-        ) {
-          const maxLen = `${i}MaxLength`;
-          const lenleft = `${i}LengthLeft`;
-          const value = v;
-          this.setFormLengthLeft(maxLen, lenleft, value);
+        if (Object.prototype.hasOwnProperty.call(testInfo, i)) {
+          let v = testInfo[i];
+          v = v === undefined || v === null || v === '' ? '' : v;
+          form.setFieldsValue({
+            [i]: v,
+          });
+          if (
+            i === 'name' ||
+            i === 'applicablePerson' ||
+            i === 'introduce' ||
+            i === 'applicableCourseNumber' ||
+            i === 'applicableCourseName'
+          ) {
+            const maxLen = `${i}MaxLength`;
+            const lenleft = `${i}LengthLeft`;
+            const value = v;
+            this.setFormLengthLeft(maxLen, lenleft, value);
+          }
         }
       }
     }
@@ -154,6 +159,8 @@ class UploadExamStepFirst extends Component {
         router.push('/exam/uploadZip/uploadZip2');
       }
     });
+
+    return true;
   };
 
   // Upload组件beforeUpload调用的方法
@@ -190,7 +197,7 @@ class UploadExamStepFirst extends Component {
     }
     if (info.file.status === 'done') {
       message.success(`${info.file.name}上传成功`);
-      if (info.file.response.status === 'ok') {
+      if (info.file.response && info.file.response.status === 'ok') {
         this.setState({
           isUploadDone: true,
           zipfileid: info.file.response.data.zipfileid, // 上传成功后服务器返回的zip文件id
@@ -234,23 +241,26 @@ class UploadExamStepFirst extends Component {
         const {
           zipfileResponse: { testinfo },
         } = this.state;
+        const { form } = this.porps;
         for (const i in testinfo) {
-          let v = testinfo[i];
-          v = v === undefined || v === null || v === '' ? '' : v;
-          this.props.form.setFieldsValue({
-            [i]: v,
-          });
-          if (
-            i === 'name' ||
-            i === 'applicablePerson' ||
-            i === 'introduce' ||
-            i === 'applicableCourseNumber' ||
-            i === 'applicableCourseName'
-          ) {
-            const maxLen = `${i}MaxLength`;
-            const lenleft = `${i}LengthLeft`;
-            const value = v;
-            this.setFormLengthLeft(maxLen, lenleft, value);
+          if (Object.prototype.hasOwnProperty.call(testinfo, i)) {
+            let v = testinfo[i];
+            v = v === undefined || v === null || v === '' ? '' : v;
+            form.setFieldsValue({
+              [i]: v,
+            });
+            if (
+              i === 'name' ||
+              i === 'applicablePerson' ||
+              i === 'introduce' ||
+              i === 'applicableCourseNumber' ||
+              i === 'applicableCourseName'
+            ) {
+              const maxLen = `${i}MaxLength`;
+              const lenleft = `${i}LengthLeft`;
+              const value = v;
+              this.setFormLengthLeft(maxLen, lenleft, value);
+            }
           }
         }
       }
@@ -285,6 +295,7 @@ class UploadExamStepFirst extends Component {
 
   // 为表单赋值同时修改剩余多少字
   setFormLengthLeft = (maxLen, lenleft, value) => {
+    // eslint-disable-next-line react/destructuring-assignment
     const lengthLeft = this.state[maxLen] - value.length; // 剩余多少字
     this.setState({
       [lenleft]: lengthLeft <= 0 ? 0 : lengthLeft,
@@ -342,7 +353,7 @@ class UploadExamStepFirst extends Component {
       applicableCourseNameMaxLength, // 适用课程名称最多50字
       applicableCourseNameLengthLeft, // 适用课程名称剩余字数
     } = this.state;
-    const token = localStorage.getItem('WHLQYHGPXPT_TOKEN');
+    const token = storetoken.get();
     const uploadProps = {
       headers: {
         Authorization: `Token ${token}`,
@@ -395,7 +406,7 @@ class UploadExamStepFirst extends Component {
                   ) : null}
                 </div>
                 <Form hideRequiredMark style={{ display: isFirstUpload ? 'none' : 'block' }}>
-                  <SelfCard title="试卷信息" noPadding="true">
+                  <SelfCard title="试卷信息" nopadding="true">
                     <FormItem label="试卷编号" className={styles.selfFormItem}>
                       {getFieldDecorator('number', {
                         rules: [
@@ -607,7 +618,7 @@ class UploadExamStepFirst extends Component {
                       )}
                     </FormItem>
                   </SelfCard>
-                  <SelfCard title="试题信息" noPadding="true">
+                  <SelfCard title="试题信息" nopadding="true">
                     <Tabs
                       // onChange={this.changeTabs}
                       type="card"

@@ -1,4 +1,4 @@
-import fetch from 'dva/fetch';
+import { fetch } from 'dva';
 import { notification } from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
@@ -135,7 +135,7 @@ export default function request(url, option) {
       // DELETE and 204 do not return data by default
       // using .json will report an error.
 
-      if (newOptions.method === 'DELETE' || response.status === 204) {
+      if (response.status === 204) {
         return response.text();
       }
       return response.json();
@@ -148,20 +148,16 @@ export default function request(url, option) {
         window.g_app._store.dispatch({
           type: 'login/logout',
         });
-        return;
       }
       // environment should not be used
       if (status === 403) {
         router.push('/exception/403');
-        return;
       }
       if (status <= 504 && status >= 500) {
         router.push('/exception/500');
-        return;
       }
       if (status >= 404 && status < 422) {
         router.push('/exception/404');
-
       }
     });
 }

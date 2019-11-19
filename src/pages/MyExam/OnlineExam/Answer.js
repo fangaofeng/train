@@ -158,11 +158,11 @@ class OnlineExamAnswer extends Component {
           visible: true,
           score: res.data.score,
         });
-        if (res.status === 'ok') {
-          console.log('请求成功');
+        if (res && res.status === 'ok') {
+          // console.log('请求成功');
           this.setState({ submitSuccess: true });
         } else {
-          console.log('请求失败');
+          // console.log('请求失败');
           this.setState({ submitSuccess: false });
         }
       },
@@ -171,7 +171,7 @@ class OnlineExamAnswer extends Component {
 
   // 取消提交（关闭模态框）
   handleCancel = () => {
-    console.log('取消按钮');
+    // console.log('取消按钮');
     this.setState({
       visible: false,
     });

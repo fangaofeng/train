@@ -6,102 +6,11 @@ import styles from './index.less';
 
 const { TreeNode } = Tree;
 
-const treeData = [
-  {
-    title: '0-0',
-    copyTitle: '0-0',
-    key: '0-0',
-    id: 1,
-    parentId: -1,
-    children: [
-      {
-        title: '0-0-0',
-        copyTitle: '0-0-0',
-        key: '0-0-0',
-        id: 11,
-        parentId: 1,
-        children: [
-          { title: '0-0-0-0', copyTitle: '0-0-0-0', id: 111, parentId: 2, key: '0-0-0-0' },
-          { title: '0-0-0-1', copyTitle: '0-0-0-1', id: 112, parentId: 2, key: '0-0-0-1' },
-          { title: '0-0-0-2', copyTitle: '0-0-0-2', id: 113, parentId: 2, key: '0-0-0-2' },
-        ],
-      },
-      {
-        title: '0-0-1',
-        copyTitle: '0-0-1',
-        key: '0-0-1',
-        parentId: 1,
-        id: 12,
-        children: [
-          { title: '0-0-1-0', copyTitle: '0-0-1-0', id: 121, parentId: 3, key: '0-0-1-0' },
-          { title: '0-0-1-1', copyTitle: '0-0-1-1', id: 122, parentId: 3, key: '0-0-1-1' },
-          { title: '0-0-1-2', copyTitle: '0-0-1-2', id: 123, parentId: 3, key: '0-0-1-2' },
-        ],
-      },
-      {
-        title: '0-0-2',
-        copyTitle: '0-0-2',
-        key: '0-0-2',
-        parentId: 1,
-        id: 13,
-        children: [],
-      },
-    ],
-  },
-  {
-    title: '0-1',
-    copyTitle: '0-1',
-    key: '0-1',
-    parentId: -1,
-    id: 2,
-    children: [
-      {
-        title: '0-1-0-0',
-        copyTitle: '0-1-0-0',
-        parentId: 5,
-        id: 21,
-        key: '0-1-0-0',
-        isEdit: false,
-        selected: false,
-        children: [],
-      },
-      {
-        title: '0-1-0-1',
-        copyTitle: '0-1-0-1',
-        parentId: 5,
-        id: 22,
-        key: '0-1-0-1',
-        isEdit: false,
-        selected: false,
-        children: [],
-      },
-      {
-        title: '0-1-0-2',
-        copyTitle: '0-1-0-2',
-        parentId: 5,
-        id: 23,
-        key: '0-1-0-2',
-        isEdit: false,
-        selected: false,
-        children: [],
-      },
-    ],
-  },
-  {
-    title: '0-2',
-    copyTitle: '0-2',
-    key: '0-2',
-    parentId: -1,
-    id: 3,
-    children: [],
-  },
-];
-
 export default class TreeEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      treeData,
+      treeData: null,
       inputValue: '',
       expandedKeys: [],
     };
@@ -109,7 +18,7 @@ export default class TreeEdit extends Component {
 
   componentDidMount() {}
 
-  componentWillReceiveProps(nextProps, nextContext) {}
+  // UNSAFE_componentWillReceiveProps(nextProps, nextContext) {}
 
   /**
    * 渲染树节点
@@ -119,7 +28,7 @@ export default class TreeEdit extends Component {
     treeData.map(item => {
       if (item.children) {
         return (
-          <TreeNode title={item.title} key={item.key} dataRef={item}>
+          <TreeNode title={item.title} key={item.id} dataRef={item}>
             {this.renderTreeNodes(item.children)}
           </TreeNode>
         );
@@ -133,10 +42,12 @@ export default class TreeEdit extends Component {
    */
   resetTreeNodes = treeData => {
     treeData.map(mItem => {
-      mItem.title = mItem.copyTitle;
-      if (mItem.children) {
-        this.resetTreeNodes(mItem.children);
+      const TmItem = mItem;
+      TmItem.title = mItem.copyTitle;
+      if (TmItem.children) {
+        this.resetTreeNodes(TmItem.children);
       }
+      return TmItem;
     });
     return treeData;
   };
@@ -149,46 +60,47 @@ export default class TreeEdit extends Component {
    */
   handleTreeData = (treeData, key, type) => {
     treeData.map((mItem, mIndex) => {
-      mItem.title = mItem.copyTitle;
-      if (String(mItem.key) === String(key)) {
+      const TmItem = mItem;
+      TmItem.title = mItem.copyTitle;
+      if (String(TmItem.key) === String(key)) {
         // 选中节点，在节点后面添加edit、del、add的Icon
         if (type === 'select') {
-          mItem.title = (
+          TmItem.title = (
             <TreeIcon
-              editNode={() => this.editNode(mItem.key)}
-              addNode={() => this.addNode(mItem.key)}
-              delNode={() => this.delNode(mItem.key)}
-              title={mItem.copyTitle || ''}
+              editNode={() => this.editNode(TmItem.key)}
+              addNode={() => this.addNode(TmItem.key)}
+              delNode={() => this.delNode(TmItem.key)}
+              title={TmItem.copyTitle || ''}
             />
           );
         }
         // 添加节点，0级添加1级，1级添加2级，2级添加3级，3级添加3级，都在最后面添加
         if (type === 'add') {
-          if (mItem.children && mItem.parentId === -1) {
+          if (TmItem.children && TmItem.parentId === -1) {
             // 一级添加二级
-            const idx = mItem.children.length;
-            const id = idx === 0 ? `${mItem.id}1` : Number(mItem.children[idx - 1].id) + 1;
-            mItem.children = [
-              ...mItem.children,
+            const idx = TmItem.children.length;
+            const id = idx === 0 ? `${TmItem.id}1` : Number(TmItem.children[idx - 1].id) + 1;
+            TmItem.children = [
+              ...TmItem.children,
               {
                 title: <TreeInput blurInput={value => this.blurInput(value, id)} />,
                 key: id,
                 id,
-                parentId: mItem.id,
+                parentId: TmItem.id,
                 children: [],
               },
             ];
-          } else if (mItem.children && mItem.parentId !== -1) {
+          } else if (TmItem.children && TmItem.parentId !== -1) {
             // 二级添加三级
-            const idx = mItem.children.length;
-            const id = idx === 0 ? `${mItem.id}1` : Number(mItem.children[idx - 1].id) + 1;
-            mItem.children = [
-              ...mItem.children,
+            const idx = TmItem.children.length;
+            const id = idx === 0 ? `${TmItem.id}1` : Number(TmItem.children[idx - 1].id) + 1;
+            TmItem.children = [
+              ...TmItem.children,
               {
                 title: <TreeInput blurInput={value => this.blurInput(value, id)} />,
                 key: id,
                 id,
-                parentId: mItem.id,
+                parentId: TmItem.id,
               },
             ];
           } else {
@@ -199,25 +111,26 @@ export default class TreeEdit extends Component {
               title: <TreeInput blurInput={value => this.blurInput(value, id)} />,
               key: id,
               id,
-              parentId: mItem.parentId,
+              parentId: TmItem.parentId,
             });
           }
         }
         // 编辑节点，变为input框
         if (type === 'edit') {
-          mItem.title = (
+          TmItem.title = (
             <TreeInput
-              value={mItem.copyTitle}
-              key={mItem.key}
-              blurInput={value => this.blurInput(value, mItem.key)}
+              value={TmItem.copyTitle}
+              key={TmItem.key}
+              blurInput={value => this.blurInput(value, TmItem.key)}
             />
           );
         }
         // input blur 事件，value值变为title
         if (type === 'blur') {
-          mItem.title = this.state.inputValue;
-          mItem.copyTitle = this.state.inputValue;
-          if (mItem.title === '') {
+          const { inputValue } = this.state;
+          TmItem.title = inputValue;
+          TmItem.copyTitle = inputValue;
+          if (TmItem.title === '') {
             treeData.splice(mIndex, 1);
           }
         }
@@ -225,12 +138,11 @@ export default class TreeEdit extends Component {
         if (type === 'del') {
           treeData.splice(mIndex, 1);
         }
-      } else {
-        // 递归
-        if (mItem.children) {
-          this.handleTreeData(mItem.children, key, type);
-        }
+      } else if (TmItem.children) {
+        this.handleTreeData(TmItem.children, key, type);
       }
+
+      return TmItem;
     });
     return treeData;
   };
@@ -302,10 +214,11 @@ export default class TreeEdit extends Component {
    * @param selectedKeys
    */
   onSelect = selectedKeys => {
+    const { expandedKeys } = this.state;
     let { treeData } = this.state;
     treeData = this.resetTreeNodes(treeData);
     treeData = this.handleTreeData(treeData, selectedKeys[0], 'select');
-    this.setState({ treeData, expandedKeys: [...this.state.expandedKeys, selectedKeys[0]] });
+    this.setState({ treeData, expandedKeys: [...expandedKeys, selectedKeys[0]] });
   };
 
   /**

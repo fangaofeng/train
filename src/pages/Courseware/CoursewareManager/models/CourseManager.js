@@ -1,12 +1,10 @@
 import {
-  getAllCourseManagerListData, // 系统管理员 ——> 课件管理 ——> 主页，获取所有课件的表格数据
+  getCourses, // 系统管理员 ——> 课件管理 ——> 主页，获取所有课件的表格数据
   delCourse, // 系统管理员 ——> 课件管理 ——> 主页，删除课件
-  offShelfCourse, // 系统管理员 ——> 课件管理 ——> 主页，下架课件
-  courseOnArchive, // 系统管理员 ——> 课件管理 ——> 主页，归档课件
+  courseChangeStatus, // 系统管理员 ——> 课件管理 ——> 主页，归档课件
   getCourseTeacherInfo, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 获取课件信息，老师信息
   getTrainersData, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 获取现有培训管理员的Table表格数据
-  delOneData, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 单个删除
-  delBatch, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 批量删除
+  delTrainmanagers, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 批量删除
   getOtherTrainers, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框Table表格数据
   submitAddedData, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框提交按钮
   changeCourseStatus, // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中、已上架、已下架）——> 上架课件、重新上架课件
@@ -25,10 +23,10 @@ export default {
   effects: {
     // ------------------------------------------------------------------
     // 系统管理员 ——> 课件管理 ——> 主页，获取所有课件的表格数据
-    *getAllCourseManagerListData({ payload }, { call, put }) {
+    *GetCourses({ payload }, { call, put }) {
       console.log(payload);
-      const response = yield call(getAllCourseManagerListData, payload);
-      if (response.status === 'ok') {
+      const response = yield call(getCourses, payload);
+      if (response && response.status === 'ok') {
         console.log('成功');
         yield put({
           type: 'saveAllCourseManagerTableData',
@@ -43,15 +41,10 @@ export default {
       callback(response); // 返回结果
     },
     // 系统管理员 ——> 课件管理 ——> 主页，下架课件
-    *OffShelfCourse({ payload, callback }, { call }) {
-      console.log(payload);
-      const response = yield call(offShelfCourse, payload);
-      callback(response); // 返回结果
-    },
     // 系统管理员 ——> 课件管理 ——> 主页，归档课件
-    *CourseOnArchive({ payload, callback }, { call }) {
+    *CourseChangeStatus({ payload, callback }, { call }) {
       console.log(payload);
-      const response = yield call(courseOnArchive, payload);
+      const response = yield call(courseChangeStatus, payload);
       callback(response); // 返回结果
     },
     // ------------------------------------------------------------------
@@ -65,7 +58,7 @@ export default {
     // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 获取现有培训管理员的Table表格数据
     *GetTrainmanagers({ payload }, { call, put }) {
       const response = yield call(getTrainersData, payload);
-      if (response.status === 'ok') {
+      if (response && response.status === 'ok') {
         console.log('成功');
         yield put({
           type: 'saveTrainersData',
@@ -74,22 +67,24 @@ export default {
       }
     },
     // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 单个删除
-    *DelOneData({ payload, callback }, { call }) {
-      console.log(payload);
-      const response = yield call(delOneData, payload);
-      callback(response); // 返回结果
-    },
-    // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 批量删除
-    *DelBatch({ payload, callback }, { call }) {
-      console.log(payload);
-      const response = yield call(delBatch, payload);
+    // *DelOneData({ payload, callback }, { call }) {
+    //   console.log(payload);
+    //   const response = yield call(delOneData, payload);
+    //   callback(response); // 返回结果
+    // },
+    // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 批量删除管理员
+    *DelTrainmanagers({ payload, callback }, { call }) {
+      const data = {};
+      data.trainermanagers = payload.data;
+      data.id = payload.id;
+      const response = yield call(delTrainmanagers, data);
       callback(response); // 返回结果
     },
     // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框Table表格数据
     *GetOtherTrainmanagers({ payload }, { call, put }) {
       console.log('GetOtherTrainmanagers');
       const response = yield call(getOtherTrainers, payload);
-      if (response.status === 'ok') {
+      if (response && response.status === 'ok') {
         console.log('成功');
         yield put({
           type: 'saveAddTrainersData',

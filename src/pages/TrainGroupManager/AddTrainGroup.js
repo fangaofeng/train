@@ -50,13 +50,13 @@ class AddTrainGroup extends Component {
           return;
         }
         dispatch({
-          type: 'trainGroupManager/AddTGManagerSubmit',
+          type: 'trainGroupManager/addTrainGroup',
           payload: {
             name: values.group_name,
             trainers: selectedAllKeys,
           },
           callback: res => {
-            if (res.status === 'ok') {
+            if (res && res.status === 'ok') {
               message.success('提交成功');
               this.setState({
                 responseGroupId: res.data.id,
@@ -230,9 +230,8 @@ class AddTrainGroup extends Component {
               // type="primary"
               onClick={() =>
                 router.push({
-                  pathname: '/trainGroupManager/viewTrainGroup',
+                  pathname: `/trainGroupManager/viewTrainGroup/${responseGroupId}`,
                   query: {
-                    id: responseGroupId,
                     num: responseGroupNumber,
                     name: responseGroupName,
                   },

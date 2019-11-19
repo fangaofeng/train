@@ -12,10 +12,6 @@ export async function delTrainCertificate(params) {
     method: 'DELETE',
     body: {},
   });
-  // return request('/api/course/ware/del', {
-  //   method: 'POST',
-  //   body: params,
-  // });
 }
 
 // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 增加培训管理员模态框提交按钮

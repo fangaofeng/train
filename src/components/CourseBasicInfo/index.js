@@ -43,7 +43,7 @@ class CourseBasicInfo extends PureComponent {
         id: courseid, // id
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           console.log('请求成功');
           this.setState({
             courserTeacherInfo: res.data,
@@ -60,12 +60,12 @@ class CourseBasicInfo extends PureComponent {
       isShow, // true——隐藏，false——显示
     } = this.props;
     const { courserTeacherInfo } = this.state;
-    console.log(courserTeacherInfo);
+    // console.log(courserTeacherInfo);
     return (
       <Row
         gutter={24}
         className={classNames(styles.rowInfo, isShow ? styles.rowInfoSuccess : '')}
-        // style={{display:currentStatus==='success'?'none':'block'}}
+        style={{ display: isShow ? 'none' : 'block' }}
       >
         <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
           <SelfCard title="课程信息">

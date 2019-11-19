@@ -68,10 +68,32 @@ const filterMenuData = menuData => {
   if (!menuData) {
     return [];
   }
+
   return menuData
     .filter(item => item.name && !item.hideInMenu)
     .map(item => check(item.authority, getSubMenu(item)))
     .filter(item => item);
+};
+const flattenmenuItem = menuItem => {
+  let flatmenuItem = menuItem;
+  if (menuItem.children) {
+    if (menuItem.children.length === 1) {
+      [flatmenuItem] = menuItem.children;
+      if (!flatmenuItem.icon && menuItem.icon) {
+        flatmenuItem.icon = menuItem.icon;
+      }
+      return flattenmenuItem(flatmenuItem);
+    }
+  }
+  return flatmenuItem;
+};
+const flatMenuData = menuData => {
+  if (!menuData) {
+    return [];
+  }
+  const filtermenuData = filterMenuData(menuData);
+
+  return filtermenuData.map(item => flattenmenuItem(item));
 };
 /**
  * 获取面包屑映射
@@ -82,7 +104,7 @@ const getBreadcrumbNameMap = menuData => {
     return {};
   }
   const routerMap = {};
-
+  const newmenuData = menuData.map(item => flattenmenuItem(item));
   const flattenMenuData = data => {
     data.forEach(menuItem => {
       if (menuItem.children) {
@@ -92,7 +114,7 @@ const getBreadcrumbNameMap = menuData => {
       routerMap[menuItem.path] = menuItem;
     });
   };
-  flattenMenuData(menuData);
+  flattenMenuData(newmenuData);
   return routerMap;
 };
 
@@ -111,8 +133,8 @@ export default {
     *getMenuData({ payload }, { put }) {
       const { routes, authority, path } = payload;
       const originalMenuData = memoizeOneFormatter(routes, authority, path);
-      const menuData = filterMenuData(originalMenuData);
-      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(originalMenuData);
+      const menuData = flatMenuData(originalMenuData);
+      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);
       yield put({
         type: 'save',
         payload: { menuData, breadcrumbNameMap, routerData: routes },

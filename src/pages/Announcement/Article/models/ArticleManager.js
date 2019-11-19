@@ -19,11 +19,11 @@ export default {
   effects: {
     // ------------------------------------------------------------------
     // 系统管理员 ——> 文章管理 ——> 主页，获取所有文章的表格数据
-    *GetArticleLists({ payload, config }, { call, put }) {
-      console.log(config);
+    *GetArticleLists({ payload }, { call, put }) {
+      // console.log(config);
       const response = yield call(getArticleLists, payload);
-      if (response.status === 'ok') {
-        console.log('成功');
+      if (response && response.status === 'ok') {
+        // console.log('成功');
         yield put({
           type: 'saveArticleListTableData',
           payload: response.data,

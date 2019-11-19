@@ -1,0 +1,70 @@
+.departmentManagerContent .deparmentAlreadyExist .departmentManagerContentTreeDiv > div:nth-child(1) {
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #3c3c3c;
+  text-align: center;
+}
+.departmentManagerContent .deparmentAlreadyExist .departmentManagerContentTreeDiv > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.departmentManagerContent .uploadingExcelRow {
+  padding: 25px 0;
+}
+.departmentManagerContent .uploadingExcelRow .uploadingExcel > div:nth-child(1) {
+  padding: 15px 0;
+  font-size: 16px;
+  font-weight: bolder;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.departmentManagerContent .uploadingExcelRow .uploadingExcel > div:nth-child(2) {
+  padding: 20px 0;
+}
+.departmentManagerContent .uploadSuccessDiv {
+  text-align: center;
+  border-bottom: 1px dashed #dcdcdc;
+}
+.departmentManagerContent .uploadSuccessDiv > div:nth-child(1) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px 0;
+}
+.departmentManagerContent .uploadSuccessDiv > div:nth-child(1) > img {
+  margin-right: 20px;
+}
+.departmentManagerContent .uploadSuccessDiv > div:nth-child(1) > span {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+}
+.departmentManagerContent .uploadSuccessDiv > div:nth-child(2) {
+  padding-bottom: 55px;
+  font-size: 16px;
+}
+.departmentManagerContent .uploadSuccessDiv > div:nth-child(2) span {
+  font-weight: bold;
+}
+.departmentManagerContent .uploadSuccessRow {
+  padding: 45px 0;
+}
+.departmentManagerContent .uploadSuccessRow .uploadSuccessPreview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.departmentManagerContent .foonter_btns {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+.departmentManagerContent .foonter_btns :global .ant-btn {
+  margin: 0 5px;
+}

@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { routerRedux } from 'dva/router';
+import { routerRedux } from 'dva';
 // import { stringify } from 'qs';
 // import { fakeAccountLogin, getFakeCaptcha } from '@/services/api';
 import { accountLogin } from '@/services/api';
@@ -43,7 +43,7 @@ export default {
           localStorage.removeItem('WHLQYHGPXPT_USERNAME');
         }
         token.save(response.token); // 保存token
-        // if (response.status === 'ok') {
+        // if (response && response.status === 'ok') {
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -84,7 +84,7 @@ export default {
       // 退出后不使用重定向
       yield put(
         routerRedux.push({
-          pathname: '/user/login',
+          pathname: '/auth/login',
           // search: stringify({
           //   redirect: window.location.href,
           // }),
@@ -92,7 +92,7 @@ export default {
       );
       // yield put(
       //   routerRedux.push({
-      //     pathname: '/user/login',
+      //     pathname: '/auth/login',
       //     search: stringify({
       //       redirect: window.location.href,
       //     }),

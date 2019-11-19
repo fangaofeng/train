@@ -6,7 +6,7 @@ import router from 'umi/router';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import CourseBasicInfo from '@/components/CourseBasicInfo';
-import SubmitSuccessCard from '@/components/CustomComponent/SubmitSuccessCard/SubmitSuccessCard';
+import SubmitSuccessCard from '@/components/SubmitSuccessCard';
 import styles from './Common.less';
 
 const FormItem = Form.Item;
@@ -56,7 +56,7 @@ class EditSP extends Component {
         id: studyPlanID, // id
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           // console.log('请求成功', res);
           this.setState({
             courserTeacherInfo: res.data.course,
@@ -122,7 +122,7 @@ class EditSP extends Component {
         },
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           message.success('提交成功');
           this.setState({
             studyPlanName, // 学习计划名称

@@ -38,17 +38,15 @@ export async function getSPGroups(params) {
 // 学习计划管理——>查看学习计划——>查看培训群组学习详情（获取table表格数据）
 export async function getViewSPGroupDetails(params) {
   return request(
-    `/api/learn/plan/${params.studyPlanID}/${params.trainGroupID}/members?page=${
-      params.page
-    }&size=${params.size}`
+    `/api/learn/plan/${params.studyPlanID}/${params.trainGroupID}/members?page=${params.page}&size=${params.size}`
   );
 }
 // ------------------------------------------------------------------
 // 学习计划管理——>主页，归档学习计划
-export async function fileOnArchive(params) {
-  return request(`/api/learn/plan/fileOnArchive`, {
-    method: 'POST',
-    body: params,
+export async function changeStatus(params) {
+  return request(`/api/learn/plan/${params.id}`, {
+    method: 'PATCH',
+    body: params.data,
   });
 }
 // ------------------------------------------------------------------

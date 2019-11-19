@@ -1,5 +1,6 @@
 // https://umijs.org/config/
 // import os from 'os';
+// import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import pageRoutes from './router.config';
 import webpackPlugin from './plugin.config';
 // import defaultSettings from '../src/defaultSettings';
@@ -21,7 +22,7 @@ export default {
         locale: {
           enable: false, // default false
           default: 'zh-CN', // default zh-CN
-          baseNavigator: true, // 为true时，用navigator.language的值作为默认语言 default true, when it is true, will use `navigator.language` overwrite default
+          baseNavigator: false, // 为true时，用navigator.language的值作为默认语言 default true, when it is true, will use `navigator.language` overwrite default
         },
         // dynamicImport: {
         //   loadingComponent: './components/PageLoading/index',
@@ -38,13 +39,6 @@ export default {
         //   : {}),
       },
     ],
-    // [
-    //   'umi-plugin-ga',
-    //   {
-    //     code: 'UA-72788897-6',
-    //     judge: () => process.env.APP_TYPE === 'site',
-    //   },
-    // ],
   ],
   targets: {
     ie: 11,
@@ -54,12 +48,23 @@ export default {
   },
   // 路由配置
   routes: pageRoutes,
-  // Theme for antd https://ant.design/docs/react/customize-theme-cn
   theme: myThemeConfig, // 自定义主题
   // {   'primary-color': defaultSettings.primaryColor, },
   externals: {
     '@antv/data-set': 'DataSet',
   },
+
+  uglifyJSOptions(opts) {
+    if (process.env.NODE_ENV !== 'production') {
+      const optss = opts;
+      optss.uglifyOptions.compress.warnings = true;
+      optss.uglifyOptions.compress.drop_console = true;
+      optss.uglifyOptions.compress.drop_debugger = true;
+      return optss;
+    }
+    return opts;
+  },
+
   proxy: {
     '/api': {
       target: 'http://localhost:9000/',
@@ -79,20 +84,24 @@ export default {
     getLocalIdent: (context, localIdentName, localName) => {
       if (
         context.resourcePath.includes('node_modules') ||
-        context.resourcePath.includes('ant.design.pro.less') ||
+        context.resourcePath.includes('web.less') ||
         context.resourcePath.includes('global.less')
       ) {
+        // console.log('localName1:', context.resourcePath.includes('node_modules'));
         return localName;
       }
       const match = context.resourcePath.match(/src(.*)/);
       if (match && match[1]) {
         const antdProPath = match[1].replace('.less', '');
+        // console.log('antdProPath:', antdProPath);
         const arr = antdProPath
           .split('/')
           .map(a => a.replace(/([A-Z])/g, '-$1'))
           .map(a => a.toLowerCase());
-        return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
+        // console.log('localName3:', `web${arr.join('-')}-${localName}`.replace(/--/g, '-'));
+        return `web${arr.join('-')}-${localName}`.replace(/--/g, '-');
       }
+      // console.log('localName2:', localName);
       return localName;
     },
   },

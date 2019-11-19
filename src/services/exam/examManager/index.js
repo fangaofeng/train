@@ -36,29 +36,29 @@ export async function changeExamStatus(params) {
 }
 // ------------------------------------------------------------------
 // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 获取试卷信息
-export async function getTestPapersInfo(params) {
+export async function getPaperDetail(params) {
   return request(`/api/paper/${params.id}`);
 }
 // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 获取现有培训管理员的Table表格数据
-export async function getTrainersData(params) {
+export async function getTrainmanagers(params) {
   return request(`/api/paper/${params.id}/trainmanagers?page=${params.page}&size=${params.size}`);
 }
 // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 单个删除
-export async function delOneData(params) {
+export async function delTrainmanager(params) {
   return request(`/api/paper/${params.id}/trainmanagers`, {
     method: 'PATCH',
     body: params.data,
   });
 }
 // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 批量删除
-export async function delBatch(params) {
+export async function delTrainmanagers(params) {
   return request(`/api/paper/${params.id}/trainmanagers`, {
     method: 'PATCH',
     body: params.data,
   });
 }
 // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 增加培训管理员模态框Table表格数据
-export async function getOtherTrainers(params) {
+export async function getOtherTrainmanagers(params) {
   return request(
     `/api/paper/${params.id}/trainmanagers?page=${params.page}&size=${params.size}&exclude=true`
   );

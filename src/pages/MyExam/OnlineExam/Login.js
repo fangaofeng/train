@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Card, Button, Row, Col, Spin } from 'antd';
+import { Card, Button, Row, Col, Spin, message } from 'antd';
 import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
@@ -35,14 +35,13 @@ class OnlineExamLogin extends Component {
         id,
       },
       callback: res => {
-        if (res.status === 'ok') {
-          console.log('请求成功', res.data);
+        if (res && res.status === 'ok') {
           const {
-            status,
-            start_time,
-            end_time,
-            score,
-            days_remaining,
+            // status,
+            // start_time,
+            // end_time,
+            // score,
+            // days_remaining,
             plan,
             plan: { exampaper },
           } = res.data;
@@ -58,7 +57,7 @@ class OnlineExamLogin extends Component {
             },
           });
         } else {
-          console.log('请求失败');
+          message.warning('您无法参加考试');
         }
       },
     });

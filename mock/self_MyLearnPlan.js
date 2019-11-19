@@ -32,7 +32,7 @@ function mockTable(page, size) {
         status: sta, // 已指派、学习中、已完成、超期已完成、超期未完成
         progress: {
           starttime: '300',
-          numpage: '2',
+          numpage: 2,
         },
         percent: Math.ceil(Math.random() * 50) + 50,
         plan: {
@@ -48,8 +48,7 @@ function mockTable(page, size) {
             class_hour: '1.50', // 课时
             file_type: fileType,
             teachername: '张老师', // 讲师姓名
-            teacherdesc:
-              '上海交通大学工科硕士。二年级起钻研奥赛，中考前夕代班上课，高中获数学物理竞赛省级奖。10年起兼职教育行业，12年入沪上某知名机构，15年合伙加入乐课力培优，现任职乐课力竞赛部。执教5年，所带班级在各类竞赛中战绩优异。 张老师功底深厚，逻辑性强，上课激情，板书清晰，重、难点突出。她将用爱心耐心责任心及独特的教学能力，培养孩子们对于未知领域的兴趣，畅享数学。',
+            teacherdesc: '上海交通大学工科硕士。培养孩子们对于未知领域的兴趣，畅享数学。',
             teacherimg: 'http://localhost/002.jpg', // 老师封面
             cover: 'http://localhost/001.jpg', // 课件封面
             status: '拟制',
@@ -106,7 +105,7 @@ export default {
         status: '已指派', // 已指派、学习中、已完成、超期已完成、超期未完成
         progress: {
           starttime: '300',
-          numpage: '2',
+          numpage: 2,
         },
         type: 'course',
         plan: {
@@ -123,7 +122,7 @@ export default {
             file_type: fileType,
             teachername: '张老师', // 讲师姓名
             teacherdesc:
-              '上海交通大学工科硕士。二年级起钻研奥赛，中考前夕代班上课，高中获数学物理竞赛省级奖。10年起兼职教育行业，12年入沪上某知名机构，15年合伙加入乐课力培优，现任职乐课力竞赛部。执教5年，所带班级在各类竞赛中战绩优异。 张老师功底深厚，逻辑性强，上课激情，板书清晰，重、难点突出。她将用爱心耐心责任心及独特的教学能力，培养孩子们对于未知领域的兴趣，畅享数学。',
+              '上海交通大学工科硕士。教育行业，12年入沪上某知名机构，年，所带班级在各类竞赛中战绩优异。 张老师功底深厚，逻辑性强，上课激情，板书清晰，重、难点突出。她将用爱心耐心责任心及独特的教学能力，培养孩子们对于未知领域的兴趣，畅享数学。',
             teacherimg: 'http://localhost/002.jpg', // 老师封面
             cover: 'http://localhost/001.jpg', // 课件封面
             status: '拟制',

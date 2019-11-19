@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Card, List, Button, Input } from 'antd';
-import router from 'umi/router';
+import { Card, List, Input, Button } from 'antd';
+
 import Link from 'umi/link';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import SelfCard from '@/components/Workbench/selfCard';
+
 import SelfItemCard from '@/components/Workbench/selfItemCard';
 import SelfItemCardImg from '@/components/Workbench/selfItemCardImg';
 import SelfItemCardDetail from '@/components/Workbench/selfItemCardDetail';
@@ -12,10 +12,10 @@ import styles from './index.less';
 
 const { Search } = Input;
 
-@connect(({ CourseManager }) => ({
-  allCourseManager: CourseManager.allCourseManager, // 系统管理员 ——> 课件管理 ——> 主页，获取所有课件的表格数据
+@connect(({ TrainCertificates }) => ({
+  TrainCertificates: TrainCertificates.TrainCertificates, // 系统管理员 ——> 课件管理 ——> 主页，获取所有课件的表格数据
 }))
-class coursewareList extends Component {
+class TrainCertificate extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,7 +45,7 @@ class coursewareList extends Component {
   getListData = (page, size) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'CourseManager/getAllCourseManagerListData',
+      type: 'TrainCertificates/getTrainCertificateListData',
       payload: {
         page, // 页码
         size, // 每页条数
@@ -71,18 +71,18 @@ class coursewareList extends Component {
   };
 
   render() {
-    const { allCourseManager } = this.props;
+    const { TrainCertificates } = this.props;
     const { pagination } = this.state;
     const pageConfig = {
       ...pagination,
-      total: allCourseManager.count,
+      total: TrainCertificates.count,
       showTotal: total => `共 ${total} 条记录`,
       onChange: this.handlePageChange,
     };
     // 循环Table数据，添加key
-    const dataSource = allCourseManager.results.map(value =>
-      Object.assign({}, value, { key: value.id })
-    );
+    // const dataSource = TrainCertificates.results.map(value =>
+    //   Object.assign({}, value, { key: value.id })
+    // );
 
     return (
       <PageHeaderWrapper title="课件管理">
@@ -99,7 +99,7 @@ class coursewareList extends Component {
 
           <List
             grid={{ gutter: 4, xs: 1, sm: 1, md: 2, lg: 2, xl: 4, xxl: 4 }}
-            dataSource={dataSource}
+            dataSource={TrainCertificates.results}
             pagination={pageConfig}
             locale={{
               emptyText: <div>没有培训证书</div>,
@@ -110,11 +110,13 @@ class coursewareList extends Component {
                   <SelfItemCardImg
                     // item={item}
                     imgSrc={item.cover}
-                    // showCourseTip
-                    // showExamTip
                     studyTime={`${Number(item.class_hour)}学时`}
                     btns={
-                      <Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>创建学习计划</Link>
+                      <Button type="primary">
+                        <Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>
+                          创建学习计划
+                        </Link>
+                      </Button>
                     }
                   />
                   <SelfItemCardDetail
@@ -136,4 +138,4 @@ class coursewareList extends Component {
   }
 }
 
-export default coursewareList;
+export default TrainCertificate;

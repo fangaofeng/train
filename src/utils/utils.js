@@ -179,5 +179,5 @@ export function formatWan(val) {
 }
 
 export function isAntdPro() {
-  return window.location.hostname === 'preview.pro.ant.design';
+  return window.location.hostname === 'localhost';
 }

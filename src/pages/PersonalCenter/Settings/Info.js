@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
-import { FormattedMessage } from 'umi-plugin-react/locale';
+// import { FormattedMessage } from 'umi-plugin-react/locale';
 import { Menu } from 'antd';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import styles from './Info.less';
@@ -9,8 +9,8 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 const { Item } = Menu;
 
-@connect(({ user }) => ({
-  currentUser: user.currentUser,
+@connect(({ account }) => ({
+  currentUser: account.currentUser,
 }))
 class Info extends Component {
   constructor(props) {

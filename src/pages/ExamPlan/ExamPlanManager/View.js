@@ -60,7 +60,7 @@ class ViewExamPlan extends Component {
         id: examPlanID, // id
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           console.log('请求成功');
           this.setState({
             currentTestInfo: res.data.exampaper,

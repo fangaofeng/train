@@ -42,7 +42,7 @@ class ExamBasicInfo extends PureComponent {
         id,
       },
       callback: res => {
-        if (res.status === 'ok') {
+        if (res && res.status === 'ok') {
           console.log('请求成功');
           this.setState({
             currentTestInfo: res.data,
@@ -62,7 +62,7 @@ class ExamBasicInfo extends PureComponent {
     const { currentTestInfo } = this.state;
     const info = (
       <Row>
-        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={14}>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={16}>
           <div className={styles.leftContent}>
             <div className={styles.imgLeft}>
               <img src={currentTestInfo.cover} alt="" />
@@ -90,17 +90,18 @@ class ExamBasicInfo extends PureComponent {
                   合格分数：
                   {currentTestInfo.passing_score}分
                 </span>
-                <Divider type="vertical" />
-                <span>
-                  考试时长：
-                  {currentTestInfo.duration}
-                  分钟
-                </span>
+                <div className={styles.msgDetail}>
+                  <span>
+                    考试时长：
+                    {currentTestInfo.duration}
+                    分钟
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </Col>
-        <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
+        <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={8}>
           <div className={styles.rightContent}>
             <div className={styles.introduceName}>试卷介绍：</div>
             <div className={styles.introduceInfo}>{currentTestInfo.introduce}</div>
@@ -122,9 +123,7 @@ class ExamBasicInfo extends PureComponent {
       <div
         className={classNames(styles.examInfoContent, isShow ? styles.hiddenExamInfoContent : '')}
       >
-        <SelfCard title="试卷信息" nopadding>
-          {info}
-        </SelfCard>
+        <SelfCard title="试卷信息">{info}</SelfCard>
       </div>
     );
   }

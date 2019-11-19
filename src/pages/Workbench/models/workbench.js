@@ -32,7 +32,7 @@ export default {
     // 获取平台公告
     *getAnnouncement(_, { call, put }) {
       const response = yield call(getAnnouncement);
-      if (response.status === 'ok') {
+      if (response && response.status === 'ok') {
         yield put({
           type: 'saveAnnouncement',
           payload: response.data.results,
@@ -42,7 +42,7 @@ export default {
     // 系统管理员获取课件管理
     *getCourseManager({ payload }, { call, put }) {
       const response = yield call(getCourseManager, payload);
-      if (response.status === 'ok') {
+      if (response && response.status === 'ok') {
         yield put({
           type: 'saveCourseManager',
           payload: response.data.results,
@@ -61,7 +61,7 @@ export default {
     // 培训管理员获取最新课程
     *getLatestCourse({ payload }, { call, put }) {
       const response = yield call(getLatestCourse, payload);
-      if (response.status === 'ok') {
+      if (response && response.status === 'ok') {
         yield put({
           type: 'saveLatestCourse',
           payload: response.data.results,
@@ -79,7 +79,7 @@ export default {
     // 学员获取待完成、已完成、已逾期
     *GetStuAllCourseAndExam(_, { call, put }) {
       const response = yield call(getStuAllCourseAndExam);
-      if (response.status === 'ok') {
+      if (response && response.status === 'ok') {
         yield put({
           type: 'saveStuAllCourseAndExam',
           payload: response.data,

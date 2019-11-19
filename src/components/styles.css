@@ -1,0 +1,45 @@
+.managerContent .searchContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.managerContent .searchContent .TreeSelect {
+  width: 250px;
+  margin-right: 20px;
+}
+.managerContent .searchContent .Search {
+  width: 300px;
+}
+.managerContent .searchContent > div:nth-child(2) button {
+  margin-left: 20px;
+}
+.managerContent .formContent {
+  border-bottom: 1px dashed #dcdcdc;
+}
+.managerContent .formContent :global .ant-form-item {
+  margin-bottom: 24px;
+}
+.managerContent .formContent :global .ant-form-item-with-help {
+  margin-bottom: 5px;
+}
+.managerContent .tableContent {
+  padding-bottom: 30px;
+  border-bottom: 1px dashed #dcdcdc;
+}
+.managerContent .foonter_btns {
+  padding: 34px 0 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.managerContent .foonter_btns :global .ant-btn {
+  margin: 0 5px;
+}
+.managerContent .editorStyle {
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+.managerContent .image {
+  max-width: 600px;
+}

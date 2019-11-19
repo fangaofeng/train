@@ -141,22 +141,7 @@ export default {
       status: 'ok',
     });
   },
-  // 培训群组管理（批量删除）
-  // 'POST /api//user/list/tGManagerBatchDel': (req, res) => {
-  //   res.send({
-  //     status: 'ok',
-  //   });
-  // },
-  // ------------------------------------------------------------------
-  // 增加培训群组（获取table表格数据）
-  // 'GET /api//user/list/addTtrainGroupManager': (req, res) => {
-  //   const params = req.query;
-  //   const { page , size } = params;
-  //   const result = mockTable2(page,size);
-  //   return res.json(result);
-  // },
-  // 增加培训群组(点击提交按钮)
-  // 'POST /api//user/list/addTGSubmit': (req, res) => {
+
   'POST /api/train/group': (req, res) => {
     res.send({
       status: 'ok',
@@ -175,7 +160,7 @@ export default {
    * 培训管理员 ————> 培训群组管理 ————> 编辑培训群组（获取现有群组成员的Table表格数据）
    * 培训管理员 ————> 培训群组管理 ————> 编辑培训群组（增加群组成员的Table表格数据）有参数exclude=true
    */
-  // 'GET /api//user/list/viewTtrainGroupManager': (req, res) => {
+
   'GET /api/train/group/:id/members': (req, res) => {
     const params = req.query;
     const { page, size } = params;
@@ -186,45 +171,22 @@ export default {
     });
   },
   // ------------------------------------------------------------------
-  // 编辑培训群组（获取现有群组成员的Table表格数据）
-  // 'GET /api//user/list/editTGManager': (req, res) => {
-  //   const params = req.query;
-  //   const { page , size } = params;
-  //   const result = mockTable4(page,size);
-  //   return res.json(result);
-  // },
+
   // 编辑培训群组（删除成员,批量删除成员）
   'PATCH /api/train/group/:id/members': (req, res) => {
     res.send({
       status: 'ok',
     });
   },
-  // // 编辑培训群组（批量删除成员）
-  // 'PATCH /api/train/group/:id/members': (req, res) => {
-  // // 'POST /api//user/list/editTGManagerBatchDel': (req, res) => {
-  //   res.send({
-  //     status: 'ok',
-  //   });
-  // },
-  // 编辑培训群组（修改群组名称）`/api/train/group/${params.id}`
+
   'PUT /api/train/group/:id': (req, res) => {
-    // 'POST /api/train/group/editTGManagerName': (req, res) => {
     res.send({
       status: 'ok',
     });
   },
 
-  // // 编辑培训群组（增加群组成员的Table表格数据）exclude=true
-  // 'GET /api/train/group/:id/members': (req, res) => {
-  // // 'GET /api//user/list/editTGManagerAddMember': (req, res) => {
-  //   const params = req.query;
-  //   const { page , size } = params;
-  //   const result = mockTable5(page,size);
-  //   return res.json(result);
-  // },
   // 编辑培训群组（增加群组成员提交按钮）
   'PUT /api/train/group/:id/members': (req, res) => {
-    // 'POST /api//user/list/editTGMAddMemberSubmit': (req, res) => {
     res.send({
       status: 'ok',
     });

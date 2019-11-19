@@ -1,0 +1,34 @@
+@import '~antd/lib/style/themes/default.less';
+
+.main {
+  position: absolute;
+  width: 500px;
+  margin: 0 auto;
+  padding: 85px 65px;
+  background: #fff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  @media screen and (max-width: @screen-sm) {
+    width: 95%;
+    padding: 85px 25px;
+  }
+
+  .loginAvatar {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .other {
+    margin-top: 24px;
+    line-height: 22px;
+    text-align: left;
+
+    .register {
+      float: right;
+    }
+  }
+}
