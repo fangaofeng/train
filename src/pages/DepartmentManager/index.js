@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, Row, Col, Spin, Button, message } from 'antd';
 import { connect } from 'dva';
 // import { Link } from 'umi/link';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
 import router from 'umi/router';
 import styles from './style.less';

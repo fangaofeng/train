@@ -4,7 +4,7 @@ import moment from 'moment';
 import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import CourseBasicInfo from '@/components/CourseBasicInfo';
 import SubmitSuccessCard from '@/components/SubmitSuccessCard';
 import styles from './Common.less';

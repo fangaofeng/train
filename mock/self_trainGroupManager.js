@@ -146,6 +146,7 @@ export default {
     res.send({
       status: 'ok',
       data: {
+        id: 1,
         group_no: '编号XXXXXXXX',
         name: '名字XXXXXXX',
       },

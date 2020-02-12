@@ -1,21 +1,25 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Avatar } from 'antd';
+import { Row, Col, message, Descriptions } from 'antd';
 import SelfCard from '@/components/Workbench/selfCard';
-import classNames from 'classnames';
-import styles from './index.less';
+import SelfItemCardImg from '@/components/Workbench/selfItemCardImg';
+// import classNames from 'classnames';
+// import styles from './index.less';
 
 class CourseBasicInfo extends PureComponent {
   constructor(props) {
     super(props);
+    const { CousreInfo } = this.props;
     this.state = {
-      courserTeacherInfo: {},
+      courserTeacherInfo: CousreInfo,
     };
   }
 
   // 页面加载完成后
   componentDidMount() {
     const { CousreInfo } = this.props;
+
     if (CousreInfo) {
+      // console.log('sdasd', CousreInfo);
       this.setState({
         courserTeacherInfo: CousreInfo,
       });
@@ -44,12 +48,11 @@ class CourseBasicInfo extends PureComponent {
       },
       callback: res => {
         if (res && res.status === 'ok') {
-          console.log('请求成功');
           this.setState({
             courserTeacherInfo: res.data,
           });
         } else {
-          console.log('请求失败');
+          message.warning('获取课程信息失败');
         }
       },
     });
@@ -60,64 +63,52 @@ class CourseBasicInfo extends PureComponent {
       isShow, // true——隐藏，false——显示
     } = this.props;
     const { courserTeacherInfo } = this.state;
+
     // console.log(courserTeacherInfo);
     return (
-      <Row
-        gutter={24}
-        className={classNames(styles.rowInfo, isShow ? styles.rowInfoSuccess : '')}
-        style={{ display: isShow ? 'none' : 'block' }}
-      >
-        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+      <Row gutter={24} type="flex" style={{ display: isShow ? 'none' : '' }}>
+        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12} style={{ display: 'flex' }}>
           <SelfCard title="课程信息">
-            <div className={styles.courseInfo}>
-              <div className={styles.courseInfoImgContent}>
-                <div className={styles.imgLeft}>
-                  <img src={courserTeacherInfo.cover} alt="" />
-                </div>
-                <div className={styles.imgRight}>
-                  <div className={styles.msgDetail}>
-                    <span>课件编号：</span>
-                    <span
-                      className={styles.msgDetailOverflow}
-                      title={courserTeacherInfo.courseware_no}
-                    >
-                      {courserTeacherInfo.courseware_no}
-                    </span>
-                  </div>
-                  <div className={styles.msgDetail}>
-                    <span>课件名称：</span>
-                    <span className={styles.msgDetailOverflow} title={courserTeacherInfo.name}>
-                      {courserTeacherInfo.name}
-                    </span>
-                  </div>
-                  <div className={styles.msgDetail}>
-                    <span>课&emsp;&emsp;时：</span>
-                    <span>{`${Number(courserTeacherInfo.class_hour)}小时`}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Row gutter={24}>
+              <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                <SelfItemCardImg imgSrc={courserTeacherInfo.cover} />
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={24} xl={16}>
+                {' '}
+                <Descriptions column={1}>
+                  <Descriptions.Item label="课件编号">
+                    {' '}
+                    {courserTeacherInfo.courseware_no}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="课件名称">{courserTeacherInfo.name}</Descriptions.Item>
+                  <Descriptions.Item label="课&emsp;&emsp;时">{`${Number(
+                    courserTeacherInfo.class_hour
+                  )}小时`}</Descriptions.Item>
+                </Descriptions>
+              </Col>
+            </Row>
           </SelfCard>
         </Col>
-        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12} style={{ display: 'flex' }}>
           <SelfCard title="讲师信息">
-            <div className={styles.teacherInfo}>
-              <div className={styles.teacherInfoLeft}>
-                <Avatar size={100} src={courserTeacherInfo.teacherimg} alt="老师头像" icon="user" />
-              </div>
-              <div className={styles.teacherInfoRight}>
-                <div className={styles.msgDetail}>
-                  <span>讲师姓名：</span>
-                  <span>{courserTeacherInfo.teachername}</span>
-                </div>
-                <div className={styles.teacherInfoJSJS}>
-                  <span>讲师介绍：</span>
-                  <span className={styles.teacherInfoJSJSMsg}>
+            <Row gutter={24}>
+              <Col xs={24} sm={24} md={12} lg={4}>
+                <SelfItemCardImg imgSrc={courserTeacherInfo.teacherimg} />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={20}>
+                {' '}
+                <Descriptions column={1}>
+                  <Descriptions.Item label="讲师姓名">
+                    {' '}
+                    {courserTeacherInfo.teachername}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="讲师介绍">
                     {courserTeacherInfo.teacherdesc}
-                  </span>
-                </div>
-              </div>
-            </div>
+                  </Descriptions.Item>
+                  <Descriptions.Item label=""></Descriptions.Item>
+                </Descriptions>
+              </Col>
+            </Row>
           </SelfCard>
         </Col>
       </Row>

@@ -2,7 +2,7 @@ import {
   getCourses, // 系统管理员 ——> 课件管理 ——> 主页，获取所有课件的表格数据
   // getCourseTeacherInfo,
   // 系统管理员 ——> 课件管理 ——> 课件编辑（拟制中） ——> 获取课件信息，老师信息
-} from '@/services/courseware/coursewareManager/index';
+} from '@/services/courseware/index';
 
 import {
   /**

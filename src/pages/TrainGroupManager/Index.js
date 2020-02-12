@@ -5,7 +5,7 @@ import { Divider, Popconfirm, Button } from 'antd';
 
 export default () => {
   const listdata = state => state.trainGroupManager.trainGroups;
-  const columns = (deleteConfirm, delloading) => [
+  const columns = deleteConfirm => [
     {
       title: '培训群组编号',
       dataIndex: 'train_group_number',
@@ -55,7 +55,7 @@ export default () => {
             cancelText="取消"
           >
             <a>
-              <Button loading={delloading}>删除</Button>
+              <Button type="link">删除</Button>
             </a>
           </Popconfirm>
         </span>

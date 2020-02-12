@@ -7,11 +7,22 @@ import { Tree } from 'antd';
 import styles from './index.less';
 
 const { TreeNode } = Tree;
-
+/**
+ * 处理后台的数据
+ * @param treeData
+ */
+const formatData = treeData =>
+  treeData.map(item => {
+    const mItem = { ...item, title: item.name, copyTitle: item.name, key: item.id };
+    if (item.children) {
+      mItem.children = formatData(item.children);
+    }
+    return mItem;
+  });
 export default class TreeEdit extends Component {
   constructor(props) {
     super(props);
-    const treeData = this.formatData(props.treeList);
+    const treeData = formatData(props.treeList);
     this.state = {
       treeData,
       expandedKeys: [],
@@ -20,24 +31,11 @@ export default class TreeEdit extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.treeList) {
-      const treeData = this.formatData(props.treeList);
+      const treeData = formatData(props.treeList);
       return { ...state, treeData };
     }
     return state;
   }
-
-  /**
-   * 处理后台的数据
-   * @param treeData
-   */
-  formatData = treeData =>
-    treeData.map(item => {
-      const mItem = { ...item, title: item.name, copyTitle: item.name, key: item.id };
-      if (item.children) {
-        mItem.children = this.formatData(item.children);
-      }
-      return mItem;
-    });
 
   /**
    * 渲染树节点

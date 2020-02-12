@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
 class OnlineExam extends Component {
   constructor(props) {

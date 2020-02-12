@@ -1,0 +1,93 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+.colorWeak {
+  filter: invert(80%);
+}
+.ant-layout {
+  min-height: 100vh;
+}
+canvas {
+  display: block;
+}
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.globalSpin {
+  width: 100%;
+  margin: 40px 0 !important;
+}
+ul,
+ol {
+  list-style: none;
+}
+.uploadContent .ant-upload.ant-upload-select {
+  display: block;
+}
+.uploadContent .ant-upload.ant-upload-select .ant-btn {
+  font-size: 20px;
+  font-weight: 600;
+  height: 70px;
+}
+.ant-btn-del {
+  color: #fff;
+  background-color: #8fc127;
+  border-color: #8fc127;
+}
+.ant-btn-del:hover,
+.ant-btn-del:active,
+.ant-btn-del:focus {
+  color: #fff;
+  background: #a4dc2f;
+  border-color: #a4dc2f;
+}
+.ant-btn-upload {
+  color: #3c3c3c;
+  background-color: #e5f3ff;
+  border-color: #e5f3ff;
+}
+.ant-btn-upload:hover,
+.ant-btn-upload:active,
+.ant-btn-upload:focus {
+  color: #fff;
+  background: #1890ff;
+  border-color: #1890ff;
+}
+.tableRowClassNameErr {
+  background: #fee8ea;
+}
+.tableRowClassNameWarn {
+  background: #fff9e5;
+}
+#menuID {
+  border-top: 1px solid #1b1e25;
+  border-bottom: 1px solid #30333a;
+}
+#menuID > li {
+  border-top: 1px solid #30333a;
+  border-bottom: 1px solid #1b1e25;
+}
+#menuID > li > ul > li:not(:last-child) {
+  padding-left: 24px !important;
+}
+#menuID > li > ul > li:not(:last-child) > a {
+  box-sizing: border-box;
+  height: 100%;
+  border-bottom: 1px solid #262930;
+  padding-left: 24px;
+}
+#menuID > li > ul :global li.ant-menu-item.ant-menu-item-selected > a {
+  border: none;
+}
+#menuID :global .ant-menu-item,
+#menuID :global .ant-menu-submenu-title {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+#menuID :global .ant-menu-item:not(:last-child) {
+  margin-bottom: 0;
+}

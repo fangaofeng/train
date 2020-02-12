@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Card, Button, Progress, Icon, Upload, Row, Col, Spin, message } from 'antd';
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import { getDepartmentUploadurl } from '@/services/uploadUrl/uploadUrl';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+// import { getDepartmentUploadurl } from '@/services/uploadUrl/uploadUrl';
 import uploadSuccess from '@/assets/images/upload_success.png';
 import styles from './style.less';
 import TreeEdit from '@/components/TreeEditDynamic';
 import storetoken from '@/utils/token';
 // const { TreeNode } = Tree;
 
-@connect(({ loading }) => ({
+@connect(({ loading, settings }) => ({
+  orgExcelfile: settings.uploadurl.org,
   departmentloading: loading.effects['DepartmentManager/GetOrgsDeparments'],
 }))
 class DepartmentManager extends Component {
@@ -107,7 +108,7 @@ class DepartmentManager extends Component {
   };
 
   render() {
-    const { departmentloading } = this.props;
+    const { departmentloading, orgExcelfile } = this.props;
     const {
       uploadFileName,
       isFirstUpload,
@@ -116,7 +117,7 @@ class DepartmentManager extends Component {
       progressPercent,
       fileStatus,
     } = this.state;
-    const uploadurl = getDepartmentUploadurl(); // 获取上传excel的地址
+    // const uploadurl = getDepartmentUploadurl(); // 获取上传excel的地址
     const token = storetoken.get();
     const uploadProps = {
       headers: {
@@ -146,7 +147,7 @@ class DepartmentManager extends Component {
             showUploadList={false}
             accept=".xls,.xlsx"
             name="excelfile"
-            action={uploadurl}
+            action={orgExcelfile}
             // action='//jsonplaceholder.typicode.com/posts/'
             beforeUpload={this.beforeUpload}
             onChange={this.uploadOnChange}

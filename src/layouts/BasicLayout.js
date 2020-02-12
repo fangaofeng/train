@@ -1,198 +1,158 @@
-import React, { Suspense } from 'react';
-import { Layout } from 'antd';
-import DocumentTitle from 'react-document-title';
-
+/**
+ * Ant Design Pro v4 use `@ant-design/pro-layout` to handle Layout.
+ * You can view component api by:
+ * https://github.com/ant-design/ant-design-pro-layout
+ */
+import ProLayout, {
+  // MenuDataItem,
+  // BasicLayoutProps as ProLayoutProps,
+  // Settings,
+  DefaultFooter,
+  SettingDrawer,
+} from '@ant-design/pro-layout';
+import React, { useEffect } from 'react';
+import Link from 'umi/link';
+// import { Dispatch } from 'redux';
 import { connect } from 'dva';
-import { ContainerQuery } from 'react-container-query';
-import classNames from 'classnames';
-// import pathToRegexp from 'path-to-regexp';
-
-// import { formatMessage } from 'umi/locale';
-import SiderMenu from '@/components/SiderMenu';
-// import Authorized from '@/utils/Authorized';
-import SettingDrawer from '@/components/SettingDrawer';
-// import logo from '../assets/logo.svg';
+import { formatMessage } from 'umi-plugin-react/locale';
+import Authorized from '@/utils/Authorized';
+import RightContent from '@/components/GlobalHeader/RightContent';
+// import { ConnectState } from '@/models/connect';
+// eslint-disable-next-line import/no-unresolved
+import setttings from '../../config/defaultSettings';
 import logo from '../assets/images/Header/logo.png';
-import Footer from './Footer';
-import Header from './Header';
-import Context from './MenuContext';
-// import Exception403 from '../pages/Exception/403';
-import getPageTitle from '@/utils/getPageTitle';
-import styles from './BasicLayout.less';
 
-const { Content } = Layout;
+// export interface BasicLayoutProps extends ProLayoutProps {
+//   breadcrumbNameMap: {
+//     [path: string]: MenuDataItem;
+//   };
+//   settings: Settings;
+//   dispatch: Dispatch;
+// }
+// export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
+//   breadcrumbNameMap: {
+//     [path: string]: MenuDataItem;
+//   };
+// };
+/**
+ * use Authorized check all menu item
+ */
 
-const query = {
-  'screen-xs': {
-    maxWidth: 575,
-  },
-  'screen-sm': {
-    minWidth: 576,
-    maxWidth: 767,
-  },
-  'screen-md': {
-    minWidth: 768,
-    maxWidth: 991,
-  },
-  'screen-lg': {
-    minWidth: 992,
-    maxWidth: 1199,
-  },
-  'screen-xl': {
-    minWidth: 1200,
-    maxWidth: 1599,
-  },
-  'screen-xxl': {
-    minWidth: 1600,
-  },
-};
+const menuDataRender = menuList =>
+  menuList.map(item => {
+    const localItem = {
+      ...item,
+      children: item.children ? menuDataRender(item.children) : [],
+    };
+    return Authorized.check(item.authority, localItem, null);
+  });
 
-class BasicLayout extends React.PureComponent {
-  componentDidMount() {
-    const {
-      dispatch,
-      route: { routes, path, authority },
-    } = this.props;
-    dispatch({
-      type: 'account/fetchCurrent',
-    });
-    dispatch({
-      type: 'setting/getSetting',
-    });
-    dispatch({
-      type: 'global/fetchNotices',
-    });
-    dispatch({
-      type: 'menu/getMenuData',
-      payload: { routes, path, authority },
-    });
-  }
+const defaultFooterDom = <DefaultFooter copyright={setttings.companyband} links={[]} />;
 
-  // UNSAFE_componentWillReceiveProps(nextProps) {
-  //   const { location } = this.props;
-  //   // 当路由切换时,返回顶部
-  //   if (location !== nextProps.location) {
-  //     window.scrollTo(0, 0);
-  //   }
+const footerRender = () => {
+  // if (!isAntDesignPro()) {
+  //   return defaultFooterDom
   // }
 
-  componentWillUnmount() {
-    // cancelAnimationFrame(this.renderRef);
-    // unenquireScreen(this.enquireHandler);
-  }
+  return (
+    <>
+      {defaultFooterDom}
+      <div
+        style={{
+          padding: '0px 24px 24px',
+          textAlign: 'center',
+        }}
+      />
+    </>
+  );
+};
 
-  getContext() {
-    const { location, breadcrumbNameMap } = this.props;
-    return {
-      location,
-      breadcrumbNameMap,
-    };
-  }
+const BasicLayout = props => {
+  const { dispatch, children, settings } = props;
+  /**
+   * constructor
+   */
 
-  getLayoutStyle = () => {
-    const { fixSiderbar, isMobile, collapsed, layout } = this.props;
-    if (fixSiderbar && layout !== 'topmenu' && !isMobile) {
-      return {
-        paddingLeft: collapsed ? '80px' : '256px',
-      };
+  useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: 'account/FetchCurrent',
+      });
+      dispatch({
+        type: 'settings/getSetting',
+      });
+      dispatch({
+        type: 'settings/GetUploadurl',
+      });
     }
-    return null;
-  };
+  }, []);
+  /**
+   * init variables
+   */
 
-  getContentStyle = () => {
-    const { fixedHeader } = this.props;
-    return {
-      margin: '20px 20px 0',
-      paddingTop: fixedHeader ? 64 : 0,
-    };
-  };
-
-  handleMenuCollapse = collapsed => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'global/changeLayoutCollapsed',
-      payload: collapsed,
-    });
-  };
-
-  renderSettingDrawer = () => {
-    // Do not render SettingDrawer in production
-    // unless it is deployed in preview.pro.ant.design as demo
-    // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
-    if (process.env.NODE_ENV === 'production') {
-      return null;
+  const handleMenuCollapse = payload => {
+    if (dispatch) {
+      dispatch({
+        type: 'global/changeLayoutCollapsed',
+        payload,
+      });
     }
-    return <SettingDrawer />;
   };
 
-  render() {
-    const {
-      navTheme,
-      layout: PropsLayout,
-      children,
-      location: { pathname },
-      isMobile,
-      menuData,
-      breadcrumbNameMap,
-      fixedHeader,
-    } = this.props;
+  return (
+    <>
+      <ProLayout
+        logo={logo}
+        onCollapse={handleMenuCollapse}
+        menuItemRender={(menuItemProps, defaultDom) => {
+          if (menuItemProps.isUrl || menuItemProps.children) {
+            return defaultDom;
+          }
 
-    const isTop = PropsLayout === 'topmenu';
-    const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
-    const layout = (
-      <Layout>
-        {isTop && !isMobile ? null : (
-          <SiderMenu
-            logo={logo}
-            theme={navTheme}
-            onCollapse={this.handleMenuCollapse}
-            menuData={menuData}
-            isMobile={isMobile}
-            {...this.props}
-          />
-        )}
-        <Layout
-          style={{
-            ...this.getLayoutStyle(),
-            minHeight: '100vh',
-          }}
-        >
-          <Header
-            menuData={menuData}
-            handleMenuCollapse={this.handleMenuCollapse}
-            logo={logo}
-            isMobile={isMobile}
-            {...this.props}
-          />
-          <Content className={styles.content} style={contentStyle}>
-            {children}
-          </Content>
-          <Footer />
-        </Layout>
-      </Layout>
-    );
-    return (
-      <React.Fragment>
-        <DocumentTitle title={getPageTitle(pathname, breadcrumbNameMap)}>
-          <ContainerQuery query={query}>
-            {params => (
-              <Context.Provider value={this.getContext()}>
-                <div className={classNames(params)}>{layout}</div>
-              </Context.Provider>
-            )}
-          </ContainerQuery>
-        </DocumentTitle>
-        <Suspense fallback={null}>{this.renderSettingDrawer()}</Suspense>
-      </React.Fragment>
-    );
-  }
-}
+          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        }}
+        breadcrumbRender={(routers = []) => [
+          {
+            path: '/',
+            breadcrumbName: formatMessage({
+              id: 'menu.home',
+              defaultMessage: 'Home',
+            }),
+          },
+          ...routers,
+        ]}
+        itemRender={(route, params, routes, paths) => {
+          const first = routes.indexOf(route) === 0;
+          return first ? (
+            <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+          ) : (
+            <span>{route.breadcrumbName}</span>
+          );
+        }}
+        footerRender={footerRender}
+        menuDataRender={menuDataRender}
+        formatMessage={formatMessage}
+        rightContentRender={rightProps => <RightContent {...rightProps} />}
+        {...props}
+        {...settings}
+      >
+        {children}
+      </ProLayout>
+      <SettingDrawer
+        settings={settings}
+        onSettingChange={config =>
+          dispatch({
+            type: 'settings/changeSetting',
+            payload: config,
+          })
+        }
+      />
+    </>
+  );
+};
 
-export default connect(({ global, setting, menu: menuModel, account }) => ({
+export default connect(({ global, settings, account }) => ({
   collapsed: global.collapsed,
-  layout: setting.layout,
-  menuData: menuModel.menuData,
-  breadcrumbNameMap: menuModel.breadcrumbNameMap,
+  settings,
   currentUser: account.currentUser,
-  ...setting,
 }))(BasicLayout);

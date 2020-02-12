@@ -1,0 +1,22 @@
+.treeManagerContent .tableContent {
+  padding-bottom: 30px;
+  border-bottom: 1px dashed #dcdcdc;
+}
+.treeManagerContent .searchContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 24px;
+}
+.treeManagerContent .searchContent > div:nth-child(2) button {
+  margin-left: 20px;
+}
+.treeManagerContent .foonter_btns {
+  padding: 34px 0 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.treeManagerContent .foonter_btns :global .ant-btn {
+  margin: 0 5px;
+}

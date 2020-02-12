@@ -3,7 +3,7 @@ import { Card, Button, message, Popconfirm, Row, Col, Descriptions, Avatar } fro
 
 import SelfCard from '@/components/Workbench/selfCard';
 import { useSelector, useDispatch } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import TreeOtherOpration from '@/components/TreeOtherOpration';
 import defaultavatar from '@/assets/images/Header/avatar_default_small.png';
 import ModalAdd from '@/components/Modal/ModalAdd';

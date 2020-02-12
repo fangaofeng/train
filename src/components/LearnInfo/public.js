@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Progress } from 'antd';
+import { Progress, Descriptions } from 'antd';
 import moment from 'moment';
 import styles from './LearnInfo.less';
 import ImgWord from '@/components/ImageWord';
@@ -13,28 +13,18 @@ function LearnInfo(props) {
           <ImgWord imgSrc={course.cover} bottomRight bottomRightMsg={course.file_type} />
         </div>
         <div className={styles.imgRight}>
-          <div className={styles.msgDetail}>
-            <span>课程名称：</span>
-            <span className={styles.msgDetailOverflow}>{course.name}</span>
-          </div>
-          <div>
-            <Divider type="vertical" />
-            <span>
-              学习进度：
-              <Progress percent={rate} style={{ width: 280 }} />
-            </span>
-          </div>
-          <div>
-            <span>
-              课时：
-              {course.class_hour}时
-            </span>
-            <Divider type="vertical" />
-            <span>
-              学习完成时间：
+          <Descriptions column={2}>
+            <Descriptions.Item label="课程名称">{course.name}</Descriptions.Item>
+            <Descriptions.Item label="课时">{course.class_hour}时</Descriptions.Item>
+            <Descriptions.Item label="学习完成时间">
+              {' '}
               {moment(endTime).format('YYYY-MM-DD HH:mm')}
-            </span>
-          </div>
+            </Descriptions.Item>
+            <Descriptions.Item label="学习进度">
+              {' '}
+              <Progress percent={rate} style={{ width: 280 }} />
+            </Descriptions.Item>
+          </Descriptions>
         </div>
       </div>
     </div>

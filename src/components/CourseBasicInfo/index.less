@@ -1,13 +1,12 @@
 @import '~antd/lib/style/themes/default.less';
 
-.rowInfoSuccess {
-  display: none;
+.rowInfo {
+  display: flex;
 }
 
 @media screen and (min-width: @screen-xl) {
   .rowInfo {
     display: flex;
-    margin-bottom: 25px;
 
     :global {
       .ant-card {
@@ -16,9 +15,9 @@
     }
   }
 
-  .rowInfoSuccess {
-    display: none;
-  }
+  // .rowInfoSuccess {
+  //   display: flex;
+  // }
 }
 
 // ------------课程信息,讲师信息------------
@@ -37,57 +36,15 @@ div.msgDetail {
     }
   }
 }
-
-.courseInfo {
-  .courseInfoImgContent {
-    display: flex;
-
-    .imgLeft {
-      margin-right: 20px;
-
-      img {
-        height: 130px;
-        width: 232px;
-      }
-    }
-
-    .imgRight {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-    }
+.imgLeft {
+  img {
+    height: 130px;
+    width: auto;
   }
 }
 
-.teacherInfo {
-  display: flex;
-
-  .teacherInfoLeft {
-    width: 125px;
-  }
-
-  .teacherInfoRight {
-    flex: 1;
-
-    > div {
-      margin-top: 24px;
-
-      &.teacherInfoJSJS {
-        display: flex;
-        line-height: 1.5;
-
-        .teacherInfoJSJSMsg {
-          flex: 1;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-        }
-      }
-    }
-  }
+.teacherInfoLeft {
+  width: 125px;
 }
 
 // ------------课程信息,讲师信息------------

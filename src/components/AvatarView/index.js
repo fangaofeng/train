@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Upload, Icon, message, Avatar } from 'antd';
 import storetoken from '@/utils/token';
-import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl';
+// import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl';
 
 // function getBase64(img, callback) {
 //   const reader = new FileReader();
@@ -61,6 +61,7 @@ class AvatarView extends Component {
 
   render() {
     const { loading, imageUrl } = this.state;
+    const { uploadurl } = this.props;
     console.log('loading', loading);
     const uploadButton = (
       <div>
@@ -75,7 +76,7 @@ class AvatarView extends Component {
         Authorization: `Token ${token}`,
       },
     };
-    const action = getUploadAvatarurl();
+    // const action = getUploadAvatarurl();
     return (
       <section className="example">
         <h3 className="ex-title">头像</h3>
@@ -84,7 +85,7 @@ class AvatarView extends Component {
           listType="picture-card"
           className="avatar-uploader"
           showUploadList={false}
-          action={action}
+          action={uploadurl}
           beforeUpload={beforeUpload}
           onChange={this.handleChange}
           {...uploadProps}

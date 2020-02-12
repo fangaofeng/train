@@ -4,14 +4,15 @@ import router from 'umi/router';
 // import Link from 'umi/link';
 // import Redirect from 'umi/redirect';
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import { getUploadUsersurl } from '@/services/uploadUrl/uploadUrl';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+// import { getUploadUsersurl } from '@/services/uploadUrl/uploadUrl';
 import uploadSuccess from '@/assets/images/upload_success.png';
 import styles from './UploadUsers.less';
 import PageTable from '@/components/PageTable';
 import storetoken from '@/utils/token';
 
-@connect(({ UserManager, loading }) => ({
+@connect(({ UserManager, settings, loading }) => ({
+  zipfile: settings.uploadurl.zipfile,
   batchImportData: UserManager.batchImportData, // 获取指定页码的表格数据
   userloading: loading.effects['UserManager/GetbatchImportData'],
 }))
@@ -133,7 +134,7 @@ class UploadUserStep1 extends Component {
       fileStatus,
       dispatch,
     } = this.state;
-    const uploadurl = getUploadUsersurl(); // 获取上传excel的地址
+    // const uploadurl = getUploadUsersurl(); // 获取上传excel的地址
     const token = storetoken.get();
     const uploadProps = {
       headers: {
@@ -141,7 +142,7 @@ class UploadUserStep1 extends Component {
       },
     };
 
-    const { batchImportData } = this.props;
+    const { batchImportData, zipfile } = this.props;
     const { importcount } = this.state;
 
     // Table通用的columns
@@ -198,7 +199,7 @@ class UploadUserStep1 extends Component {
             showUploadList={false}
             accept=".xls,.xlsx"
             name="excelfile"
-            action={uploadurl}
+            action={zipfile}
             // action='//jsonplaceholder.typicode.com/posts/'
             beforeUpload={this.beforeUpload}
             onChange={this.uploadOnChange}

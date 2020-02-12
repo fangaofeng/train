@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Card, List, Input, Empty } from 'antd';
 
 import { useSelector, useDispatch } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import styles from '@/components/styles.less';
 
 const { Search } = Input;
@@ -14,7 +14,7 @@ export default function Viewlist(props) {
   const listdataloading = useSelector(store => store.loading.effects[action]);
   const [pagination, setPagination] = useState({
     current: 1, // 当前页数
-    pageSize: 12, // 每页条数
+    pageSize: 10, // 每页条数
     pageSizeOptions: ['10', '20', '20', '30'], // 指定每页可以显示多少条数据
     showQuickJumper: true, // 是否可以快速跳转至某页
     showSizeChanger: true, // 是否可以改变 pageSize

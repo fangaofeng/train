@@ -1,10 +1,9 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva';
-// import { stringify } from 'qs';
-// import { fakeAccountLogin, getFakeCaptcha } from '@/services/api';
-import { accountLogin } from '@/services/api';
+
+import { login } from '@/services/auth';
 import { setAuthority } from '@/utils/authority';
-import token from '../utils/token';
+import tokenmanager from '../utils/token';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
 
@@ -23,17 +22,19 @@ export default {
         username: userName,
         password,
       };
-      const response = yield call(accountLogin, param);
+      const response = yield call(login, param);
       yield put({
         type: 'changeLoginStatus',
         payload: response,
       });
 
       // Login successfully
-      if (
-        Object.prototype.hasOwnProperty.call(response, 'token') &&
-        Object.prototype.hasOwnProperty.call(response, 'role')
-      ) {
+      const {
+        status,
+        data: { token, roles },
+      } = response;
+      // 登录成功
+      if (status === 'ok' && token && roles) {
         // 表示登录成功
         if (rememberUsername) {
           // 记住用户名
@@ -42,8 +43,7 @@ export default {
           // 不记住用户名
           localStorage.removeItem('WHLQYHGPXPT_USERNAME');
         }
-        token.save(response.token); // 保存token
-        // if (response && response.status === 'ok') {
+        tokenmanager.save(token); // 保存token
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -60,6 +60,7 @@ export default {
             return;
           }
         }
+        reloadAuthorized();
         yield put(routerRedux.replace(redirect || '/'));
       }
     },
@@ -71,12 +72,12 @@ export default {
     // 退出登录
     *logout(_, { put }) {
       // remove token
-      token.remove();
+      tokenmanager.remove();
       yield put({
         type: 'changeLoginStatus',
         payload: {
-          status: false,
-          currentAuthority: 'guest',
+          status: 'ok',
+          data: { token: null, roles: ['guest'] },
         },
       });
       reloadAuthorized();
@@ -103,34 +104,41 @@ export default {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      console.log('changeLoginStatus', payload);
-      let status = ''; // ok 还是 error
+      console.log(payload);
+      const {
+        status,
+        data: { token, roles },
+      } = payload;
+
       // 登录成功
       if (
-        Object.prototype.hasOwnProperty.call(payload, 'token') &&
-        Object.prototype.hasOwnProperty.call(payload, 'role')
+        status === 'ok' &&
+        token &&
+        roles
+        // Object.prototype.hasOwnProperty.call(payload, 'token') &&
+        // Object.prototype.hasOwnProperty.call(payload, 'roles')
       ) {
-        switch (payload.role) {
-          case '系统管理员':
-            setAuthority('admin');
-            break;
-          case '培训管理员':
-            setAuthority('user');
-            break;
-          case '员工':
-            setAuthority('stu');
-            break;
-          default:
-            break;
-        }
-        status = 'ok';
+        setAuthority(roles);
+        // switch (payload.roles) {
+        //   case '系统管理员':
+        //     setAuthority('admin');
+        //     break;
+        //   case '培训管理员':
+        //     setAuthority('user');
+        //     break;
+        //   case '员工':
+        //     setAuthority('stu');
+        //     break;
+        //   default:
+        //     break;
+
+        // }
       }
       // 登录失败  或者  退出登录
-      if (Object.prototype.hasOwnProperty.call(payload, 'status')) {
-        ({ status } = payload);
-        setAuthority('guest');
+      else {
+        setAuthority(roles);
       }
-      // setAuthority(payload.currentAuthority);
+
       return {
         ...state,
         status,

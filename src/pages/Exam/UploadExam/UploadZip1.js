@@ -18,21 +18,22 @@ import {
   Radio,
   Checkbox,
 } from 'antd';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import SelfCard from '@/components/Workbench/selfCard';
 // import classNames from 'classnames';
 // import JSZip from 'jszip';
 import router from 'umi/router';
 import Link from 'umi/link';
 import styles from './UploadZip1.less';
-import { getUploadExamurl } from '@/services/uploadUrl/uploadUrl';
+// import { getUploadExamurl } from '@/services/uploadUrl/uploadUrl';
 import storetoken from '@/utils/token';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
 const { TabPane } = Tabs;
 
-@connect(({ uploadExam }) => ({
+@connect(({ uploadExam, settings }) => ({
+  examexcelfileUrl: settings.uploadurl.paper,
   zipFileName: uploadExam.zipFileName,
   testInfo: uploadExam.testInfo,
   testDetails: uploadExam.testDetails,
@@ -133,7 +134,7 @@ class UploadExamStepFirst extends Component {
   // 下一步表单提交
   handleSubmit = () => {
     const { isFirstUpload, isUploadDone, zipFileName, zipfileResponse, zipfileid } = this.state;
-    const { form } = this.props;
+    const { form, dispatch } = this.props;
     if (isFirstUpload) {
       message.warning('请上传试卷包');
       return false;
@@ -143,7 +144,6 @@ class UploadExamStepFirst extends Component {
       message.warning('请试卷包上传成功后再点击下一步');
       return false;
     }
-    const { dispatch } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('表单值', values);
@@ -173,6 +173,7 @@ class UploadExamStepFirst extends Component {
       mulPageSize: 5, // 多选题每页个数
       judCurrent: 1, // 判断题页码
       judPageSize: 5, // 判断题每页个数
+      zipFileName: file.name,
     });
     // const filetype = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
     // 测试关闭
@@ -180,13 +181,11 @@ class UploadExamStepFirst extends Component {
     //   message.warning('请根据模板上传zip试卷包');
     //   return false;
     // }
-    this.setState({
-      zipFileName: file.name,
-    });
   };
 
   // Upload组件OnChange调用的方法
   uploadOnChange = info => {
+    console.log(info.file.status);
     this.setState({
       fileList: info.fileList,
     });
@@ -196,35 +195,38 @@ class UploadExamStepFirst extends Component {
       });
     }
     if (info.file.status === 'done') {
+      console.log(info);
+
       message.success(`${info.file.name}上传成功`);
       if (info.file.response && info.file.response.status === 'ok') {
+        const testInfo = {
+          // 试卷编号
+          number: info.file.response.data.paper_info['试卷编号'],
+          // 试卷名称
+          name: info.file.response.data.paper_info['试卷名称'],
+          // 考试时长
+          time: info.file.response.data.paper_info['考试时长'],
+          // 试卷总分
+          score: info.file.response.data.paper_info['试卷总分'],
+          // 合格分数
+          passScore: info.file.response.data.paper_info['合格分数'],
+          // 适用对象
+          applicablePerson: info.file.response.data.paper_info['适用对象'],
+          // 试卷介绍
+          introduce: info.file.response.data.paper_info['试卷简介'],
+          // 封面
+          cover: info.file.response.data.paper_info['试卷封面'],
+          // 适用课程编号，不是必填
+          applicableCourseNumber: info.file.response.data.paper_info['适用课程编号'],
+          // 适用课程名称，不是必填
+          applicableCourseName: info.file.response.data.paper_info['适用课程名称'],
+        };
         this.setState({
           isUploadDone: true,
           zipfileid: info.file.response.data.zipfileid, // 上传成功后服务器返回的zip文件id
           zipfileResponse: {
             // 试卷信息
-            testInfo: {
-              // 试卷编号
-              number: info.file.response.data.paper_info['试卷编号'],
-              // 试卷名称
-              name: info.file.response.data.paper_info['试卷名称'],
-              // 考试时长
-              time: info.file.response.data.paper_info['考试时长'],
-              // 试卷总分
-              score: info.file.response.data.paper_info['试卷总分'],
-              // 合格分数
-              passScore: info.file.response.data.paper_info['合格分数'],
-              // 适用对象
-              applicablePerson: info.file.response.data.paper_info['适用对象'],
-              // 试卷介绍
-              introduce: info.file.response.data.paper_info['试卷简介'],
-              // 封面
-              cover: info.file.response.data.paper_info['试卷封面'],
-              // 适用课程编号，不是必填
-              applicableCourseNumber: info.file.response.data.paper_info['适用课程编号'],
-              // 适用课程名称，不是必填
-              applicableCourseName: info.file.response.data.paper_info['适用课程名称'],
-            },
+            testInfo,
             // 试题信息
             questions: {
               // 实际总分
@@ -238,13 +240,14 @@ class UploadExamStepFirst extends Component {
             },
           },
         });
-        const {
-          zipfileResponse: { testinfo },
-        } = this.state;
-        const { form } = this.porps;
-        for (const i in testinfo) {
-          if (Object.prototype.hasOwnProperty.call(testinfo, i)) {
-            let v = testinfo[i];
+        // const {
+        //   zipfileResponse: { testinfo },
+        // } = this.state;
+        const { form } = this.props;
+
+        for (const i in testInfo) {
+          if (Object.prototype.hasOwnProperty.call(testInfo, i)) {
+            let v = testInfo[i];
             v = v === undefined || v === null || v === '' ? '' : v;
             form.setFieldsValue({
               [i]: v,
@@ -318,7 +321,9 @@ class UploadExamStepFirst extends Component {
   render() {
     const {
       form: { getFieldDecorator },
+      examexcelfileUrl,
     } = this.props;
+    console.log(examexcelfileUrl);
     const {
       zipFileName, // zip文件名
       zipfileResponse: {
@@ -359,7 +364,7 @@ class UploadExamStepFirst extends Component {
         Authorization: `Token ${token}`,
       },
     };
-    const uploadurl = getUploadExamurl();
+    // const uploadurl = getUploadExamurl();
     return (
       <PageHeaderWrapper title="上传试卷">
         <Card className={styles.uploadZipContent}>
@@ -377,7 +382,7 @@ class UploadExamStepFirst extends Component {
                   accept=".zip"
                   name="zipfile"
                   // action='//jsonplaceholder.typicode.com/posts/'
-                  action={uploadurl}
+                  action={examexcelfileUrl}
                   beforeUpload={this.beforeUpload}
                   onChange={this.uploadOnChange}
                   // className={styles.uploadContent}
@@ -807,7 +812,7 @@ class UploadExamStepFirst extends Component {
             <Button type="primary" onClick={this.handleSubmit}>
               下一步
             </Button>
-            <Link to="/exam/examManager/index">
+            <Link to="/exam/index">
               <Button>取消</Button>
             </Link>
           </div>

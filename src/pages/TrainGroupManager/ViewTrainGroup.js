@@ -28,7 +28,9 @@ export default props => {
   ];
 
   const {
-    match: { query: id },
+    match: {
+      params: { id },
+    },
     location: {
       query: { num, name },
     },

@@ -33,7 +33,7 @@ export default function viewPapers() {
   );
 
   const props = {
-    action: 'ExamManager/GetAllTestPapersTableData',
+    action: 'ExamManager/GetPapers',
     name: '试卷',
     datalist,
     renderItem,

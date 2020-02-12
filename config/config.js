@@ -8,6 +8,9 @@ import myThemeConfig from './myThemeConfig';
 
 export default {
   // add for transfer to umi
+  base: '/front',
+  // runtimePublicPath: true,
+  // publicPath: '/front/',
   plugins: [
     [
       'umi-plugin-react',
@@ -20,9 +23,12 @@ export default {
           ie: 11,
         },
         locale: {
-          enable: false, // default false
-          default: 'zh-CN', // default zh-CN
-          baseNavigator: false, // 为true时，用navigator.language的值作为默认语言 default true, when it is true, will use `navigator.language` overwrite default
+          // default false
+          enable: false,
+          // default zh-CN
+          default: 'zh-CN',
+          // default true, when it is true, will use `navigator.language` overwrite default
+          baseNavigator: false,
         },
         // dynamicImport: {
         //   loadingComponent: './components/PageLoading/index',
@@ -69,9 +75,9 @@ export default {
     '/api': {
       target: 'http://localhost:9000/',
       changeOrigin: true,
-      pathRewrite: {
-        '^/api': '',
-      },
+      // pathRewrite: {
+      //   '^/api': '',
+      // },
     },
   },
   ignoreMomentLocale: true,
@@ -108,7 +114,7 @@ export default {
   manifest: {
     name: 'ledi',
     background_color: '#FFF',
-    description: 'An out-of-box UI solution for enterprise applications as a React boilerplate.',
+    description: 'bonado web train',
     display: 'standalone',
     start_url: '/index.html',
     icons: [
@@ -124,4 +130,6 @@ export default {
   // cssnano: {
   //   mergeRules: false,
   // },
+  extraBabelIncludes: [/node_modules[\\/][\\@]uform[\\/]antd[\\/]esm/],
+  // exportStatic: true,
 };

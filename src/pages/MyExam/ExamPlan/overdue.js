@@ -17,7 +17,6 @@ export default () => {
           <Button type="danger " disabled>
             无法参加
           </Button>
-          ,
         </Link>,
       ]}
     >

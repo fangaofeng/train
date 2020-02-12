@@ -20,26 +20,30 @@ export default [
     path: '/',
     component: '../layouts/BasicLayout',
     Routes: ['src/pages/Authorized'],
-    authority: ['admin', 'user', 'stu'],
+    authority: ['admin', 'trainmanager', 'stu'],
     routes: [
       // 工作台配置
       {
         path: '/',
-        redirect: '/workbench/workbench',
+        redirect: '/workbench/index',
       },
       {
-        path: '/workbench/workbench',
+        path: '/workbench/index',
         name: '工作台',
-        icon: 'self_WorkbenchIcon',
+        icon: 'icon-workbench',
         component: './Workbench/Workbench',
       },
       // 系统管理员——>系统管理
       {
         path: '/DepartmentManager',
         name: '部门管理',
-        icon: 'apartment',
+        icon: 'icon-department',
         authority: ['admin'],
         routes: [
+          {
+            path: '/DepartmentManager',
+            redirect: '/DepartmentManager/index',
+          },
           {
             path: '/DepartmentManager/index',
             name: '部门查看',
@@ -61,7 +65,7 @@ export default [
       {
         path: '/userManager',
         name: '用户管理',
-        icon: 'user',
+        icon: 'icon-usersetting1',
         hideChildrenInMenu: true,
         authority: ['admin'],
 
@@ -99,9 +103,9 @@ export default [
       {
         path: '/announcement',
         name: '公告管理',
-        icon: 'self_AnnouncementIcon',
+        icon: 'icon-gonggao2',
         // hideChildrenInMenu: true,
-        authority: ['admin', 'user', 'stu'],
+        authority: ['admin', 'trainmanager', 'stu'],
         routes: [
           {
             path: '/announcement',
@@ -111,39 +115,39 @@ export default [
             path: '/announcement/article',
             name: '公告列表',
             authority: ['admin'],
-            component: './Announcement/Article/index',
+            component: './Announcement/index',
           },
           {
             path: '/announcement/create',
             name: '发布公告',
-            component: './Announcement/Article/ArticleMaking',
+            component: './Announcement/ArticleMaking',
             authority: ['admin'],
           },
           {
             path: '/announcement/edit/:id',
             // name: '编辑公告',
-            component: './Announcement/Article/ArticleMaking',
+            component: './Announcement/ArticleMaking',
             authority: ['admin'],
           },
           {
             path: '/announcement/detail/:id',
             name: '公告详情',
             hideInMenu: true,
-            component: './Announcement/Article/Detail',
-            authority: ['admin', 'user', 'stu'],
+            component: './Announcement/Detail',
+            authority: ['admin', 'trainmanager', 'stu'],
           },
           {
             path: '/announcement/articles',
             name: '查看公告',
-            component: './Announcement/Article/list',
-            authority: ['admin', 'user', 'stu'],
+            component: './Announcement/list',
+            authority: ['admin', 'trainmanager', 'stu'],
           },
         ],
       },
       {
         path: '/courseware',
         name: '课件管理',
-        icon: 'self_CoursewareIcon',
+        icon: 'icon-course',
         authority: ['admin'],
         routes: [
           {
@@ -203,26 +207,31 @@ export default [
       {
         path: '/exam',
         name: '试卷管理',
-        icon: 'self_TestResourceIcon',
+        icon: 'icon-kaoshi1',
         authority: ['admin'],
 
         routes: [
           {
             path: '/exam',
-            redirect: '/exam/examManager/index',
+            redirect: '/exam/index',
           },
           {
-            path: '/exam/examManager/index',
+            path: '/exam/index',
             name: '试卷列表',
             component: './Exam/ExamManager/index',
           },
           {
-            path: '/exam/examManager/edit/:id',
+            path: '/exam/edit/:id',
             hideInMenu: true,
             name: '试卷修改',
             component: './Exam/ExamManager/Edit',
           },
+          {
+            path: '/exam/create',
 
+            name: '创建试卷',
+            component: './Exam/ExamManager/Create',
+          },
           {
             // 上传试卷
             path: '/exam/uploadZip',
@@ -262,8 +271,8 @@ export default [
       {
         path: '/trainGroupManager',
         name: '培训群组管理',
-        icon: 'self_StuManagerIcon',
-        authority: ['user'],
+        icon: 'icon-Shape',
+        authority: ['trainmanager'],
         hideChildrenInMenu: true,
         routes: [
           {
@@ -296,14 +305,15 @@ export default [
       {
         path: '/studyPlan',
         name: '学习计划',
-        icon: 'self_StudyPlanIcon',
-        authority: ['user'],
+        icon: 'icon-plan',
+        authority: ['trainmanager'],
         routes: [
+          { path: '/studyPlan', redirect: '/studyPlan/studyPlanManager' },
           {
             path: '/studyPlan/couser/list',
             name: '查看课程',
             component: './Courseware/CoursewareManager/viewcourses',
-            authority: ['user'],
+            authority: ['trainmanager'],
           },
           {
             path: '/studyPlan/studyPlanManager',
@@ -346,9 +356,11 @@ export default [
       {
         path: '/examPlan',
         name: '考试计划',
-        icon: 'self_ExamPlanIcon',
-        authority: ['user'],
+        icon: 'icon-plan1',
+        authority: ['trainmanager'],
         routes: [
+          { path: '/examPlan', redirect: '/examPlan/examPlanManager' },
+
           {
             path: '/examPlan/viewAllTests',
             name: '查看试卷',
@@ -395,9 +407,10 @@ export default [
       {
         path: '/trainCertificate',
         // name: '培训证书',
-        icon: 'self_TrainCertificateIcon',
-        authority: ['user'],
+        icon: 'icon-zhengshu',
+        authority: ['trainmanager'],
         routes: [
+          { path: '/trainCertificate', redirect: '/trainCertificate/index' },
           {
             path: '/trainCertificate/index',
             name: '证书管理',
@@ -408,19 +421,26 @@ export default [
       // 培训管理员——>问卷调查  没有实现
       {
         path: '/questionnaire',
-        // name: '问卷调查',
-        icon: 'self_QuestionnaireIcon',
-        authority: ['user'],
+        name: '问卷调查',
+        icon: 'icon-wenti',
+        authority: ['admin', 'trainmanager', 'stu'],
         routes: [
+          { path: '/questionnaire', redirect: '/questionnaire/index' },
           {
-            path: '/questionnaire/questionnaire1',
-            name: '发布问卷',
-            component: './Questionnaire/Questionnaire1',
+            path: '/questionnaire/index',
+            name: '问卷列表',
+            component: './Questionnaire/index',
           },
           {
-            path: '/questionnaire/questionnaire2',
-            name: '问卷回收',
-            component: './Questionnaire/Questionnaire2',
+            path: '/questionnaire/create',
+            name: '创建问卷',
+            component: './Questionnaire/createoredit',
+          },
+          {
+            path: '/questionnaire/edit/:id',
+            hideInMenu: true,
+            name: '修改问卷',
+            component: './Questionnaire/edit',
           },
         ],
       },
@@ -428,24 +448,25 @@ export default [
       {
         path: '/statisticalAnalysis',
         name: '统计分析',
-        icon: 'self_StatisticalAnalysisIcon',
-        authority: ['user'],
+        icon: 'icon-tongji1',
+        authority: ['trainmanager'],
         routes: [
+          { path: '/statisticalAnalysis', redirect: '/statisticalAnalysis/statisticalAnalysis1' },
           {
             path: '/statisticalAnalysis/statisticalAnalysis1',
             name: '学习资源统计',
             component: './StatisticalAnalysis/StatisticalAnalysis1',
           },
-          {
-            path: '/statisticalAnalysis/statisticalAnalysis2',
-            name: '学习情况统计',
-            component: './StatisticalAnalysis/StatisticalAnalysis2',
-          },
-          {
-            path: '/statisticalAnalysis/statisticalAnalysis3',
-            name: '考试情况统计',
-            component: './StatisticalAnalysis/StatisticalAnalysis3',
-          },
+          // {
+          //   path: '/statisticalAnalysis/statisticalAnalysis2',
+          //   name: '学习情况统计',
+          //   component: './StatisticalAnalysis/StatisticalAnalysis2',
+          // },
+          // {
+          //   path: '/statisticalAnalysis/statisticalAnalysis3',
+          //   name: '考试情况统计',
+          //   component: './StatisticalAnalysis/StatisticalAnalysis3',
+          // },
         ],
       },
 
@@ -453,13 +474,14 @@ export default [
       {
         path: '/publicCourse',
         name: '公开课',
-        icon: 'calendar',
+        icon: 'icon-gongkaike',
         component: './MyStudy/publicCourse/publicourse',
+        authority: ['stu'],
       },
       {
         path: '/myStudy',
         name: '我的学习',
-        icon: 'self_MyStudyIcon',
+        icon: 'icon-xuexi',
         authority: ['stu'],
         routes: [
           {
@@ -502,13 +524,41 @@ export default [
           },
         ],
       },
+      {
+        path: '/nofity',
+        name: '通知任务',
+        icon: 'icon-exam1',
+
+        authority: ['admin'],
+        routes: [
+          { path: '/nofity', redirect: '/nofity/index' },
+          {
+            path: '/nofity/index',
+            name: '通知任务列表',
+            component: './Noticetask/index',
+          },
+          {
+            path: '/nofity/create',
+            name: '创建通知任务',
+            component: './Noticetask/createoredit',
+          },
+          {
+            path: '/nofity/edit/:id',
+            name: '编辑通知',
+            hideInMenu: true,
+            component: './Noticetask/createoredit',
+          },
+        ],
+      },
       // 学员——>我的考试
       {
         path: '/myExam',
         name: '我的考试',
-        icon: 'self_MyExamIcon',
+        icon: 'icon-exam1',
+
         authority: ['stu'],
         routes: [
+          { path: '/myExam', redirect: '/myExam/examPlan' },
           {
             path: '/myExam/examPlan',
             name: '待参加考试',
@@ -594,7 +644,7 @@ export default [
       {
         path: '/myCertificate',
         name: '我的证书',
-        icon: 'self_MyCertificateIcon',
+        icon: 'icon-zhengshu',
         authority: ['stu'],
         hideChildrenInMenu: true,
         routes: [
@@ -613,11 +663,16 @@ export default [
       // 个人中心
       {
         name: '个人中心',
-        icon: 'self_SystemManagerIcon',
-        authority: ['admin', 'user', 'stu'],
+        // icon: 'self_SystemManagerIcon',
+        icon: 'icon-shezhi',
+        authority: ['admin', 'trainmanager', 'stu'],
         path: '/personalCenter',
 
         routes: [
+          {
+            path: '/personalCenter',
+            redirect: '/personalCenter/center',
+          },
           {
             path: '/personalCenter/center',
             name: '消息中心',
@@ -625,11 +680,11 @@ export default [
             routes: [
               {
                 path: '/personalCenter/center',
-                redirect: '/personalCenter/center/articles',
+                redirect: '/personalCenter/center/notifications',
               },
               {
-                path: '/personalCenter/center/articles',
-                component: './PersonalCenter/Center/Articles',
+                path: '/personalCenter/center/notifications',
+                component: './PersonalCenter/Center/notifications',
               },
             ],
           },

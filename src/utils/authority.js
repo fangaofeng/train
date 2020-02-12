@@ -1,8 +1,9 @@
 // use localStorage to store the authority info, which might be sent from server in actual project.
+import { reloadAuthorized } from './Authorized';
+
 export function getAuthority(str) {
   // return localStorage.getItem('antd-pro-authority') || ['admin', 'user'];
-  const authorityString =
-    typeof str === 'undefined' ? localStorage.getItem('jswhl-authority') : str;
+  const authorityString = typeof str === 'undefined' ? localStorage.getItem('bnd-authority') : str;
   // authorityString could be admin, "admin", ["admin"]
   let authority;
   try {
@@ -13,11 +14,12 @@ export function getAuthority(str) {
   if (typeof authority === 'string') {
     return [authority];
   }
-  // return authority || ['admin'];
-  return authority || ['guest'];
+
+  return authority;
 }
 
 export function setAuthority(authority) {
   const proAuthority = typeof authority === 'string' ? [authority] : authority;
-  return localStorage.setItem('jswhl-authority', JSON.stringify(proAuthority));
+  localStorage.setItem('bnd-authority', JSON.stringify(proAuthority));
+  reloadAuthorized();
 }

@@ -32,13 +32,14 @@ class ModalTable extends Component {
   }
 
   getTableData = (page, size) => {
-    const { dispatch, id, action } = this.props;
+    const { dispatch, id, action, sid } = this.props;
     dispatch({
       type: action,
       payload: {
         page, // 页码
         size, // 每页条数
         id, // 课程id
+        sid,
       },
     });
   };

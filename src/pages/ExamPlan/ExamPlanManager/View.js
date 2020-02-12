@@ -3,7 +3,7 @@ import { Card, Badge, Form } from 'antd';
 // import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ExamBasicInfo from '@/components/ExamBasicInfo';
 
 import PageTable from '@/components/PageTable';
@@ -151,7 +151,7 @@ class ViewExamPlan extends Component {
         title: '群组成员',
         dataIndex: 'train_group_member',
         key: 'train_group_member',
-        render: (text, record) => <span>{record.trainers.length}</span>,
+        render: (text, record) => <span>{record.count}</span>,
       },
       {
         title: (
@@ -266,7 +266,8 @@ class ViewExamPlan extends Component {
         </Card>
 
         <ModalTable
-          id={modalTableTGID}
+          id={examPlanID}
+          sid={modalTableTGID}
           visible={showModalTable}
           modalTitle="查看培训群组考试详情"
           Headerinfo={

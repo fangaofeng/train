@@ -9,7 +9,7 @@ import {
   changeStatus, // 学习计划管理——>主页，归档学习计划
 } from '@/services/studyPlan/studyPlanManager/index';
 
-import { getCourseTeacherInfo } from '@/services/courseware/coursewareManager/index';
+import { getCourseTeacherInfo } from '@/services/courseware/index';
 import { getTrainGroups, getTrainGroupMembers } from '@/services/trainGroupManager/index';
 
 export default {

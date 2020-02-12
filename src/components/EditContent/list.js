@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { Card, Button, message } from 'antd';
 import router from 'umi/router';
 import { useSelector, useDispatch } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import PageTable from '@/components/PageTable';
 import styles from '@/components/Modal/Common.less';
 import ModalDel from '@/components/Modal/ModalDel';

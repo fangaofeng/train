@@ -3,7 +3,7 @@ import { Card, Button, message, Input, Form } from 'antd';
 import router from 'umi/router';
 
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import PageTable from '@/components/PageTable';
 import styles from './Common.less';
 import uploadSuccess from '@/assets/images/upload_success.png';
@@ -44,7 +44,6 @@ class AddTrainGroup extends Component {
     const len = selectedAllKeys.length;
     validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('表单值', values);
         if (len < 1) {
           message.info('请选择您需要添加的数据');
           return;
@@ -57,15 +56,12 @@ class AddTrainGroup extends Component {
           },
           callback: res => {
             if (res && res.status === 'ok') {
-              message.success('提交成功');
+              // message.success('提交成功')
               this.setState({
                 responseGroupId: res.data.id,
                 responseGroupNumber: res.data.group_no,
                 responseGroupName: res.data.name,
-              });
-
-              this.setState({
-                addTrainGroupFlag: 'success', // 增加群组是否成功的标志,fail为失败，success为成功
+                addTrainGroupFlag: 'success',
               });
             } else {
               message.warning('提交失败');
@@ -101,8 +97,9 @@ class AddTrainGroup extends Component {
       responseGroupId,
       responseGroupName,
       responseGroupNumber,
+      maxNameLength,
+      nameLengthLeft,
     } = this.state;
-    const { maxNameLength, nameLengthLeft } = this.state;
 
     const columns = [
       {

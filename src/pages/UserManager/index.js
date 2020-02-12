@@ -3,7 +3,7 @@ import { TreeSelect, Card, Button, Divider, Popconfirm, message, Input } from 'a
 import router from 'umi/router';
 import Link from 'umi/link';
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import styles from '@/components/styles.less';
 import PageTable from '@/components/PageTable';
 import ModalDel from '@/components/Modal/ModalDel';

@@ -9,7 +9,7 @@ import {
   // getSPGroups,// 考试计划管理——>查看考试计划（获取table表格数据）
   getExamplanGroups, // 考试计划管理——>查看考试计划——>查看培训群组考试详情（获取table表格数据）\
 } from '@/services/examPlan/examPlanManager/index';
-import { getPaperDetail } from '@/services/exam/examManager/index';
+import { getPaperDetail } from '@/services/exam/index';
 import { getTrainGroups, getTrainGroupMembers } from '@/services/trainGroupManager/index';
 
 export default {
@@ -48,7 +48,7 @@ export default {
       callback(response); // 返回结果
     },
     // 考试计划管理——>编辑考试计划——>获取课程信息、讲师信息，获取计划名称、计划时间
-    *GetPaperDetail({ payload, callback }, { call }) {
+    *GetPaper({ payload, callback }, { call }) {
       const response = yield call(getPaperDetail, payload);
       callback(response); // 返回结果
     },

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Card, Table, Input, Button } from 'antd';
 import router from 'umi/router';
 import { useSelector, useDispatch } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import styles from '@/components/styles.less';
 
 const { Search } = Input;

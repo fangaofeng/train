@@ -3,7 +3,7 @@ import { Card, Badge, Form, Spin } from 'antd';
 // import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import CourseBasicInfo from '@/components/CourseBasicInfo';
 import PageTable from '@/components/PageTable';
 import ModalTable from '@/components/Modal/ModalTable';
@@ -106,7 +106,15 @@ class ViewSP extends Component {
       studyPlanEndTime,
       modalTableTGID,
     } = this.state;
-    const { viewSPData, learnplanloading, dispatch, detailLoading } = this.props;
+    const {
+      viewSPData,
+      learnplanloading,
+      dispatch,
+      detailLoading,
+      match: {
+        params: { studyPlanID },
+      },
+    } = this.props;
 
     const columns = [
       {
@@ -125,7 +133,7 @@ class ViewSP extends Component {
         title: '群组成员',
         dataIndex: 'train_group_member',
         key: 'train_group_member',
-        render: (text, record) => <span>{record.trainers.length}</span>,
+        render: (text, record) => <span>{record.count}</span>,
       },
       {
         title: (
@@ -246,8 +254,8 @@ class ViewSP extends Component {
             </div>
 
             <PageTable
+              id={studyPlanID}
               {...this.props}
-              id={1}
               data={viewSPData}
               columns={columns}
               loading={learnplanloading}
@@ -256,7 +264,8 @@ class ViewSP extends Component {
           </div>
         </Card>
         <ModalTable
-          id={modalTableTGID}
+          id={studyPlanID}
+          sid={modalTableTGID}
           visible={showModalTable}
           modalTitle="查看培训群组学习详情"
           Headerinfo={

@@ -1,15 +1,26 @@
-import { queryCurrent, patchuserinfo, changeuseravatar } from '@/services/account';
+import {
+  queryCurrent,
+  patchuserinfo,
+  changeuseravatar,
+  queryNotices,
+  changeNoticeStatus,
+  clearNotice,
+} from '@/services/account';
 
 export default {
   namespace: 'account',
 
   state: {
-    currentUser: {},
+    currentUser: { avatar: '', name: '' },
+    // currentUser: null,
+    notices: { results: [], count: 0 },
+    unreadnoticescount: 0,
   },
 
   effects: {
-    *fetchCurrent(_, { call, put }) {
+    *FetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
+      // console.log(response);
       yield put({
         type: 'saveCurrentUser',
         payload: response.data,
@@ -22,6 +33,7 @@ export default {
         payload: response.data,
       });
     },
+
     *changeuseravatar({ payload }, { call, put }) {
       const response = yield call(changeuseravatar, payload);
       yield put({
@@ -29,18 +41,35 @@ export default {
         payload: response.data,
       });
     },
+    *fetchNotices({ payload }, { call, put }) {
+      const res = yield call(queryNotices, payload);
+      yield put({
+        type: 'saveNotices',
+        payload: res.data,
+      });
+    },
+    *changeNoticeReadState({ payload }, { call, put }) {
+      const response = yield call(changeNoticeStatus, payload);
+      yield put({
+        type: 'saveNotices',
+        payload: response.data,
+      });
+    },
+    *clearNotices({ payload }, { call, put }) {
+      const response = yield call(clearNotice, payload);
+      yield put({
+        type: 'saveClearedNotices',
+        payload: response.data,
+      });
+    },
   },
   reducers: {
-    save(state, action) {
-      return {
-        ...state,
-        list: action.payload,
-      };
-    },
     saveCurrentUser(state, action) {
+      // console.log(action.payload);
       return {
         ...state,
         currentUser: action.payload || {},
+        unreadnoticescount: action.payload.unreadnoticescount || 0,
       };
     },
     saveUserAvatar(state, action) {
@@ -50,13 +79,18 @@ export default {
         currentUser: { ...currentUser, ...(action.payload || {}) },
       };
     },
-    changeNotifyCount(state, action) {
+    saveNotices(state, { payload }) {
       return {
         ...state,
-        currentUser: {
-          ...state.currentUser,
-          notifyCount: action.payload,
-        },
+        notices: payload,
+        unreadnoticescount: payload.unreadnoticescount,
+      };
+    },
+    saveClearedNotices(state, { payload }) {
+      return {
+        ...state,
+        notices: payload.results || [],
+        unreadnoticescount: payload.unreadnoticescount || 0,
       };
     },
   },

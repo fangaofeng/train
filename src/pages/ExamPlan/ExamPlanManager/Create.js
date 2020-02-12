@@ -4,7 +4,7 @@ import { DatePicker, Card, Button, Table, message, Input, Spin, Form } from 'ant
 import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ExamBasicInfo from '@/components/ExamBasicInfo';
 import SubmitSuccessCard from '@/components/SubmitSuccessCard';
 
@@ -19,7 +19,7 @@ const { RangePicker } = DatePicker;
 @connect(({ ExamPlanManager, loading }) => ({
   createGroups: ExamPlanManager.createGroups, // 考试管理——>发布考试计划——>查看培训群组（获取table表格数据）
   // createMembers: ExamPlanManager.createMembers, // 考试管理——>发布考试计划——>查看培训群组成员（获取table表格数据）
-  paperLoading: loading.effects['ExamPlanManager/GetPaperDetail'],
+  paperLoading: loading.effects['ExamPlanManager/GetPaper'],
   groupsLoading: loading.effects['ExamPlanManager/GetTrainGroups'],
 }))
 @Form.create()
@@ -288,7 +288,7 @@ class CreateExam extends Component {
           <ExamBasicInfo
             dispatch={dispatch}
             id={examID}
-            action="ExamPlanManager/GetPaperDetail"
+            action="ExamPlanManager/GetPaper"
             isShow={currentStatus === 'success'}
           />
         </Spin>
@@ -387,7 +387,7 @@ class CreateExam extends Component {
               dataSource={filterData(selectedData)}
               columns={columns}
               pagination={previewPageConifg}
-              // onChange={this.previewTableChange}
+              rowKey="id"
             />
           </div>
           <div className={styles.foonter_btns}>

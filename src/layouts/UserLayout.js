@@ -5,19 +5,19 @@ import GlobalFooter from '@/components/GlobalFooter';
 import styles from './UserLayout.less';
 // import logo from '../assets/logo.svg';
 import logo from '@/assets/images/Login/login_logo.png';
-import { company } from '../defaultSettings';
-
-const copyright = (
-  <Fragment>
-    Copyright <Icon type="copyright" /> {company}
-  </Fragment>
-);
+// eslint-disable-next-line import/no-unresolved
+import settings from '../../config/defaultSettings';
 
 class UserLayout extends React.PureComponent {
   render() {
+    console.log(settings);
     const { children } = this.props;
+    const copyright = (
+      <Fragment>
+        Copyright <Icon type="copyright" /> {settings.companyband}
+      </Fragment>
+    );
     return (
-      // @TODO <DocumentTitle title={this.getPageTitle()}>
       <div className={styles.container}>
         <div className={styles.top}>
           <Row>

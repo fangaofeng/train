@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { Form, Input, Button, Card } from 'antd';
+import { Form, Input, Button, Card, Descriptions } from 'antd';
 import { connect } from 'dva';
 // import storetoken from '@/utils/token'
 
 import styles from './BaseView.less';
 
-import DescriptionList from '@/components/DescriptionList';
 // import { getTimeDistance } from '@/utils/utils';
 // import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl'
 import AvatarView from '@/components/AvatarView';
@@ -15,7 +14,6 @@ const FormItem = Form.Item;
 
 // const token = storetoken.get()
 
-const { Description } = DescriptionList;
 // 头像组件 方便以后独立，增加裁剪之类的功能
 // const AvatarView = ({ avatar }) => (
 //   <Fragment>
@@ -55,9 +53,10 @@ const { Description } = DescriptionList;
 //   callback();
 // };
 
-@connect(({ account, loading }) => ({
+@connect(({ account, loading, settings }) => ({
+  avataruploadurl: settings.uploadurl.avatar,
   currentUser: account.currentUser,
-  currentUserLoading: loading.effects['account/fetchCurrent'],
+  currentUserLoading: loading.effects['account/FetchCurrent'],
   patchuserinfoLoading: loading.effects['account/patchuserinfo'],
 }))
 @Form.create()
@@ -107,13 +106,13 @@ class BaseView extends Component {
       form: { getFieldDecorator },
       currentUser,
       patchuserinfoLoading,
-      // currentUserLoading,
+      avataruploadurl,
     } = this.props;
 
     return (
       <div>
         <Card title="基本信息" style={{ marginBottom: 24 }} bordered={false}>
-          <DescriptionList
+          <Descriptions
             col={1}
             size="small"
             layout="horizontal"
@@ -121,13 +120,13 @@ class BaseView extends Component {
             style={{ marginBottom: 16 }}
             // title="基本信息"
           >
-            <Description term="email">{currentUser.email}</Description>
-            <Description term="培训中职位">{currentUser.role_display}</Description>
+            <Descriptions.Item label="email">{currentUser.email}</Descriptions.Item>
+            <Descriptions.Item label="培训中职位">{currentUser.role_display}</Descriptions.Item>
 
-            <Description term="员工编号">{currentUser.user_no}</Description>
-            <Description term="所属部门">{currentUser.department_name}</Description>
-            <Description term="部门职位">{currentUser.employee_position}</Description>
-          </DescriptionList>
+            <Descriptions.Item label="员工编号">{currentUser.user_no}</Descriptions.Item>
+            <Descriptions.Item label="所属部门">{currentUser.department_name}</Descriptions.Item>
+            <Descriptions.Item label="部门职位">{currentUser.employee_position}</Descriptions.Item>
+          </Descriptions>
         </Card>
         {/* <Divider style={{ margin: '16px 0' }} /> */}
         <Card title="修改信息" style={{ marginBottom: 24 }} bordered={false}>
@@ -245,7 +244,7 @@ class BaseView extends Component {
               </Form>
             </div>
             <div className={styles.right}>
-              <AvatarView avatar={currentUser.avatar} />
+              <AvatarView avatar={currentUser.avatar} uploadurl={avataruploadurl} />
             </div>
           </div>
         </Card>

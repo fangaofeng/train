@@ -1,16 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { Card } from 'antd';
 
-class AnswerQuestion extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  };
-    }
-    
-    render() {
-        return (
-            <div>阿法发顺丰</div>
-        );
-    }
+function AnswerQuestion() {
+  return (
+    <PageHeaderWrapper title="课堂提问">
+      <Card> 没有实现</Card>
+    </PageHeaderWrapper>
+  );
 }
 
-export default AnswerQuestion; 
+export default AnswerQuestion;

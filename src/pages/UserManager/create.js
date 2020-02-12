@@ -1,40 +1,16 @@
-import React, { Component, Fragment } from 'react';
-import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
-import { Form, Input, Upload, Button, Card, message } from 'antd';
+import React, { Component } from 'react';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { Form, Input, Button, Card, message } from 'antd';
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import PhoneView from '@/components/PhoneView';
 import styles from './Edit.less';
-import storetoken from '@/utils/token';
-import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl';
+import AvatarView from '@/components/AvatarView';
+// import storetoken from '@/utils/token';
+// import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl';
 import defaultavatar from '@/assets/images/Header/avatar_default_small.png';
 
 const FormItem = Form.Item;
-
-const token = storetoken.get();
-const uploadProps = {
-  headers: {
-    Authorization: `Token ${token}`,
-  },
-};
-const uploadurl = getUploadAvatarurl();
-
-// 头像组件 方便以后独立，增加裁剪之类的功能
-const AvatarView = ({ avatar }) => (
-  <Fragment>
-    <div className={styles.avatar_title}>个人图像</div>
-    <div className={styles.avatar}>
-      <img src={avatar} alt="avatar" />
-    </div>
-    <Upload action={uploadurl} {...uploadProps}>
-      <div className={styles.button_view}>
-        <Button icon="upload">
-          <FormattedMessage id="app.settings.basic.change-avatar" defaultMessage="Change avatar" />
-        </Button>
-      </div>
-    </Upload>
-  </Fragment>
-);
 
 const validatorPhone = (rule, value, callback) => {
   const values = value.split('-');
@@ -47,7 +23,8 @@ const validatorPhone = (rule, value, callback) => {
   callback();
 };
 
-@connect(({ loading }) => ({
+@connect(({ loading, settings }) => ({
+  avataruploadurl: settings.uploadurl.avatar,
   createuserinfoLoading: loading.effects['UserManager/createuserinfo'],
 }))
 @Form.create()
@@ -113,6 +90,7 @@ class BaseView extends Component {
     const {
       form: { getFieldDecorator },
       createuserinfoLoading,
+      avataruploadurl,
     } = this.props;
     const formItemLayout = {
       labelCol: {
@@ -223,7 +201,7 @@ class BaseView extends Component {
               </Form>
             </div>
             <div className={styles.right}>
-              <AvatarView avatar={this.getAvatarURL()} />
+              <AvatarView avatar={(this.getAvatarURL(), avataruploadurl)} />
             </div>
           </div>
         </Card>

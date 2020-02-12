@@ -4,28 +4,54 @@ const data = {
   ui: 'canupload',
   data: [
     {
-      id: 391,
+      id: 1,
       name: '江苏博纳德s',
       children: [
         {
-          id: 392,
+          id: 2,
           name: '研发中心',
           children: [
             {
-              id: 393,
+              id: 3,
               name: '测试部',
               children: [
                 {
-                  id: 394,
+                  id: 4,
                   name: '交付团队dfgsdfgsdfgsdgsdfgsdfgsdfgdfg',
                   children: [],
-                  parent: 393,
+                  parent: 3,
+                },
+                {
+                  id: 5,
+                  name: 'ertegdfg',
+                  children: [],
+                  parent: 3,
                 },
               ],
-              parent: 392,
+              parent: 2,
             },
           ],
-          parent: 391,
+          parent: 1,
+        },
+        {
+          id: 21,
+          name: '研发中心',
+          children: [
+            {
+              id: 31,
+              name: '测试部',
+              children: [
+                {
+                  id: 41,
+                  name: '交付团队dfgsdfgsdfgsdgsdfgsdfgsdfgdfg',
+                  children: [],
+                  parent: 31,
+                },
+              ],
+              parent: 21,
+            },
+          ],
+          parent: 1,
         },
       ],
     },

@@ -3,13 +3,16 @@ import { Divider, Button } from 'antd';
 import router from 'umi/router';
 import Link from 'umi/link';
 import ManagerTable from '@/components/ManagerTable/index';
-
+// import styles from '@/components/styles.less';
 export default () => {
   const datalist = state => state.ExamManager.allTestPapers;
   const extrabutton = (
-    <div className="">
+    <div styles>
       <Button type="primary" onClick={() => router.push('/exam/uploadZip/uploadZip1')}>
         上传试卷
+      </Button>
+      <Button type="primary" onClick={() => router.push('/exam/create')}>
+        创建试卷
       </Button>
     </div>
   );
@@ -64,9 +67,7 @@ export default () => {
         if (record.status === '拟制中') {
           dom = (
             <span>
-              <Link to={`/exam/examManager/edit/${record.id}?currentType=${record.status}`}>
-                编辑
-              </Link>
+              <Link to={`/exam/edit/${record.id}?currentType=${record.status}`}>编辑</Link>
               <Divider type="vertical" />
               <a
                 onClick={() =>
@@ -80,9 +81,7 @@ export default () => {
         } else if (record.status === '已上架') {
           dom = (
             <span>
-              <Link to={`/exam/examManager/edit/${record.id}?currentType=${record.status}`}>
-                编辑
-              </Link>
+              <Link to={`/exam/edit/${record.id}?currentType=${record.status}`}>编辑</Link>
               <Divider type="vertical" />
               <a
                 onClick={() =>
@@ -96,9 +95,7 @@ export default () => {
         } else if (record.status === '已下架') {
           dom = (
             <span>
-              <Link to={`/exam/examManager/edit/${record.id}?currentType=${record.status}`}>
-                编辑
-              </Link>
+              <Link to={`/exam/edit/${record.id}?currentType=${record.status}`}>编辑</Link>
               <Divider type="vertical" />
               <a
                 onClick={() =>
@@ -122,7 +119,7 @@ export default () => {
   ];
 
   const props = {
-    listAction: 'ExamManager/GetAllTestPapersTableData',
+    listAction: 'ExamManager/GetPapers',
     name: '试卷',
     datalist,
     columns,

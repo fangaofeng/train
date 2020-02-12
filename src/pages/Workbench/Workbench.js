@@ -3,7 +3,7 @@ import { List, Button, Card, Row, Col, Progress, Table, Badge, Tabs, Spin } from
 import moment from 'moment';
 // import classNames from 'classnames';
 import Link from 'umi/link';
-import GridContent from '@/components/PageHeaderWrapper/GridContent';
+import { GridContent } from '@ant-design/pro-layout';
 // import moment from 'moment';
 import SelfCard from '@/components/Workbench/selfCard';
 import SelfItemCard from '@/components/Workbench/selfItemCard';
@@ -119,7 +119,7 @@ class Workbench extends Component {
         type: 'workbench/getStats',
         payload: {},
       });
-    } else if (currentUserFlag[0] === 'user') {
+    } else if (currentUserFlag[0] === 'trainmanager') {
       // 最新课程
       dispatch({
         type: 'workbench/getLatestCourse',
@@ -304,11 +304,11 @@ class Workbench extends Component {
       // status状态  ‘拟制中’、‘已上架’、‘已下架’、‘已归档’
       let url = '';
       if (status === '拟制中') {
-        url = `/courseware/coursewareManager/courseMaking/${id}`;
+        url = `/courseware/coursewareManager/edit/${id}?currentType=${status}`;
       } else if (status === '已上架') {
-        url = `/courseware/coursewareManager/onShelf/${id}`;
+        url = `/courseware/coursewareManager/edit/${id}?currentType=${status}`;
       } else if (status === '已下架') {
-        url = `/courseware/coursewareManager/offShelf/${id}`;
+        url = `/courseware/coursewareManager/edit/${id}?currentType=${status}`;
       } else {
         url = '';
       }
@@ -350,7 +350,7 @@ class Workbench extends Component {
                       title={
                         <div>
                           <span className={styles.listCircle} />
-                          <a href={`/announcement/detail/${item.id}`}>{item.title}</a>
+                          <Link to={`/announcement/detail/${item.id}`}>{item.title}</Link>
                         </div>
                       }
                     />
@@ -424,10 +424,7 @@ class Workbench extends Component {
                 上传课件
               </Button>
             </SelfCard>
-            <SelfCard
-              title="试卷管理"
-              extra={<Link to="/exam/examManager/index">查看更多&gt;&gt;</Link>}
-            >
+            <SelfCard title="试卷管理" extra={<Link to="/exam/index">查看更多&gt;&gt;</Link>}>
               <List
                 grid={{ gutter: 4, xs: 1, sm: 1, md: 2, lg: 2, xl: 4, xxl: 4 }}
                 dataSource={examManagerList}
@@ -448,7 +445,7 @@ class Workbench extends Component {
                         title={item.name}
                         adminConfig={{
                           status: item.status,
-                          btns: <Link to={`/exam/examManager/examMaking/${item.id}`}>编辑</Link>,
+                          btns: <Link to={`/exam/examMaking/${item.id}`}>编辑</Link>,
                         }}
                       />
                     </SelfItemCard>
@@ -527,7 +524,7 @@ class Workbench extends Component {
               </Card>
             </div>
           </Authorized>
-          <Authorized authority="user">
+          <Authorized authority="trainmanager">
             <SelfCard title="最新课程" extra={<Link to="#">查看更多&gt;&gt;</Link>}>
               <List
                 grid={{ gutter: 4, xs: 1, sm: 1, md: 2, lg: 2, xl: 4, xxl: 4 }}
@@ -623,6 +620,7 @@ class Workbench extends Component {
                 }}
                 dataSource={dataSource}
                 columns={columns}
+                rowKey="id"
               />
             </SelfCard>
           </Authorized>

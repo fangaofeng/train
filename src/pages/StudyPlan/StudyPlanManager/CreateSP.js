@@ -4,7 +4,7 @@ import { DatePicker, Card, Button, Table, Spin, message, Input, Form } from 'ant
 import router from 'umi/router';
 // import Link from 'umi/link';
 import { connect } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import SubmitSuccessCard from '@/components/SubmitSuccessCard';
 
 import CourseBasicInfo from '@/components/CourseBasicInfo';

@@ -17,7 +17,7 @@ export default () => {
     <List.Item
       actions={[
         <Link to={`/myExam/onlineExam/${item.id}`}>
-          <Button type="primary ">开始考试</Button>,
+          <Button type="primary ">开始考试</Button>
         </Link>,
       ]}
     >

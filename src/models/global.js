@@ -1,35 +1,31 @@
-import { queryNotices } from '@/services/api';
+import {
+  getUploadurl, // 考试计划管理——>查看考试计划——>查看培训群组考试详情（获取table表格数据）\
+} from '@/services/config';
 
 export default {
   namespace: 'global',
 
   state: {
     collapsed: false,
-    notices: { results: [], count: 0 },
+    uploadurl: {
+      course: '',
+      paper: '',
+      avatar: '',
+      org: '',
+      user: '',
+    },
   },
 
   effects: {
-    *fetchNotices(_, { call, put }) {
-      const res = yield call(queryNotices);
-      yield put({
-        type: 'saveNotices',
-        payload: res.data,
-      });
-      yield put({
-        type: 'account/changeNotifyCount',
-        payload: res.data.count,
-      });
-    },
-    *clearNotices({ payload }, { put, select }) {
-      yield put({
-        type: 'saveClearedNotices',
-        payload,
-      });
-      const count = yield select(state => state.global.notices.length);
-      yield put({
-        type: 'account/changeNotifyCount',
-        payload: count,
-      });
+    *GetUploadurl({ payload }, { call, put }) {
+      const response = yield call(getUploadurl, payload);
+
+      if (response && response.status === 'ok') {
+        yield put({
+          type: 'saveuploadurl',
+          payload: response.data,
+        });
+      }
     },
   },
 
@@ -40,16 +36,10 @@ export default {
         collapsed: payload,
       };
     },
-    saveNotices(state, { payload }) {
+    saveuploadurl(state, { payload }) {
       return {
         ...state,
-        notices: payload,
-      };
-    },
-    saveClearedNotices(state, { payload }) {
-      return {
-        ...state,
-        notices: state.notices.filter(item => item.type !== payload),
+        uploadurl: payload,
       };
     },
   },

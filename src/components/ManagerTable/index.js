@@ -2,9 +2,9 @@ import React, { useReducer } from 'react';
 import { Card, Modal, Icon, Button, Input, message } from 'antd';
 
 import { useSelector, useDispatch } from 'dva';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import PageTable from '@/components/PageTable';
-import styles from './index.less';
+import styles from '@/components/styles.less';
 
 const { Search } = Input;
 const initialState = {

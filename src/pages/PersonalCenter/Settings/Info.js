@@ -3,9 +3,8 @@ import { connect } from 'dva';
 import router from 'umi/router';
 // import { FormattedMessage } from 'umi-plugin-react/locale';
 import { Menu } from 'antd';
-import GridContent from '@/components/PageHeaderWrapper/GridContent';
+import { PageHeaderWrapper, GridContent } from '@ant-design/pro-layout';
 import styles from './Info.less';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 const { Item } = Menu;
 

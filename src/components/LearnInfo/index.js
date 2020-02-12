@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Divider, Progress } from 'antd';
+import { Progress, Descriptions } from 'antd';
 import moment from 'moment';
 import styles from './LearnInfo.less';
 import ImgWord from '@/components/ImageWord';
@@ -18,32 +18,19 @@ class LearnInfo extends PureComponent {
             />
           </div>
           <div className={styles.imgRight}>
-            <div className={styles.msgDetail}>
-              <span>课程名称：</span>
-              <span className={styles.msgDetailOverflow}>{detail.plan.course.name}</span>
-            </div>
-            <div>
-              <span>
-                计划名称：
-                {detail.plan.name}
-              </span>
-              <Divider type="vertical" />
-              <span>
-                学习进度：
-                <Progress percent={detail.rate_progress} style={{ width: 280 }} />
-              </span>
-            </div>
-            <div>
-              <span>
-                课时：
-                {detail.plan.course.class_hour}时
-              </span>
-              <Divider type="vertical" />
-              <span>
-                学习完成时间：
+            <Descriptions column={2}>
+              <Descriptions.Item label="课程名称">{detail.plan.course.name}</Descriptions.Item>
+              <Descriptions.Item label="计划名称">{detail.plan.name}</Descriptions.Item>
+              <Descriptions.Item label="课时">{detail.plan.course.class_hour}时</Descriptions.Item>
+              <Descriptions.Item label="学习完成时间">
+                {' '}
                 {moment(detail.end_time).format('YYYY-MM-DD HH:mm')}
-              </span>
-            </div>
+              </Descriptions.Item>
+              <Descriptions.Item label="学习进度">
+                {' '}
+                <Progress percent={detail.rate_progress} style={{ width: 180 }} />
+              </Descriptions.Item>
+            </Descriptions>
           </div>
         </div>
       </div>

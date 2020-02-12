@@ -9,8 +9,8 @@ import request from '@/utils/request';
  */
 
 export async function getUser(params) {
-  return request(`/api/user/${params.id}`);
+  return request(`/user/${params.id}`);
 }
 export async function getUsers(params) {
-  return request(`/api/user?${stringify(params)}`);
+  return request(`/user?${stringify(params)}`);
 }

@@ -5,22 +5,23 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Card, Button, Icon, Upload, Row, Col, message, Input, Select, Form, Avatar } from 'antd';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import SelfCard from '@/components/Workbench/selfCard';
 import classNames from 'classnames';
 import JSZip from 'jszip';
 import router from 'umi/router';
 import Link from 'umi/link';
 import styles from './UploadZip1.less';
-import { getUploadCouserurl } from '@/services/uploadUrl/uploadUrl';
+// import { getUploadCouserurl } from '@/services/uploadUrl/uploadUrl';
 import storetoken from '@/utils/token';
 
 const { TextArea } = Input;
 const { Option } = Select;
 const FormItem = Form.Item;
 
-@connect(({ uploadCourse }) => ({
+@connect(({ uploadCourse, settings }) => ({
   zipInfo: uploadCourse.zipInfo,
+  coursewareFileUrl: settings.uploadurl.course,
   zipFileName: uploadCourse.zipFileName,
   zipfileResponse: uploadCourse.zipfileResponse,
 }))
@@ -123,15 +124,18 @@ class UploadZipNew extends Component {
   // 解析config.ini文件，生成对应的json
   parseINIString = data => {
     const regex = {
-      section: /^\s*\[\s*([^\]]*)\s*\]\s*$/,
-      param: /^\s*([w.\-_]+)\s*=\s*(.*?)\s*$/,
+      section: /^\s*\s*([^]*)\s*\]\s*$/,
+      // eslint-disable-next-line no-useless-escape
+      param: /^\s*([\w\.\-\_]+)\s*=\s*(.*?)\s*$/,
       comment: /^\s*;.*$/,
     };
     const value = {};
     const lines = data.split(/\r\n|\r|\n/);
     let section = null;
     lines.forEach(line => {
-      if (regex.param.test(line)) {
+      if (regex.comment.test(line)) {
+        // dfdfdf
+      } else if (regex.param.test(line)) {
         const match = line.match(regex.param);
         if (section) {
           value[section][match[1]] = match[2];
@@ -169,9 +173,9 @@ class UploadZipNew extends Component {
 
       .then(contentlist => {
         const content = contentlist[0];
-        console.log(content);
+        // console.log(content);
         const objInfo = this.parseINIString(content);
-        console.log(objInfo);
+        // console.log(objInfo);
         objInfo.JSZP = `data:image/png;base64,${contentlist[1]}`;
         objInfo.KJFM = `data:image/png;base64,${contentlist[2]}`;
         return objInfo;
@@ -191,13 +195,10 @@ class UploadZipNew extends Component {
     const obj = this.unzipHandler(file)
       .then(data => {
         const { form } = this.props;
-        const { zipInfo } = this.state;
         this.setState({
           zipInfo: data,
         });
-        // this.props.form.setFieldsValue({
-        //     KJBH: this.state.zipInfo.KJBH
-        //   });
+        const { zipInfo } = this.state;
         for (const i in zipInfo) {
           form.setFieldsValue({
             [i]: zipInfo[i],
@@ -218,7 +219,7 @@ class UploadZipNew extends Component {
 
   // Upload组件OnChange调用的方法
   uploadOnChange = info => {
-    console.log(info.file.status);
+    // console.log(info.file.status);
     this.setState({
       fileList: info.fileList,
     });
@@ -230,8 +231,8 @@ class UploadZipNew extends Component {
 
     if (info.file.status === 'done') {
       message.success(`${info.file.name}上传成功`);
-      console.log(info);
-      console.log(info.file.response.zipfile);
+      // console.log(info);
+      // console.log(info.file.response.zipfile);
       this.setState({
         isUploadDone: true,
         zipfileResponse: info.file.response.zipfileid,
@@ -269,6 +270,7 @@ class UploadZipNew extends Component {
     // const { pageHeaderWrapperTittle } = this.state;
     const {
       form: { getFieldDecorator },
+      coursewareFileUrl,
     } = this.props;
     const { isFirstUpload, fileList, zipFileName, zipInfo } = this.state;
     const {
@@ -287,7 +289,7 @@ class UploadZipNew extends Component {
         Authorization: `Token ${token}`,
       },
     };
-    const uploadurl = getUploadCouserurl();
+    // const uploadurl = getUploadCouserurl();
     return (
       <PageHeaderWrapper title="上传课件">
         <Card className={styles.uploadZipContent}>
@@ -304,7 +306,7 @@ class UploadZipNew extends Component {
                 <Upload
                   accept=".zip"
                   name="zipfile"
-                  action={uploadurl}
+                  action={coursewareFileUrl}
                   beforeUpload={this.beforeUpload}
                   onChange={this.uploadOnChange}
                   // className={styles.uploadContent}
@@ -536,6 +538,16 @@ class UploadZipNew extends Component {
                         <div style={{ width: '230px', height: '130px', background: '#ccc' }} />
                       )}
                     </FormItem>
+                    <FormItem label="文件名称" className={styles.selfFormItem}>
+                      {getFieldDecorator('KJWJ', {
+                        rules: [
+                          {
+                            required: true,
+                            message: '文件名称',
+                          },
+                        ],
+                      })(<Input disable="true" placeholder="文件名称" />)}
+                    </FormItem>
                   </SelfCard>
                   <SelfCard title="讲师信息" nopadding="true">
                     <div className={styles.teacherInfo}>
@@ -586,23 +598,6 @@ class UploadZipNew extends Component {
                             <span>{JSJSLengthLeft}</span>字
                           </span>
                         </FormItem>
-                        {/* 多余的 */}
-                        {/* <FormItem
-                            label="讲师介绍："
-                            className={styles.selfFormItem}
-                        >
-                            {
-                            getFieldDecorator('KJWJ', {
-                                rules: [
-                                {
-                                    required: true, message: '讲师介绍必填',
-                                }
-                                ],
-                            })(
-                                <TextArea placeholder='讲师介绍' />
-                            )
-                            }
-                        </FormItem>  */}
                       </div>
                     </div>
                   </SelfCard>

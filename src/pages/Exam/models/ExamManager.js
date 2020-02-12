@@ -8,8 +8,9 @@ import {
   delTrainmanagers, // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 批量删除
   getOtherTrainmanagers, // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 增加培训管理员模态框Table表格数据
   submitAddedData, // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 增加培训管理员模态框提交按钮
-  changeExamStatus, // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架）——> 上架试卷、重新上架试卷
-} from '@/services/exam/examManager';
+  changepaperStatus,
+  createPaper, // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架）——> 上架试卷、重新上架试卷
+} from '@/services/exam/index';
 
 export default {
   namespace: 'ExamManager',
@@ -18,12 +19,13 @@ export default {
     allTestPapers: { results: [], count: 0 }, // 系统管理员 ——> 试卷管理 ——> 主页，获取所有试卷的表格数据
     currenttrainmanagers: { results: [], count: 0 }, // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中） ——> 获取现有培训管理员的Table表格数据
     addtrainmanagers: { results: [], count: 0 }, // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中） ——> 增加培训管理员模态框Table表格数据
+    paper: null,
   },
 
   effects: {
     // ------------------------------------------------------------------
     // 系统管理员 ——> 试卷管理 ——> 主页，获取所有试卷的表格数据
-    *GetAllTestPapersTableData({ payload }, { call, put }) {
+    *GetPapers({ payload }, { call, put }) {
       console.log(payload);
       const response = yield call(getAllTestPapersTableData, payload);
       if (response && response.status === 'ok') {
@@ -52,17 +54,32 @@ export default {
       const response = yield call(testPaperOnArchive, payload);
       callback(response); // 返回结果
     },
-    *ChangeStatue({ payload, callback }, { call }) {
+
+    *ChangeExam({ payload, callback }, { call }) {
       console.log(payload);
-      const response = yield call(changeExamStatus, payload);
+      const response = yield call(changepaperStatus, payload);
       callback(response); // 返回结果
     },
+
+    *ChangeStatue({ payload, callback }, { call }) {
+      console.log(payload);
+      const response = yield call(changepaperStatus, payload);
+      callback(response); // 返回结果
+    },
+
     // ------------------------------------------------------------------
     // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 获取试卷信息
-    *GetPaperDetail({ payload, callback }, { call }) {
+    *GetPaper({ payload, callback }, { put, call }) {
       console.log(payload);
       const response = yield call(getPaperDetail, payload);
-      callback(response); // 返回结果
+      if (response && response.status === 'ok') {
+        // console.log('成功');
+        yield put({
+          type: 'savePaper',
+          payload: response.data,
+        });
+        callback(response.data);
+      }
     },
     // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> 获取现有培训管理员的Table表格数据
     *GetTrainmanagers({ payload }, { call, put }) {
@@ -104,7 +121,12 @@ export default {
     // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架）——> 上架试卷、重新上架试卷
     *ChangeExamStatus({ payload, callback }, { call }) {
       console.log(payload);
-      const response = yield call(changeExamStatus, payload);
+      const response = yield call(changepaperStatus, payload);
+      callback(response); // 返回结果
+    },
+    *CreatePaper({ payload, callback }, { call }) {
+      console.log(payload);
+      const response = yield call(createPaper, payload);
       callback(response); // 返回结果
     },
     // ------------------------------------------------------------------
@@ -117,6 +139,12 @@ export default {
       return {
         ...state,
         allTestPapers: action.payload,
+      };
+    },
+    savePaper(state, action) {
+      return {
+        ...state,
+        paper: action.payload,
       };
     },
     // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中） ——> 获取现有培训管理员的Table表格数据

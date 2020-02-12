@@ -13,17 +13,17 @@ export function getUploadExamurl() {
 export function getDepartmentUploadurl() {
   return `${url}/orgs/excelupload`;
 }
-export function getImageUploadurl() {
-  return `${url}/upload/file`;
-}
+// export function getImageUploadurl() {
+//   return `${url}/upload/file`;
+// }
 
 // 系统管理员用户管理上传excel
 export function getUploadUsersurl() {
   return `${url}/user/excelupload`;
 }
 export function getUploadAvatarurl() {
-  return `${url}/user/avatar`;
+  return `${url}/account/avatar`;
 }
-export function getCoverUploadurl() {
-  return `${url}/course/zipfileupload`;
-}
+// export function getCoverUploadurl() {
+//   return `${url}/course/zipfileupload`;
+// }

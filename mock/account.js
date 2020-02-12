@@ -15,6 +15,8 @@ export default {
       thumbnail: 'http://localhost/avatar_default_big_bak.png', // 缩略图
       avatar: 'http://localhost/avatar_default_big_bak.png',
       department_name: '总经办', // 部门
+      notifyCount: 12,
+      unreadnoticescount: 11,
     },
   },
 
@@ -22,25 +24,31 @@ export default {
     const { username, password } = req.body;
     if (username === 'fgf' && password === '1234qwer') {
       res.send({
-        token: 'a9e85cd0f340b52b7d285af8f41b7f342e771be7', // toekn
-        role: '系统管理员', // 角色
-        role_display: '系统管理员',
+        status: 'ok',
+        data: {
+          token: 'a9e85cd0f340b52b7d285af8f41b7f342e771be7', // toekn
+          roles: ['admin'],
+        }, // 角色
       });
       return;
     }
     if (username === 'tr' && password === '1234qwer') {
       res.send({
-        token: 'a9e85cd0f340b52b7d285af8f41b7f342e771be7', // toekn
-        role: '培训管理员', // 角色
-        role_display: '培训管理员',
+        status: 'ok',
+        data: {
+          token: 'a9e85cd0f340b52b7d285af8f41b7f342e771be7', // toekn
+          roles: ['trainmanager'],
+        }, // 角色
       });
       return;
     }
     if (username === 'stu' && password === '1234qwer') {
       res.send({
-        token: 'a9e85cd0f340b52b7d285af8f41b7f342e771be7', // toekn
-        role: '员工', // 角色
-        role_display: '学员',
+        status: 'ok',
+        data: {
+          token: 'a9e85cd0f340b52b7d285af8f41b7f342e771be7', // toekn
+          roles: ['stu'],
+        }, // 角色
       });
       return;
     }
@@ -48,7 +56,7 @@ export default {
       status: 'error',
     });
   },
-  'POST /api/register': (req, res) => {
+  'POST /api/auth/register': (req, res) => {
     res.send({ status: 'ok', currentAuthority: 'user' });
   },
   'GET /api/500': (req, res) => {

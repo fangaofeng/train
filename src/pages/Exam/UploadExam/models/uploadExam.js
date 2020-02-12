@@ -1,4 +1,4 @@
-import { getTrainerTableData, saveExam } from '@/services/exam/uploadExam';
+import { getTrainerTableData, saveExam } from '@/services/exam/index';
 
 export default {
   namespace: 'uploadExam',
@@ -30,6 +30,12 @@ export default {
       const response = yield call(saveExam, payload);
       callback(response); // 返回结果
     },
+    *SaveSelectedTableData({ payload }, { put }) {
+      yield put({
+        type: 'saveSelectedTableData',
+        payload,
+      }); // 返回结果
+    },
   },
 
   reducers: {
@@ -54,7 +60,7 @@ export default {
     saveSelectedTableData(state, action) {
       return {
         ...state,
-        selectedTableData: action.param.saveSelectedData,
+        selectedTableData: action.payload.selectedData,
       };
     },
   },

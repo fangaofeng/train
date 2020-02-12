@@ -1,4 +1,4 @@
-import { saveCourseWare } from '@/services/courseware/uploadCourse';
+import { saveCourseWare } from '@/services/courseware/index';
 
 export default {
   namespace: 'uploadCourse',
@@ -7,9 +7,7 @@ export default {
     zipInfo: {}, // 上传的zip包内容
     zipFileName: '', // zip文件名
     zipfileResponse: '', // 上传成功后服务器返回的值
-    // 存放获取到的数据
     selectedTableData: {}, // 存放已经选择的表格数据
-    // saveStatus:undefined// 保存或者上架成功失败状态
   },
 
   effects: {
@@ -18,6 +16,12 @@ export default {
       console.log(payload);
       const response = yield call(saveCourseWare, payload);
       callback(response); // 返回结果
+    },
+    *SaveSelectedTableData({ payload }, { put }) {
+      yield put({
+        type: 'saveSelectedTableData',
+        payload,
+      }); // 返回结果
     },
   },
 
@@ -36,7 +40,7 @@ export default {
     saveSelectedTableData(state, action) {
       return {
         ...state,
-        selectedTableData: action.param.saveSelectedData,
+        selectedTableData: action.payload.selectedData,
       };
     },
   },
