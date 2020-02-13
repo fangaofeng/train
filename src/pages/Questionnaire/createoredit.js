@@ -29,7 +29,7 @@ import SchemaForm, {
 
 import { message } from 'antd';
 
-import '@/components/arraryFieldlist';
+import '@/components/uform/index';
 
 // const { onFormInit$, onFieldValueChange$ } = FormEffectHooks;
 // const onChangeOption$ = createEffectHook('onChangeOption');

@@ -15,7 +15,7 @@ import SchemaForm, {
 
 import { message } from 'antd';
 // eslint-disable-next-line import/no-unresolved
-import '@/components/arraryFieldlist';
+import '@/components/uform/index';
 
 // const { onFormInit$, onFieldValueChange$ } = FormEffectHooks;
 // const onChangeOption$ = createEffectHook('onChangeOption');

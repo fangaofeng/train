@@ -15,7 +15,7 @@ import SchemaForm, {
 
 import { message } from 'antd';
 
-import '@/components/uform/arraryFieldlist';
+import '@/components/uform/index';
 // import { getCoverUploadurl } from '@/services/uploadUrl/uploadUrl';
 // const { onFormInit$, onFieldValueChange$ } = FormEffectHooks;
 // const onChangeOption$ = createEffectHook('onChangeOption');
