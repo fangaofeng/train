@@ -1,4 +1,4 @@
-import { message } from 'antd';
+// import { message } from 'antd';
 import { routerRedux } from 'dva';
 
 import { login } from '@/services/auth';
@@ -29,13 +29,14 @@ export default {
       });
 
       // Login successfully
-      const {
-        status,
-        data: { token, roles },
-      } = response;
+      const { status } = response;
       // 登录成功
-      if (status === 'ok' && token && roles) {
+      if (status === 'ok') {
         // 表示登录成功
+        const {
+          data: { token },
+        } = response;
+
         if (rememberUsername) {
           // 记住用户名
           localStorage.setItem('WHLQYHGPXPT_USERNAME', userName);
@@ -81,7 +82,7 @@ export default {
         },
       });
       reloadAuthorized();
-      message.success('退出成功');
+      // message.success('退出成功');
       // 退出后不使用重定向
       yield put(
         routerRedux.push({
@@ -105,38 +106,18 @@ export default {
   reducers: {
     changeLoginStatus(state, { payload }) {
       console.log(payload);
-      const {
-        status,
-        data: { token, roles },
-      } = payload;
+      const { status } = payload;
 
       // 登录成功
-      if (
-        status === 'ok' &&
-        token &&
-        roles
-        // Object.prototype.hasOwnProperty.call(payload, 'token') &&
-        // Object.prototype.hasOwnProperty.call(payload, 'roles')
-      ) {
+      if (status === 'ok') {
+        const {
+          data: { roles },
+        } = payload;
         setAuthority(roles);
-        // switch (payload.roles) {
-        //   case '系统管理员':
-        //     setAuthority('admin');
-        //     break;
-        //   case '培训管理员':
-        //     setAuthority('user');
-        //     break;
-        //   case '员工':
-        //     setAuthority('stu');
-        //     break;
-        //   default:
-        //     break;
-
-        // }
       }
       // 登录失败  或者  退出登录
       else {
-        setAuthority(roles);
+        setAuthority(['guest']);
       }
 
       return {

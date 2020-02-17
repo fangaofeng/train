@@ -2,6 +2,7 @@ const STORAGE_TOKEN_NAME = 'WHLQYHGPXPT_TOKEN';
 
 export default {
   get() {
+    console.log('token');
     return localStorage.getItem(STORAGE_TOKEN_NAME);
   },
   save(token) {

@@ -5,6 +5,14 @@
 import { extend } from 'umi-request';
 import { notification } from 'antd';
 import token from './token';
+import router from 'umi/router';
+declare global {
+  interface Window {
+    g_app: any;
+  }
+}
+
+window.g_app = window.g_app || {};
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -27,23 +35,39 @@ const codeMessage = {
 /**
  * 异常处理程序
  */
-const errorHandler = (error: { response: Response }): Response => {
-  const { response } = error;
+const errorHandler = (error: { data: object; response: Response }): object => {
+  const { data, response } = error;
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
-
-    notification.error({
-      message: `请求错误 ${status}: ${url}`,
-      description: errorText,
-    });
+    if (status === 401) {
+      // @HACK
+      /* eslint-disable no-underscore-dangle */
+      window.g_app._store.dispatch({
+        type: 'login/logout',
+      });
+    }
+    // environment should not be used
+    else if (status === 403) {
+      router.push('/exception/403');
+    } else if (status <= 504 && status >= 500) {
+      router.push('/exception/500');
+    } else if (status >= 404 && status < 422) {
+      router.push('/exception/404');
+    } else {
+      notification.error({
+        message: `请求错误 ${status}: ${url}`,
+        description: errorText,
+      });
+    }
   } else if (!response) {
     notification.error({
       description: '您的网络发生异常，无法连接服务器',
       message: '网络异常',
     });
   }
-  return response;
+
+  return data;
 };
 
 /**
@@ -52,9 +76,22 @@ const errorHandler = (error: { response: Response }): Response => {
 
 const request = extend({
   prefix: '/api',
-  headers: token.get() ? { Authorization: `Token ${token.get()}` } : {},
+
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
 
+request.interceptors.request.use(async (url, options) => {
+  const ttoken = token.get();
+  const defaultOptions = { ...options };
+  if (ttoken) {
+    defaultOptions.headers = {
+      Authorization: `Token ${ttoken}`,
+    };
+  }
+  return {
+    url,
+    options: { ...defaultOptions },
+  };
+});
 export default request;
