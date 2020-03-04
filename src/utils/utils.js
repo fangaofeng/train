@@ -181,3 +181,23 @@ export function formatWan(val) {
 export function isAntdPro() {
   return window.location.hostname === 'localhost';
 }
+
+// export function dealObjectValue(obj) {
+//   const param = {};
+//   if (obj === null || obj === undefined || obj === '' || obj === 'undefined') return param;
+//   // eslint-disable-next-line prefer-const
+//   // eslint-disable-next-line no-restricted-syntax
+//   for (const key in obj) {
+//     if (dataType(obj[key]) === 'Object') {
+//       param[key] = dealObjectValue(obj[key]);
+//     } else if (
+//       obj[key] !== null &&
+//       obj[key] !== undefined &&
+//       obj[key] !== '' &&
+//       obj[key] !== 'undefined'
+//     ) {
+//       param[key] = obj[key];
+//     }
+//   }
+//   return param;
+// }

@@ -254,8 +254,8 @@ class ViewSP extends Component {
             </div>
 
             <PageTable
-              id={studyPlanID}
-              {...this.props}
+              params={{ id: studyPlanID }}
+              dispatch={dispatch}
               data={viewSPData}
               columns={columns}
               loading={learnplanloading}

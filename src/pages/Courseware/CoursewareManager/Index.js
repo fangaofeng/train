@@ -36,7 +36,7 @@ export default () => {
       title: '课件类型',
       dataIndex: 'course_manager_KJLX',
       key: 'course_manager_KJLX',
-      render: (text, record) => <span>{record.courseware_type}</span>,
+      render: (text, record) => <span>{record.file_type}</span>,
     },
     {
       title: '课时',

@@ -27,7 +27,7 @@ class ViewTrainGroupModal extends PureComponent {
 
   // 查看培训群组。获取table表格数据(指定页码，指定每页条数)
   render() {
-    const { trainGroupMembers, loading, id, visible } = this.props;
+    const { trainGroupMembers, loading, id, visible, dispatch } = this.props;
 
     // 查看培训群组，Table分页。
 
@@ -86,8 +86,8 @@ class ViewTrainGroupModal extends PureComponent {
               </div>
             </div>
             <PageTable
-              {...this.props}
-              id={id}
+              dispatch={dispatch}
+              params={{ id }}
               data={trainGroupMembers}
               columns={columns}
               loading={loading}

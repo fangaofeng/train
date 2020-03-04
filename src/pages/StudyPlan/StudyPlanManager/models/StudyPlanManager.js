@@ -29,7 +29,7 @@ export default {
     // ------------------------------------------------------------------
     // 学习计划管理——>创建学习计划——>获取课程信息，讲师信息
     *GetCourseTeacherInfo({ payload, callback }, { call }) {
-      // console.log(payload);
+      console.log(payload);
       const response = yield call(getCourseTeacherInfo, payload);
       callback(response); // 返回结果
     },

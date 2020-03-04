@@ -77,7 +77,7 @@ export default {
         results: [
           {
             id: '000000001',
-
+            reason: 'string',
             level: 'success',
             recipient: 2,
             title: 'tr1 werwe 1 day, 5 hours ago',
@@ -85,14 +85,14 @@ export default {
             verb: 'werwe',
             description: 'werwer',
             target: null,
-            action_object: null,
-            timestamp: '2019-09-24 08:22:14',
+            actor: null,
+            created: '2019-09-24 08:22:14',
             public: true,
             data: null,
           },
           {
             id: '000000002',
-
+            reason: 'string',
             level: 'success',
             recipient: 2,
             title: 'tr1 werwe 1 day, 5 hours ago',
@@ -100,14 +100,14 @@ export default {
             verb: 'werwe',
             description: 'werwer',
             target: null,
-            action_object: null,
-            timestamp: '2019-09-24 08:22:14',
+            actor: null,
+            created: '2019-09-24 08:22:14',
             public: true,
             data: null,
           },
           {
             id: '000000003',
-
+            reason: 'string',
             level: 'success',
             recipient: 2,
             title: 'tr1 werwe 1 day, 5 hours ago',
@@ -115,8 +115,8 @@ export default {
             verb: 'werwe',
             description: 'werwer',
             target: null,
-            action_object: null,
-            timestamp: '2019-09-24 08:22:14',
+            actor: null,
+            timestacreatedmp: '2019-09-24 08:22:14',
             public: true,
             data: null,
           },

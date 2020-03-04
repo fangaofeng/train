@@ -43,7 +43,7 @@ export default function Learn(props) {
   // 发送pdf的当前页码和学习状态
   const sendRequest = (newprogress, newstatus) => {
     storedispatch({
-      type: 'MyLearnPlan/SendProgress',
+      type: 'PublicCourse/SendProgress',
       payload: {
         id,
         data: {

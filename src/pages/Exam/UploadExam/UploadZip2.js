@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
-import { Card, Row, Col, Input, Button, message, Modal, Icon } from 'antd';
+import { Card, Row, Col, Button, message, Modal, Icon } from 'antd';
 import SelfCard from '@/components/Workbench/selfCard';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import PageTable from '@/components/PageTable';
+import TreeSelect from '@/components/EditContent/tree';
 import styles from './UploadZip2.less';
 
-const { Search } = Input;
-
-@connect(({ uploadExam, trainGroupManager, loading }) => ({
+@connect(({ uploadExam }) => ({
   testInfo: uploadExam.testInfo, // 试卷信息
   testDetails: uploadExam.testDetails, // 试题信息
   tableData: uploadExam.tableData, // 获取指定页码的表格数据
   zipfileid: uploadExam.zipfileid, // zip文件id
-  trainGroups: trainGroupManager.trainGroups, // 获取指定页码的表格数据
-  groupsLoading: loading.effects['trainGroupManager/GetTrainGroups'],
 }))
 class UploadZip2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: false, // 是否显示保存成功提示的模态框
-      selectedAllKeys: [], // 选中的数据组成的数组（只包含key值）
+      checkedKeys: [], // 选中的数据组成的数组（只包含key值）
     };
   }
 
@@ -36,7 +32,7 @@ class UploadZip2 extends Component {
   // 保存和上架时候，转换一下数据格式
   getRequestData = status => {
     const { testInfo, zipfileid } = this.props;
-    const { selectedAllKeys } = this.state;
+    const { checkedKeys } = this.state;
     const obj = {
       zipfileid, // ;上传的zip返回的zip文件id
       status, // ;保存'0',上架'1'
@@ -47,21 +43,9 @@ class UploadZip2 extends Component {
       passing_score: testInfo.passScore,
       applicable_user: testInfo.applicablePerson,
       introduce: testInfo.introduce,
-      trainmanagers: selectedAllKeys, // ;已选择的培训管理员
+      departmens: checkedKeys, // ;已选择的培训管理员
     };
     return obj;
-  };
-
-  // 保存选中的培训管理员到selectedTableData中
-  saveSelectedTableData = selectedData => {
-    const { dispatch } = this.props;
-    // const { saveSelectedData } = this.state;
-    dispatch({
-      type: 'uploadExam/saveSelectedTableData',
-      payload: {
-        selectedData,
-      },
-    });
   };
 
   // 保存按钮
@@ -94,7 +78,7 @@ class UploadZip2 extends Component {
   commitTableData = () => {
     const { dispatch } = this.props;
     const obj = this.getRequestData('已上架');
-    console.log('保存', obj);
+
     dispatch({
       type: 'uploadExam/SaveExam',
       payload: {
@@ -102,8 +86,6 @@ class UploadZip2 extends Component {
       },
       callback: res => {
         if (res && res.status === 'ok') {
-          // message.success('上架成功');
-          // this.saveSelectedTableData();
           router.push('/exam/uploadZip/uploadZip3');
         } else {
           message.warning('上架失败');
@@ -117,16 +99,6 @@ class UploadZip2 extends Component {
     router.push('/exam/uploadZip/uploadZip1/Y');
   };
 
-  handleSelectRows = rows => {
-    this.setState({
-      selectedAllKeys: rows,
-    });
-  };
-
-  handleOnSelect = selectData => {
-    this.saveSelectedTableData(selectData);
-  };
-
   // 保存成功提示模态框（关闭模态框）
   submitModal = () => {
     this.setState({
@@ -135,43 +107,8 @@ class UploadZip2 extends Component {
   };
 
   render() {
-    const { testInfo, trainGroups, groupsLoading } = this.props;
-    const { selectedAllKeys, visible } = this.state;
-    const columns = [
-      {
-        title: '培训群组编号',
-        dataIndex: 'train_group_number',
-        key: 'train_group_number',
-        render: (text, record) => <span>{record.group_no}</span>,
-      },
-      {
-        title: '培训群组名称',
-        dataIndex: 'train_group_name',
-        key: 'train_group_name',
-        render: (text, record) => <span>{record.name}</span>,
-      },
-      {
-        title: '群组成员',
-        dataIndex: 'train_group_member',
-        key: 'train_group_member',
-        render: (text, record) => (
-          <span>
-            {/* {record.trainers.length} */}
-            {record.count}
-          </span>
-        ),
-      },
-      {
-        title: '操作',
-        dataIndex: 'train_group_opt',
-        key: 'train_group_opt',
-        render: (text, record) => (
-          <span>
-            <a onClick={() => this.viewModalTable(record)}>查看</a>
-          </span>
-        ),
-      },
-    ];
+    const { testInfo } = this.props;
+    const { checkedKeys, visible } = this.state;
 
     return (
       <PageHeaderWrapper title="试卷上架">
@@ -256,23 +193,13 @@ class UploadZip2 extends Component {
             <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12} className={styles.secondCol}>
               <div className={styles.searchInputContent}>
                 <span>选择可以使用本试卷的培训管理员：</span>
-                <Search
-                  placeholder="输入员工编号或姓名过滤"
-                  onSearch={value => console.log(value)}
-                  // style={{ width: 200 }}
-                />
               </div>
-              <PageTable
-                {...this.props}
-                data={trainGroups}
-                columns={columns}
-                loading={groupsLoading}
-                onSelectRow={this.handleSelectRows}
-                action="trainGroupManager/GetTrainGroups"
-                selectedRows={selectedAllKeys}
-                onSelectData={this.handleOnSelect}
+
+              <TreeSelect
+                onCheck={checkedallKeys => this.setState({ checkedKeys: checkedallKeys })}
+                action="DepartmentManager/GetOrgsDeparments"
+                checkedKeys={checkedKeys}
               />
-              {/* <div>已选择{selectedAllKeys.length}人</div> */}
             </Col>
           </Row>
           <div className={styles.footerBtns}>

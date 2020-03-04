@@ -119,7 +119,6 @@ export default function ManagerTable(props) {
         </div>
 
         <PageTable
-          dispatch={storedispatch}
           data={listdata}
           columns={columns(statedispatch)}
           loading={listdataloading}

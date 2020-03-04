@@ -5,11 +5,11 @@
   margin-bottom: 25px;
 }
 .managerContent .searchContent .TreeSelect {
-  width: 250px;
+  width: 150px;
   margin-right: 20px;
 }
 .managerContent .searchContent .Search {
-  width: 300px;
+  width: 150px;
 }
 .managerContent .searchContent > div:nth-child(2) button {
   margin-left: 20px;

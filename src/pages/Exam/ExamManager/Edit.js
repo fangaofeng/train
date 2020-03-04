@@ -14,7 +14,7 @@ export default props => {
   } = props;
 
   const data = state => state.ExamManager.paper;
-  const selectkeys = state =>
+  const getCheckedKeys = state =>
     state.ExamManager.paper ? state.ExamManager.paper.departments : null;
   const info = datainfo => {
     return <ExamBasicInfo ExamInfo={datainfo} isShow={false} />;
@@ -24,7 +24,7 @@ export default props => {
     action: 'ExamManager/GetPaper',
     name: '试卷',
     subname: '使用部门',
-    selectkeys,
+    getCheckedKeys,
 
     data,
     id,

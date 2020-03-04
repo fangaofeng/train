@@ -103,7 +103,7 @@ class BaseView extends Component {
       },
     };
     return (
-      <PageHeaderWrapper title="修改用户信息">
+      <PageHeaderWrapper title="用户信息">
         <Card title="用户信息" style={{ marginBottom: 24 }} bordered={false}>
           <div className={styles.baseView} ref={this.getViewDom}>
             <div className={styles.left}>
@@ -157,7 +157,7 @@ class BaseView extends Component {
                 </FormItem>
 
                 <FormItem label="培训系统角色">
-                  {getFieldDecorator('role_display', {
+                  {getFieldDecorator('roles', {
                     rules: [
                       {
                         required: true,

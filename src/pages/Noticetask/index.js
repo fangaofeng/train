@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Button } from 'antd';
+import { Button } from 'antd';
 import router from 'umi/router';
 import Link from 'umi/link';
 import ManagerTable from '@/components/ManagerTable/index';
@@ -8,12 +8,12 @@ export default () => {
   const datalist = state => state.Noticetask.noticetask;
   const extrabutton = (
     <div className="">
-      <Button type="primary" onClick={() => router.push('/notification/createoredit')}>
+      <Button type="primary" onClick={() => router.push('/noticetask/createoredit')}>
         创建通知
       </Button>
     </div>
   );
-  const columns = statedispatch => [
+  const columns = () => [
     {
       title: '序号',
       dataIndex: 'id',
@@ -32,11 +32,11 @@ export default () => {
       key: 'status',
       render: (text, record) => <span>{record.status}</span>,
     },
-    {
-      title: '发送者',
-      dataIndex: 'actor',
-      render: (text, record) => <span>{record.actor.name}</span>,
-    },
+    // {
+    //   title: '发送者',
+    //   dataIndex: 'actor',
+    //   render: (text, record) => <span>{record.actor.name}</span>,
+    // },
     {
       title: '标题',
       dataIndex: 'verb',
@@ -62,32 +62,32 @@ export default () => {
       dataIndex: 'opt',
       render: (text, record) => {
         let dom;
-        if (record.status === '拟制中') {
+        if (record.status === '草稿') {
           dom = (
             <span>
-              <Link to={`/notification/edit/${record.id}?currentType=${record.status}`}>编辑</Link>
-              <Divider type="vertical" />
+              <Link to={`/noticetask/edit/${record.id}`}>编辑</Link>
+              {/* <Divider type="vertical" />
               <a
                 onClick={() =>
                   statedispatch({ type: 'deldataVisible', visible: true, id: record.id })
                 }
               >
                 删除
-              </a>
+              </a> */}
             </span>
           );
         } else {
           dom = (
             <span>
-              <Link to={`/notification/view/${record.id}?currentType=${record.status}`}>查看</Link>
-              <Divider type="vertical" />
+              <Link to={`/noticetask/view/${record.id}`}>查看</Link>
+              {/* <Divider type="vertical" />
               <a
                 onClick={() =>
                   statedispatch({ type: 'offShelfVisible', visible: true, id: record.id })
                 }
               >
                 删除
-              </a>
+              </a> */}
             </span>
           );
         }

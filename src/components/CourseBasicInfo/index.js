@@ -19,7 +19,6 @@ class CourseBasicInfo extends PureComponent {
     const { CousreInfo } = this.props;
 
     if (CousreInfo) {
-      // console.log('sdasd', CousreInfo);
       this.setState({
         courserTeacherInfo: CousreInfo,
       });
@@ -65,7 +64,7 @@ class CourseBasicInfo extends PureComponent {
     const { courserTeacherInfo } = this.state;
 
     // console.log(courserTeacherInfo);
-    return (
+    return courserTeacherInfo ? (
       <Row gutter={24} type="flex" style={{ display: isShow ? 'none' : '' }}>
         <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12} style={{ display: 'flex' }}>
           <SelfCard title="课程信息">
@@ -112,6 +111,8 @@ class CourseBasicInfo extends PureComponent {
           </SelfCard>
         </Col>
       </Row>
+    ) : (
+      ''
     );
   }
 }

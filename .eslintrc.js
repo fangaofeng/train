@@ -46,12 +46,12 @@ module.exports = {
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
     'jsx-a11y/anchor-is-valid': 0,
-    // 'react-hooks/rules-of-hooks': 'error',
-    // 'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     // 'linebreak-style': 0,
   },
   settings: {
     polyfills: ['fetch', 'promises', 'url'],
   },
-  plugins: ['react', 'jsx-a11y', 'import'], //'react-hooks'
+  plugins: ['react', 'jsx-a11y', 'import', 'react-hooks'], //
 };

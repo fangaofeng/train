@@ -12,7 +12,8 @@ class SubmitSuccessCard extends PureComponent {
       successFlag,
       title,
       infoMsgConfig,
-      btns, // 底部按钮
+      btns,
+      layout, // 底部按钮
     } = this.props;
     const listItem = Object.keys(infoMsgConfig).map(v => (
       <Descriptions.Item key={v} label={v}>
@@ -25,7 +26,11 @@ class SubmitSuccessCard extends PureComponent {
           status="success"
           title={title}
           layout="vertical"
-          subTitle={<Descriptions layout="vertical">{listItem}</Descriptions>}
+          subTitle={
+            <Descriptions layout={layout || 'vertical'} style={{ textAlign: 'left' }}>
+              {listItem}
+            </Descriptions>
+          }
           extra={[btns]}
         />
       </Card>

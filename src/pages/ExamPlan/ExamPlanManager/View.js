@@ -255,8 +255,9 @@ class ViewExamPlan extends Component {
             </div>
 
             <PageTable
-              {...this.props}
+              dispatch={dispatch}
               id={examPlanID}
+              params={{ id: examPlanID }}
               data={viewGroups}
               columns={columns}
               loading={ViewGroupsLoading}

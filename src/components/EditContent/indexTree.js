@@ -6,7 +6,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import styles from './Common.less';
 
 import TreeSelect from './tree';
-// const { Search } = Input;
+
 const initialState = {
   checkedKeys: [], // 选中的数据组成的数组（只包含key值）
 };
@@ -15,10 +15,6 @@ function reducer(state, action) {
   switch (action.type) {
     case 'checkedKeys':
       return { ...state, checkedKeys: action.checkedKeys };
-    // case 'delVisible':
-    //   return { ...state, delVisible: action.visible };
-    // case 'addVisible':
-    //   return { ...state, addVisible: action.visible };
     default:
       throw new Error();
   }
@@ -26,11 +22,10 @@ function reducer(state, action) {
 export default function EditContent(props) {
   const {
     action,
-    selectkeys,
+    getCheckedKeys,
     data,
     name,
     currentType,
-
     subaction,
     changestatusAction,
     changeDataAction,
@@ -41,9 +36,10 @@ export default function EditContent(props) {
   } = props;
   const storedispatch = useDispatch();
   const datainfo = useSelector(store => data(store));
-  const checkedKeys = useSelector(store => selectkeys(store));
-  const changestatusloading = useSelector(store => store.loading.effects[changestatusAction]);
 
+  const changestatusloading = useSelector(store => store.loading.effects[changestatusAction]);
+  const checkedKeys = useSelector(store => getCheckedKeys(store));
+  console.log(checkedKeys);
   const changedataloading = useSelector(store => store.loading.effects[changeDataAction]);
   // console.log(checkedKeys);
   const [state, statedispatch] = useReducer(reducer, initialState);
@@ -56,7 +52,6 @@ export default function EditContent(props) {
         id, // id
       },
       callback: resdata => {
-        // statedispatch({ type: 'checkedKeys', checkedKeys: [] });
         return resdata;
       },
     });
@@ -65,11 +60,8 @@ export default function EditContent(props) {
     getdata();
   }, []);
   useEffect(() => {
-    if (checkedKeys) {
-      statedispatch({ type: 'checkedKeys', checkedKeys });
-    }
+    if (checkedKeys) statedispatch({ type: 'checkedKeys', checkedKeys });
   }, [checkedKeys]);
-
   const changeStatus = msg => {
     storedispatch({
       type: changestatusAction,
@@ -94,7 +86,7 @@ export default function EditContent(props) {
       payload: {
         id, // id
         data: {
-          departments: checkedKeys,
+          departments: state.checkedKeys,
         },
       },
       callback: res => {
@@ -123,14 +115,18 @@ export default function EditContent(props) {
           </Button>
         }
       >
-        <TreeSelect
-          onCheck={checkedallKeys =>
-            statedispatch({ type: 'checkedKeys', checkedKeys: checkedallKeys })
-          }
-          action={subaction}
-          checkedKeys={state.checkedKeys}
-          name={subname}
-        />
+        {checkedKeys ? (
+          <TreeSelect
+            onCheck={checkedallKeys =>
+              statedispatch({ type: 'checkedKeys', checkedKeys: checkedallKeys })
+            }
+            action={subaction}
+            checkedKeys={state.checkedKeys}
+            name={subname}
+          />
+        ) : (
+          ''
+        )}
         <div className={styles.foonter_btns}>
           {currentType === '拟制中' ? (
             <Button

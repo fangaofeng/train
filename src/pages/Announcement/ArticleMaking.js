@@ -37,7 +37,9 @@ function range(start, end) {
   }
   return result;
 }
-@connect(settings => ({ blogCover: settings.uploadurl.blog_cover }))
+@connect(({ settings }) => ({
+  blogCoverUrl: settings.uploadurl.blogCover,
+}))
 class FormDemo extends React.Component {
   constructor(props) {
     super(props);
@@ -103,7 +105,7 @@ class FormDemo extends React.Component {
     }
     // return isJPG && isLt2M;
     getBase64(file, previewImage => {
-      console.log('beforeUpload getBase64:');
+      // console.log('beforeUpload getBase64:');
       this.setState({
         previewImage,
         coverImg: previewImage,
@@ -207,7 +209,8 @@ class FormDemo extends React.Component {
 
   render() {
     const {
-      form: { getFieldDecorator, blogCover },
+      form: { getFieldDecorator },
+      blogCoverUrl,
     } = this.props;
     const { loading, previewVisible, coverImg } = this.state;
 
@@ -280,7 +283,7 @@ class FormDemo extends React.Component {
                       listType="picture-card"
                       className="cover-uploader"
                       // showUploadList={false}
-                      action={blogCover}
+                      action={blogCoverUrl}
                       beforeUpload={this.beforeUpload}
                       onChange={this.handleUploadChange}
                       onPreview={this.handlePreview}

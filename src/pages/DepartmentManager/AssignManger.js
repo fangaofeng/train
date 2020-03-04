@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import TreeOtherOpration from '@/components/TreeOtherOpration';
 import defaultavatar from '@/assets/images/Header/avatar_default_small.png';
-import ModalAdd from '@/components/Modal/ModalAdd';
+// eslint-disable-next-line import/no-unresolved
+import UserModalAdd from '../UserManager/ModalAdd';
 
 // const { Search } = Input;
 const initialState = {
@@ -168,7 +169,7 @@ export default function AssignManger() {
           </Col>
         </Row>
       </Card>
-      <ModalAdd
+      <UserModalAdd
         addDataSource={users}
         visible={state.changeVisible}
         name="部门"

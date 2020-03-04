@@ -75,7 +75,7 @@ class CreateSP extends Component {
     const len = selectedAllKeys.length;
     validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('表单值', values);
+        // console.log('表单值', values);
         if (len < 1) {
           message.info('请选择您需要添加的数据');
           return;
@@ -86,7 +86,7 @@ class CreateSP extends Component {
           studyPlanStartTime: studyTimeRange[0].format('YYYY-MM-DD'), // 学习计划开始时间
           studyPlanEndTime: studyTimeRange[1].format('YYYY-MM-DD'), // 学习计划结束时间
         });
-        console.log('下一步');
+        // console.log('下一步');
         this.setState({
           currentStatus: 'submit',
         });
@@ -187,7 +187,6 @@ class CreateSP extends Component {
       form: { getFieldDecorator },
       createSPData,
       courseTeacherInfoLoading,
-      membersLoading,
       match: {
         params: { courseid },
       },
@@ -322,10 +321,11 @@ class CreateSP extends Component {
             </div>
 
             <PageTable
-              {...this.props}
+              // dispatch={dispatch}
+
               data={createSPData}
               columns={columns}
-              loading={membersLoading}
+              // loading={membersLoading}
               onSelectRow={this.handleSelectRows}
               action="StudyPlanManager/GetTrainGroups"
               selectedRows={selectedAllKeys}

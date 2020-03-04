@@ -419,31 +419,33 @@ export default [
         ],
       },
       // 培训管理员——>问卷调查  没有实现
-      {
-        path: '/questionnaire',
-        name: '问卷调查',
-        icon: 'icon-wenti',
-        authority: ['admin', 'trainmanager', 'stu'],
-        routes: [
-          { path: '/questionnaire', redirect: '/questionnaire/index' },
-          {
-            path: '/questionnaire/index',
-            name: '问卷列表',
-            component: './Questionnaire/index',
-          },
-          {
-            path: '/questionnaire/create',
-            name: '创建问卷',
-            component: './Questionnaire/createoredit',
-          },
-          {
-            path: '/questionnaire/edit/:id',
-            hideInMenu: true,
-            name: '修改问卷',
-            component: './Questionnaire/edit',
-          },
-        ],
-      },
+      // {
+      //   path: '/questionnaire',
+      //   name: '问卷调查',
+      //   icon: 'icon-wenti',
+      //   authority: ['trainmanager', 'stu'],
+      //   routes: [
+      //     { path: '/questionnaire', redirect: '/questionnaire/index' },
+      //     {
+      //       path: '/questionnaire/index',
+      //       name: '问卷列表',
+      //       component: './Questionnaire/index',
+      //     },
+      //     {
+      //       path: '/questionnaire/create',
+      //       name: '创建问卷',
+      //       component: './Questionnaire/createoredit',
+      //       authority: [ 'trainmanager'],
+      //     },
+      //     {
+      //       path: '/questionnaire/edit/:id',
+      //       hideInMenu: true,
+      //       name: '修改问卷',
+      //       component: './Questionnaire/edit',
+      //       authority: [ 'trainmanager'],
+      //     },
+      //   ],
+      // },
       // 培训管理员——>统计分析
       {
         path: '/statisticalAnalysis',
@@ -525,28 +527,34 @@ export default [
         ],
       },
       {
-        path: '/nofity',
+        path: '/noticetask',
         name: '通知任务',
         icon: 'icon-exam1',
 
         authority: ['admin'],
         routes: [
-          { path: '/nofity', redirect: '/nofity/index' },
+          { path: '/noticetask', redirect: '/noticetask/index' },
           {
-            path: '/nofity/index',
+            path: '/noticetask/index',
             name: '通知任务列表',
             component: './Noticetask/index',
           },
           {
-            path: '/nofity/create',
+            path: '/noticetask/create',
             name: '创建通知任务',
             component: './Noticetask/createoredit',
           },
           {
-            path: '/nofity/edit/:id',
+            path: '/noticetask/edit/:id',
             name: '编辑通知',
             hideInMenu: true,
             component: './Noticetask/createoredit',
+          },
+          {
+            path: '/noticetask/view/:id',
+            name: '查看通知',
+            hideInMenu: true,
+            component: './Noticetask/view',
           },
         ],
       },

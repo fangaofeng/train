@@ -106,7 +106,7 @@ class BaseView extends Component {
       if (!error) {
         // submit the values
         dispatch({
-          type: 'UserManager/patchuserinfo',
+          type: 'UserManager/UpdateUser',
           payload: values,
         });
       }

@@ -50,21 +50,26 @@ const errorHandler = (error: { data: object; response: Response }): object => {
     // environment should not be used
     else if (status === 403) {
       router.push('/exception/403');
+      return;
     } else if (status <= 504 && status >= 500) {
       router.push('/exception/500');
+      return;
     } else if (status >= 404 && status < 422) {
       router.push('/exception/404');
+      return;
     } else {
       notification.error({
         message: `请求错误 ${status}: ${url}`,
         description: errorText,
       });
+      return;
     }
   } else if (!response) {
     notification.error({
       description: '您的网络发生异常，无法连接服务器',
       message: '网络异常',
     });
+    return;
   }
 
   return data;

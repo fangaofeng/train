@@ -179,7 +179,7 @@ class OnlineExamAnswer extends Component {
 
   // 确定归档（归档成功后关闭模态框）
   handleOk = () => {
-    router.push('/myExam/examPlan/index');
+    router.push('/myExam/examPlan');
   };
 
   render() {

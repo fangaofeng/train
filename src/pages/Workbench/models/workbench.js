@@ -5,7 +5,8 @@ import {
   getLatestCourse,
   getLatestExam,
   getStuRecommendCourse,
-  getStuAllCourseAndExam, // 学员待完成、已完成、已逾期
+  getStuCourses, // 学员待完成、已完成、已逾期
+  getStuExams,
   getStats,
 } from '@/services/workbench/workbench';
 
@@ -13,16 +14,21 @@ export default {
   namespace: 'workbench',
 
   state: {
-    getAnnouncement: [], // 平台公告
+    announcement: [], // 平台公告
     courseManager: [], // 课件管理
     examManager: [], // 试卷管理
     latestCourse: [], // 最新课程
     latestExam: [], // 最新试卷
 
-    stuAllCourseAndExamData: {
-      learntodoes: [], // 待完成
-      learncompletedes: [], // 已完成
-      learnoverdue: [], // 已逾期
+    stuCourses: {
+      todo: [], // 待完成
+      completed: [], // 已完成
+      overdue: [], // 已逾期
+    }, // 待完成、已完成、已逾期
+    stuExams: {
+      todo: [], // 待完成
+      completed: [], // 已完成
+      overdue: [], // 已逾期
     }, // 待完成、已完成、已逾期
     recommendCourse: [], // 推荐课程
     stats: {},
@@ -77,11 +83,20 @@ export default {
       });
     },
     // 学员获取待完成、已完成、已逾期
-    *GetStuAllCourseAndExam(_, { call, put }) {
-      const response = yield call(getStuAllCourseAndExam);
+    *GetStuCourses(_, { call, put }) {
+      const response = yield call(getStuCourses);
       if (response && response.status === 'ok') {
         yield put({
-          type: 'saveStuAllCourseAndExam',
+          type: 'saveStuCourse',
+          payload: response.data,
+        });
+      }
+    },
+    *GetStuExams(_, { call, put }) {
+      const response = yield call(getStuExams);
+      if (response && response.status === 'ok') {
+        yield put({
+          type: 'saveStuExam',
           payload: response.data,
         });
       }
@@ -109,7 +124,7 @@ export default {
     saveAnnouncement(state, action) {
       return {
         ...state,
-        getAnnouncement: action.payload,
+        announcement: action.payload,
       };
     },
     // 保存课件管理
@@ -142,10 +157,16 @@ export default {
     },
 
     // 学员获取待完成、已完成、已逾期
-    saveStuAllCourseAndExam(state, action) {
+    saveStuCourse(state, action) {
       return {
         ...state,
-        stuAllCourseAndExamData: action.payload,
+        stuCourses: action.payload,
+      };
+    },
+    saveStuExam(state, action) {
+      return {
+        ...state,
+        stuExams: action.payload,
       };
     },
     // 学员获取推荐课程

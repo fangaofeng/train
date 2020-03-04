@@ -89,8 +89,11 @@ class AddTrainGroup extends Component {
   render() {
     const {
       form: { getFieldDecorator },
+      dispatch,
+      addUsers,
+      employeeLoading,
     } = this.props;
-    const { addUsers, employeeLoading } = this.props;
+
     const {
       selectedAllKeys,
       addTrainGroupFlag,
@@ -182,7 +185,7 @@ class AddTrainGroup extends Component {
 
             <PageTable
               // dataSource={dataSource}
-              {...this.props}
+              dispatch={dispatch}
               data={addUsers}
               columns={columns}
               loading={employeeLoading}

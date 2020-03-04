@@ -1,36 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
-import { Card, Row, Col, Avatar, Input, Button, message, Modal, Icon } from 'antd';
+import { Card, Row, Col, Avatar, Button, message, Modal, Icon } from 'antd';
 import SelfCard from '@/components/Workbench/selfCard';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import PageTable from '@/components/PageTable';
+import TreeSelect from '@/components/EditContent/tree';
 import styles from './UploadZip2.less';
 
-const { Search } = Input;
+// const { Search } = Input;
 
-@connect(({ uploadCourse, trainGroupManager, loading }) => ({
+@connect(({ uploadCourse }) => ({
   zipInfo: uploadCourse.zipInfo,
   zipfileResponse: uploadCourse.zipfileResponse,
-  trainGroups: trainGroupManager.trainGroups, // 获取指定页码的表格数据
-  groupsLoading: loading.effects['trainGroupManager/GetTrainGroups'],
 }))
 class UploadZip2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: false, // 是否显示保存成功提示的模态框
-      selectedAllKeys: [], // 选中的数据组成的数组（只包含key值）
-      // saveSelectedData: {}, // 保存选中的数据
-      // pagination: {
-      //   // total:20,// 数据总数
-      //   current: 1, // 当前页数
-      //   pageSize: 10, // 每页条数
-      //   pageSizeOptions: ['10', '20', '30', '40'], // 指定每页可以显示多少条数据
-      //   showQuickJumper: true, // 是否可以快速跳转至某页
-      //   showSizeChanger: true, // 是否可以改变 pageSize
-      // }, // 表格分页信息
-      // loading: false,// 表格是否正在加载
+      checkedKeys: [], // 选中的数据组成的数组（只包含key值）
     };
   }
 
@@ -39,14 +27,12 @@ class UploadZip2 extends Component {
     if (Object.keys(zipInfo).length === 0) {
       router.push('/courseware/uploadZip/uploadZip1');
     }
-    // const { pagination } = this.state;
-    // this.getTrainmanagers(pagination.current, pagination.pageSize);
   }
 
   // 保存和上架时候，转换一下数据格式
   getRequestData = status => {
     const { zipInfo, zipfileResponse } = this.props;
-    const { selectedAllKeys } = this.state;
+    const { checkedKeys } = this.state;
     const obj = {
       zipfileid: zipfileResponse, // ;上传的zip返回值
       status, // ;保存'0',上架'1'
@@ -61,20 +47,9 @@ class UploadZip2 extends Component {
       teachername: zipInfo.JSXM, // ;讲师姓名：替换为实际讲师姓名（25个汉字以内）
       teacherdesc: zipInfo.JSJS, // ;讲师介绍：替换为实际讲师信息简介（250个汉字以内）
       drag_flag: zipInfo.YXSPTF === '是', // ;是否允许视频拖放：0 不允许；1 允许
-      trainmanagers: selectedAllKeys, // ;已选择的培训管理员
+      departmens: checkedKeys, // ;已选择的培训管理员
     };
     return obj;
-  };
-
-  // 保存选中的培训管理员到selectedTableData中
-  saveSelectedTableData = selectedData => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'uploadCourse/SaveSelectedTableData',
-      payload: {
-        selectedData,
-      },
-    });
   };
 
   // 保存按钮
@@ -116,8 +91,6 @@ class UploadZip2 extends Component {
       },
       callback: res => {
         if (res && res.status === 'ok') {
-          // message.success('上架成功');
-
           router.push('/courseware/uploadZip/uploadZip3');
         } else {
           message.warning('上架失败');
@@ -128,17 +101,7 @@ class UploadZip2 extends Component {
 
   // 返回按钮
   goBack = () => {
-    router.push('/courseware/uploadZip/uploadZip1/Y');
-  };
-
-  handleSelectRows = rows => {
-    this.setState({
-      selectedAllKeys: rows,
-    });
-  };
-
-  handleOnSelect = selectData => {
-    this.saveSelectedTableData(selectData);
+    router.push('/courseware/uploadZip/uploadZip1');
   };
 
   // 保存成功提示模态框（关闭模态框）
@@ -149,44 +112,8 @@ class UploadZip2 extends Component {
   };
 
   render() {
-    const { zipInfo, trainGroups, groupsLoading } = this.props;
-    const { selectedAllKeys, visible } = this.state;
-
-    const columns = [
-      {
-        title: '培训群组编号',
-        dataIndex: 'train_group_number',
-        key: 'train_group_number',
-        render: (text, record) => <span>{record.group_no}</span>,
-      },
-      {
-        title: '培训群组名称',
-        dataIndex: 'train_group_name',
-        key: 'train_group_name',
-        render: (text, record) => <span>{record.name}</span>,
-      },
-      {
-        title: '群组成员',
-        dataIndex: 'train_group_member',
-        key: 'train_group_member',
-        render: (text, record) => (
-          <span>
-            {/* {record.trainers.length} */}
-            {record.count}
-          </span>
-        ),
-      },
-      {
-        title: '操作',
-        dataIndex: 'train_group_opt',
-        key: 'train_group_opt',
-        render: (text, record) => (
-          <span>
-            <a onClick={() => this.viewModalTable(record)}>查看</a>
-          </span>
-        ),
-      },
-    ];
+    const { zipInfo } = this.props;
+    const { checkedKeys, visible } = this.state;
 
     return (
       <PageHeaderWrapper title="课件上架">
@@ -290,23 +217,12 @@ class UploadZip2 extends Component {
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12} className={styles.secondCol}>
               <div className={styles.searchInputContent}>
-                <span>选择可以使用本课件的培训管理员：</span>
-                {/* <Input placeholder='输入员工编号或姓名过滤' /> */}
-                <Search
-                  placeholder="输入员工编号或姓名过滤"
-                  onSearch={value => console.log(value)}
-                />
+                <span>选择可以使用本课件的部门：</span>
               </div>
-
-              <PageTable
-                {...this.props}
-                data={trainGroups}
-                columns={columns}
-                loading={groupsLoading}
-                onSelectRow={this.handleSelectRows}
-                action="trainGroupManager/GetTrainGroups"
-                selectedRows={selectedAllKeys}
-                onSelectData={this.handleOnSelect}
+              <TreeSelect
+                onCheck={checkedallKeys => this.setState({ checkedKeys: checkedallKeys })}
+                action="DepartmentManager/GetOrgsDeparments"
+                checkedKeys={checkedKeys}
               />
             </Col>
           </Row>

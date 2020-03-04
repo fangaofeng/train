@@ -5,24 +5,29 @@ const data = {
   data: [
     {
       id: 1,
+      key: 1,
       name: '江苏博纳德s',
       children: [
         {
           id: 2,
+          key: 2,
           name: '研发中心',
           children: [
             {
               id: 3,
+              key: 3,
               name: '测试部',
               children: [
                 {
                   id: 4,
+                  key: 4,
                   name: '交付团队dfgsdfgsdfgsdgsdfgsdfgsdfgdfg',
                   children: [],
                   parent: 3,
                 },
                 {
                   id: 5,
+                  key: 5,
                   name: 'ertegdfg',
                   children: [],
                   parent: 3,
@@ -35,14 +40,17 @@ const data = {
         },
         {
           id: 21,
+          key: 21,
           name: '研发中心',
           children: [
             {
               id: 31,
+              key: 31,
               name: '测试部',
               children: [
                 {
                   id: 41,
+                  key: 41,
                   name: '交付团队dfgsdfgsdfgsdgsdfgsdfgsdfgdfg',
                   children: [],
                   parent: 31,

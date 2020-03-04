@@ -327,7 +327,7 @@ class CreateExam extends Component {
             </div>
 
             <PageTable
-              {...this.props}
+              dispatch={dispatch}
               data={createGroups}
               columns={columns}
               loading={groupsLoading}

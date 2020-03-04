@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import router from 'umi/router';
@@ -8,67 +8,45 @@ import {
   SchemaForm,
   SchemaMarkupField as Field,
   FormButtonGroup,
-  Submit,
-  Reset,
   FormCard,
   createFormActions,
 } from '@uform/antd';
 
-import { message, Card, Button } from 'antd';
-import DepartmentSelect from '../DepartmentManager/ViewSelect';
+import { Card, message, Button } from 'antd';
+import DeparmentSelect from '../DepartmentManager/ViewSelect';
 import GroupSelect from '../TrainGroupManager/ViewSelect';
 import UserSelect from '../UserManager/ViewSelect';
 // const { onFormInit$, onFieldValueChange$ } = FormEffectHooks;
 // const onChangeOption$ = createEffectHook('onChangeOption');
-const initialState = {
-  departments: [], // 选中的数据组成的数组（只包含key值）
-  groups: [],
-  users: [],
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'departments':
-      return { ...state, departments: action.departments };
-    case 'groups':
-      return { ...state, groups: action.groups };
-    case 'users':
-      return { ...state, users: action.users };
-    default:
-      throw new Error();
-  }
-}
 
 export default props => {
-  const msg = '通知任务创建';
+  const msg = '获取通知任务';
   // const subname = '选择部门';
-  const changeAction = 'noticetask/ChangeNotification';
-  const returnUrl = '';
-  const [state, statedispatch] = useReducer(reducer, initialState);
-  // const [initialFormvalues, setInitialFormvalues] = useState({});
-  // const changeloading = useSelector(store => store.loading.effects[changeAction]);
   const storedispatch = useDispatch();
+  const [taskdetail, setTaskdetail] = useState({});
+  const returnUrl = '/noticetask/index';
   const {
     match: {
       params: { id },
     },
   } = props;
-
-  const submit = value => {
+  const getData = useCallback(() =>
     storedispatch({
-      type: id ? changeAction : 'Noticetask/CreateNoticetask',
-      payload: {
-        data: { ...value, departments: state.departments, groups: state.groups, user: state.users },
-      },
+      type: 'Noticetask/GetNoticetask',
+      payload: { id },
       callback: res => {
         if (res && res.status === 'ok') {
-          message.success(`${msg}成功`);
+          setTaskdetail(res.data);
         } else {
           message.warning(`${msg}失败`);
         }
       },
-    });
-  };
+    })
+  );
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const actions = createFormActions();
   return (
@@ -78,8 +56,8 @@ export default props => {
         actions={actions}
         labelCol={4}
         wrapperCol={20}
-        initialValues={{}}
-        onSubmit={v => submit(v)}
+        readOnly
+        initialValues={taskdetail}
       >
         <FormCard title="通知" name="noticetask">
           <Field
@@ -122,33 +100,18 @@ export default props => {
         </FormCard>{' '}
         <Card title="选择接收对象">
           <Card title="部门">
-            <DepartmentSelect
-              onSelectKeys={checkedallKeys =>
-                statedispatch({ type: 'departments', departments: checkedallKeys })
-              }
-            />
+            <DeparmentSelect />
           </Card>
           <Authorized authority="trainmanager">
             <Card title="培训群组">
-              <GroupSelect
-                onSelectKeys={checkedallKeys =>
-                  statedispatch({ type: 'groups', groups: checkedallKeys })
-                }
-              />
+              <GroupSelect />
             </Card>
           </Authorized>
           <Card title="用户">
-            <UserSelect
-              onSelectKeys={checkedallKeys =>
-                statedispatch({ type: 'users', users: checkedallKeys })
-              }
-            />
+            <UserSelect />
           </Card>
         </Card>
         <FormButtonGroup offset={8} sticky>
-          <Submit>发送</Submit>
-          <Button onClick={() => router.push(returnUrl)}>保存</Button>
-          <Reset>重置</Reset>
           <Button onClick={() => router.push(returnUrl)}>返回</Button>
         </FormButtonGroup>
       </SchemaForm>

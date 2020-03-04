@@ -10,7 +10,8 @@ export default {
   // add for transfer to umi
   base: '/front',
   // runtimePublicPath: true,
-  // publicPath: '/front/',
+  publicPath: '/front/static/',
+  cssPublicPath: '/front/',
   plugins: [
     [
       'umi-plugin-react',
@@ -45,6 +46,15 @@ export default {
         //   : {}),
       },
     ],
+    [
+      'umi-plugin-pro-block',
+      {
+        moveMock: false,
+        moveService: false,
+        modifyRequest: true,
+        autoAddMenu: true,
+      },
+    ],
   ],
   targets: {
     ie: 11,
@@ -55,7 +65,6 @@ export default {
   // 路由配置
   routes: pageRoutes,
   theme: myThemeConfig, // 自定义主题
-  // {   'primary-color': defaultSettings.primaryColor, },
   externals: {
     '@antv/data-set': 'DataSet',
   },

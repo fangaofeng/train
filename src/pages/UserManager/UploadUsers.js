@@ -12,7 +12,7 @@ import PageTable from '@/components/PageTable';
 import storetoken from '@/utils/token';
 
 @connect(({ UserManager, settings, loading }) => ({
-  zipfile: settings.uploadurl.zipfile,
+  userUploadurl: settings.uploadurl.user,
   batchImportData: UserManager.batchImportData, // 获取指定页码的表格数据
   userloading: loading.effects['UserManager/GetbatchImportData'],
 }))
@@ -68,9 +68,9 @@ class UploadUserStep1 extends Component {
       });
     } else if (info.file.status === 'done') {
       // 上传完成
-      const {
-        pagination: { current, pageSize },
-      } = this.state;
+      // const {
+      //   pagination: { current, pageSize },
+      // } = this.state;
       message.success(`${info.file.name}上传成功`);
       this.setState({
         uploadStatus: 'success',
@@ -78,10 +78,10 @@ class UploadUserStep1 extends Component {
         // importid: info.file.response.importid,
         importcount: info.file.response.importcount,
       });
-      if (info.file.response.importcount === 0) {
-        return;
-      }
-      this.getbatchImportData(current, pageSize);
+      // if (info.file.response.importcount === 0) {
+      //   return;
+      // }
+      // this.getbatchImportData(current, pageSize);
     } else if (info.file.status === 'error') {
       // 上传失败
       message.error(`${info.file.name}上传失败`);
@@ -112,14 +112,14 @@ class UploadUserStep1 extends Component {
 
       importcount: 0, // 导入成功的数量
       // importid: '', // 导入成功后返回的信息
-      pagination: {
-        // 表格分页信息
-        current: 1, // 当前页数
-        pageSize: 10, // 每页条数
-        pageSizeOptions: ['10', '20', '30', '40'], // 指定每页可以显示多少条数据
-        showQuickJumper: true, // 是否可以快速跳转至某页
-        showSizeChanger: true, // 是否可以改变 pageSize
-      },
+      // pagination: {
+      //   // 表格分页信息
+      //   current: 1, // 当前页数
+      //   pageSize: 10, // 每页条数
+      //   pageSizeOptions: ['10', '20', '30', '40'], // 指定每页可以显示多少条数据
+      //   showQuickJumper: true, // 是否可以快速跳转至某页
+      //   showSizeChanger: true, // 是否可以改变 pageSize
+      // },
     });
   };
 
@@ -142,7 +142,7 @@ class UploadUserStep1 extends Component {
       },
     };
 
-    const { batchImportData, zipfile } = this.props;
+    const { batchImportData, userUploadurl } = this.props;
     const { importcount } = this.state;
 
     // Table通用的columns
@@ -199,7 +199,7 @@ class UploadUserStep1 extends Component {
             showUploadList={false}
             accept=".xls,.xlsx"
             name="excelfile"
-            action={zipfile}
+            action={userUploadurl}
             // action='//jsonplaceholder.typicode.com/posts/'
             beforeUpload={this.beforeUpload}
             onChange={this.uploadOnChange}
@@ -275,7 +275,7 @@ class UploadUserStep1 extends Component {
               }}
               style={{ display: uploadStatus === 'success' ? 'block' : 'none' }}
             >
-              完成
+              返回
             </Button>
           </div>
         </Card>

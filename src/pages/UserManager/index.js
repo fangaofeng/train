@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TreeSelect, Card, Button, Divider, Popconfirm, message, Input } from 'antd';
+import { Card, Button, Form, Col, Row, Divider, Popconfirm, message, Input } from 'antd';
 import router from 'umi/router';
 import Link from 'umi/link';
 import { connect } from 'dva';
@@ -7,32 +7,25 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import styles from '@/components/styles.less';
 import PageTable from '@/components/PageTable';
 import ModalDel from '@/components/Modal/ModalDel';
+import DepartmentSelect from '../DepartmentManager/ViewSelect';
 
-const { Search } = Input;
-@connect(({ UserManager, loading }) => ({
+const FormItem = Form.Item;
+@connect(({ UserManager }) => ({
   Users: UserManager.Users, // 获取指定页码的表格数据
-  usersLoading: loading.effects['UserManager/GetUsers'],
+  // usersLoading: loading.effects['UserManager/GetUsers'],
 }))
 class UserManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      treeSelectValue: '', // 树形选择器的值
-
       visible: false, // 是否显示批量删除的模态框
       selectedAllKeys: [], // 选中的数据组成的数组（只包含key值）
+      params: {},
     };
   }
 
   // 页面加载完成后
   componentDidMount() {}
-
-  // 树形选择器的onChange事件
-  treeSelectValueOnChange = value => {
-    this.setState({
-      treeSelectValue: value,
-    });
-  };
 
   // 批量导入用户
   goPage = () => {
@@ -47,22 +40,12 @@ class UserManager extends Component {
       return;
     }
     this.setState({
-      visible: false,
+      visible: true,
     });
   };
 
   selectedRows = rows => {
     this.setState({ selectedAllKeys: rows });
-  };
-
-  // 批量删除确认按钮
-  handleOk = () => {};
-
-  // 批量删除取消按钮
-  handleCancel = () => {
-    this.setState({
-      visible: false,
-    });
   };
 
   // 单个删除
@@ -71,9 +54,9 @@ class UserManager extends Component {
     const { selectedAllKeys } = this.state;
     const flag = selectedAllKeys.indexOf(id); // 用于判断该数据是否已经选中存放到selectedAllKeys数组中
     dispatch({
-      type: 'trainGroupManager/DelTGManager',
+      type: 'UserManager/DelUsers',
       payload: {
-        id: id.split(' '), // 字符串转换成数组
+        data: [id],
       },
       callback: res => {
         if (res && res.status === 'ok') {
@@ -96,36 +79,55 @@ class UserManager extends Component {
     this.setState({ visible });
   };
 
+  handleSearch = e => {
+    e.preventDefault();
+
+    const { form } = this.props;
+
+    form.validateFields((err, values) => {
+      if (err) return;
+      console.log(this);
+      this.setState({
+        params: values,
+      });
+    });
+  };
+
+  renderSimpleForm = () => {
+    const {
+      form: { getFieldDecorator },
+    } = this.props;
+    return (
+      <Form onSubmit={this.handleSearch} layout="inline">
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          <Col md={12} sm={24}>
+            <FormItem label="部门">
+              {getFieldDecorator('department')(<DepartmentSelect />)}
+            </FormItem>
+          </Col>
+          <Col md={12} sm={24}>
+            <FormItem label="名称">
+              {getFieldDecorator('name')(<Input placeholder="名称" style={{ width: '100%' }} />)}
+            </FormItem>
+          </Col>
+        </Row>
+        <div style={{ overflow: 'hidden' }}>
+          <div style={{ float: 'right', marginBottom: 24 }}>
+            <Button type="primary" htmlType="submit">
+              查询
+            </Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
+              重置
+            </Button>
+          </div>
+        </div>
+      </Form>
+    );
+  };
+
   render() {
-    const { Users, usersLoading, dispatch } = this.props;
-    const { selectedAllKeys, visible, treeSelectValue } = this.state;
-
-    // 树形选择器测试数据
-    const treeData = [
-      {
-        title: 'Node1',
-        value: '0-0',
-        key: '0-0',
-        children: [
-          {
-            title: 'Child Node1',
-            value: '0-0-1',
-            key: '0-0-1',
-          },
-          {
-            title: 'Child Node2',
-            value: '0-0-2',
-            key: '0-0-2',
-          },
-        ],
-      },
-      {
-        title: 'Node2',
-        value: '0-1',
-        key: '0-1',
-      },
-    ];
-
+    const { Users, dispatch } = this.props;
+    const { selectedAllKeys, visible, params } = this.state;
     // Table通用的columns
     const commonColumns = [
       {
@@ -196,22 +198,7 @@ class UserManager extends Component {
       <PageHeaderWrapper title="用户管理">
         <Card className={styles.managerContent}>
           <div className={styles.searchContent}>
-            <div className="">
-              <TreeSelect
-                className={styles.TreeSelect}
-                value={treeSelectValue}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={treeData}
-                placeholder="请选择部门"
-                treeDefaultExpandAll
-                onChange={this.treeSelectValueOnChange}
-              />
-              <Search
-                className={styles.Search}
-                placeholder="输入员工编号或名称过滤"
-                onSearch={value => console.log(value)}
-              />
-            </div>
+            {this.renderSimpleForm()}
             <div className="">
               <Button type="primary" onClick={this.goPage}>
                 批量导入用户
@@ -226,10 +213,11 @@ class UserManager extends Component {
           </div>
 
           <PageTable
-            dispatch={dispatch}
+            // dispatch={dispatch}
             data={Users}
+            params={params}
             columns={commonColumns}
-            loading={usersLoading}
+            // loading={usersLoading}
             onSelectRow={this.selectedRows}
             action="UserManager/GetUsers"
             selectedRows={selectedAllKeys}
@@ -240,11 +228,11 @@ class UserManager extends Component {
           selectedAllKeys={selectedAllKeys}
           visible={visible}
           visiblecallback={this.modaldelcallback}
-          delAtiontype="trainGroupManager/DelTGManager"
+          delAtiontype="UserManager/DelUsers"
         />
       </PageHeaderWrapper>
     );
   }
 }
 
-export default UserManager;
+export default Form.create()(UserManager);

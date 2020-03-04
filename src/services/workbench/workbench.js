@@ -27,8 +27,11 @@ export async function getLatestExam(params) {
 }
 
 // 学员待完成、已完成、已逾期
-export async function getStuAllCourseAndExam() {
+export async function getStuCourses() {
   return request('/learn/aggregation');
+}
+export async function getStuExams() {
+  return request('/exam/aggregation');
 }
 // 学员获取推荐课程
 export async function getStuRecommendCourse(params) {

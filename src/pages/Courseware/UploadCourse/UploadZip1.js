@@ -106,7 +106,7 @@ class UploadZipNew extends Component {
     } = this.props;
     validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('表单值', values);
+        // console.log('表单值', values);
         dispatch({
           type: 'uploadCourse/saveZipInfo',
           param: {
@@ -231,8 +231,7 @@ class UploadZipNew extends Component {
 
     if (info.file.status === 'done') {
       message.success(`${info.file.name}上传成功`);
-      // console.log(info);
-      // console.log(info.file.response.zipfile);
+
       this.setState({
         isUploadDone: true,
         zipfileResponse: info.file.response.zipfileid,

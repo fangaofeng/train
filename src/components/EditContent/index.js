@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import PageTable from '@/components/PageTable';
 import styles from '@/components/Modal/Common.less';
-import ModalAdd from '@/components/Modal/ModalAdd';
+
+import UserModalAdd from '@/pages/UserManager/ModalAdd';
 import ModalDel from '@/components/Modal/ModalDel';
 
 // const { Search } = Input;
@@ -145,7 +146,7 @@ export default function EditContent(props) {
           </div>
           <PageTable
             dispatch={storedispatch}
-            id={id}
+            params={{ id }}
             data={storedata.listdata}
             columns={columns(deleteConfirm, delloading)}
             loading={listdataloading}
@@ -176,7 +177,7 @@ export default function EditContent(props) {
           <Button onClick={() => router.push(returnUrl)}>返回</Button>
         </div>
       </Card>
-      <ModalAdd
+      <UserModalAdd
         // dispatch={storedispatch}
         addDataSource={storedata.addlistdata}
         // addDataSourceLoading={addlistdataLoading}

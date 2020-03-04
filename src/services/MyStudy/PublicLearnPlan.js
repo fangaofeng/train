@@ -26,7 +26,7 @@ export async function createPublicProgress(params) {
   });
 }
 export async function sendProgress(params) {
-  return request(`/learn/progress/${params.id}`, {
+  return request(`/learn/publicprogress/${params.id}`, {
     method: 'PATCH',
     data: params.data,
   });

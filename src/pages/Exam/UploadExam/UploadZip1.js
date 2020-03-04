@@ -175,12 +175,6 @@ class UploadExamStepFirst extends Component {
       judPageSize: 5, // 判断题每页个数
       zipFileName: file.name,
     });
-    // const filetype = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
-    // 测试关闭
-    // if (filetype !== 'zip') {
-    //   message.warning('请根据模板上传zip试卷包');
-    //   return false;
-    // }
   };
 
   // Upload组件OnChange调用的方法
@@ -240,9 +234,6 @@ class UploadExamStepFirst extends Component {
             },
           },
         });
-        // const {
-        //   zipfileResponse: { testinfo },
-        // } = this.state;
         const { form } = this.props;
 
         for (const i in testInfo) {

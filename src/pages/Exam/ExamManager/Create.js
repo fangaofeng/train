@@ -20,7 +20,7 @@ import '@/components/uform/index';
 // const { onFormInit$, onFieldValueChange$ } = FormEffectHooks;
 // const onChangeOption$ = createEffectHook('onChangeOption');
 
-const paper = props => {
+export default function Paper(props) {
   const coursewareCoverurl = useSelector(store => store.settings.uploadurl.courseware_cover);
   const questionType = [
     { label: '多选', value: 'multichoice' },
@@ -296,6 +296,4 @@ const paper = props => {
       </FormButtonGroup>
     </SchemaForm>
   );
-};
-
-export default paper;
+}
