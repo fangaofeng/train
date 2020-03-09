@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button } from 'antd';
-import router from 'umi/router';
-import Link from 'umi/link';
+import { history } from 'umi';
+import { Link } from 'umi';
 import ManagerTable from '@/components/ManagerTable/index';
 
 export default () => {
   const datalist = state => state.Noticetask.noticetask;
   const extrabutton = (
     <div className="">
-      <Button type="primary" onClick={() => router.push('/noticetask/createoredit')}>
+      <Button type="primary" onClick={() => history.push('/noticetask/createoredit')}>
         创建通知
       </Button>
     </div>

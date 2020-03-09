@@ -1,66 +1,41 @@
 // https://umijs.org/config/
-// import os from 'os';
-// import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import { defineConfig, utils } from 'umi';
 import pageRoutes from './router.config';
 import webpackPlugin from './plugin.config';
-// import defaultSettings from '../src/defaultSettings';
-import myThemeConfig from './myThemeConfig';
+import defaultSettings from './defaultSettings';
 
-export default {
+import myThemeConfig from './myThemeConfig';
+const { PRODUCTION, REACT_APP_ENV } = process.env;
+
+const { pwa } = defaultSettings;
+const { winPath } = utils;
+
+export default defineConfig({
   // add for transfer to umi
+  // hash: true,
+  antd: {},
   base: '/front',
-  // runtimePublicPath: true,
   publicPath: '/front/static/',
-  cssPublicPath: '/front/',
-  plugins: [
-    [
-      'umi-plugin-react',
-      {
-        antd: true,
-        dva: {
-          hmr: true,
-        },
-        targets: {
-          ie: 11,
-        },
-        locale: {
-          // default false
-          enable: false,
-          // default zh-CN
-          default: 'zh-CN',
-          // default true, when it is true, will use `navigator.language` overwrite default
-          baseNavigator: false,
-        },
-        // dynamicImport: {
-        //   loadingComponent: './components/PageLoading/index',
-        //   webpackChunkName: true,
-        //   level: 3,
-        // },
-        // ...(!process.env.TEST && os.platform() === 'darwin'
-        //   ? {
-        //       dll: {
-        //         include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
-        //         exclude: ['@babel/runtime'],
-        //       },
-        //     }
-        //   : {}),
-      },
-    ],
-    [
-      'umi-plugin-pro-block',
-      {
-        moveMock: false,
-        moveService: false,
-        modifyRequest: true,
-        autoAddMenu: true,
-      },
-    ],
-  ],
+  favicon: PRODUCTION ? '/front/static/favicon.png' : '/favicon.png',
+  dva: {
+    hmr: true,
+  },
+  locale: {
+    default: 'zh-CN',
+    baseNavigator: false,
+  },
+  // dynamicImport: {
+  //   // 无需 level, webpackChunkName 配置
+  //   // loadingComponent: './components/PageLoading/index'
+  //   loading: '@/components/PageLoading/index',
+  // },
+  pwa,
   targets: {
     ie: 11,
   },
   define: {
-    APP_TYPE: process.env.APP_TYPE || '',
+    REACT_APP_ENV: REACT_APP_ENV || false,
+    PRODUCTION: PRODUCTION || false, // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
   },
   // 路由配置
   routes: pageRoutes,
@@ -68,18 +43,6 @@ export default {
   externals: {
     '@antv/data-set': 'DataSet',
   },
-
-  uglifyJSOptions(opts) {
-    if (process.env.NODE_ENV !== 'production') {
-      const optss = opts;
-      optss.uglifyOptions.compress.warnings = true;
-      optss.uglifyOptions.compress.drop_console = true;
-      optss.uglifyOptions.compress.drop_debugger = true;
-      return optss;
-    }
-    return opts;
-  },
-
   proxy: {
     '/api': {
       target: 'http://localhost:9000/',
@@ -90,55 +53,55 @@ export default {
     },
   },
   ignoreMomentLocale: true,
-  lessLoaderOptions: {
+  lessLoader: {
     javascriptEnabled: true,
   },
-  disableRedirectHoist: true,
-  cssLoaderOptions: {
-    modules: true,
-    getLocalIdent: (context, localIdentName, localName) => {
-      if (
-        context.resourcePath.includes('node_modules') ||
-        context.resourcePath.includes('web.less') ||
-        context.resourcePath.includes('global.less')
-      ) {
-        // console.log('localName1:', context.resourcePath.includes('node_modules'));
+  cssLoader: {
+    modules: {
+      getLocalIdent: (context, _, localName) => {
+        if (
+          context.resourcePath.includes('node_modules') ||
+          context.resourcePath.includes('ant.design.pro.less') ||
+          context.resourcePath.includes('global.less')
+        ) {
+          return localName;
+        }
+        const match = context.resourcePath.match(/src(.*)/);
+        if (match && match[1]) {
+          const antdProPath = match[1].replace('.less', '');
+
+          const arr = winPath(antdProPath)
+            .split('/')
+            .map(a => a.replace(/([A-Z])/g, '-$1'))
+            .map(a => a.toLowerCase());
+          return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
+        }
+
         return localName;
-      }
-      const match = context.resourcePath.match(/src(.*)/);
-      if (match && match[1]) {
-        const antdProPath = match[1].replace('.less', '');
-        // console.log('antdProPath:', antdProPath);
-        const arr = antdProPath
-          .split('/')
-          .map(a => a.replace(/([A-Z])/g, '-$1'))
-          .map(a => a.toLowerCase());
-        // console.log('localName3:', `web${arr.join('-')}-${localName}`.replace(/--/g, '-'));
-        return `web${arr.join('-')}-${localName}`.replace(/--/g, '-');
-      }
-      // console.log('localName2:', localName);
-      return localName;
+      },
     },
   },
   manifest: {
-    name: 'ledi',
-    background_color: '#FFF',
-    description: 'bonado web train',
-    display: 'standalone',
-    start_url: '/index.html',
-    icons: [
-      {
-        src: '/favicon.png',
-        sizes: '48x48',
-        type: 'image/png',
-      },
-    ],
+    basePath: '/',
   },
 
   chainWebpack: webpackPlugin,
   // cssnano: {
   //   mergeRules: false,
   // },
-  extraBabelIncludes: [/node_modules[\\/][\\@]uform[\\/]antd[\\/]esm/],
-  // exportStatic: true,
-};
+  // extraBabelIncludes: [/node_modules[\\/][\\@]uform[\\/]antd[\\/]esm/],
+  // manifest: {
+  //   name: 'ledi',
+  //   background_color: '#FFF',
+  //   description: 'bonado web train',
+  //   display: 'standalone',
+  //   start_url: '/index.html',
+  //   icons: [
+  //     {
+  //       src: '/favicon.png',
+  //       sizes: '48x48',
+  //       type: 'image/png',
+  //     },
+  //   ],
+  // },
+});

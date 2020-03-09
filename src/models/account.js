@@ -12,7 +12,6 @@ export default {
 
   state: {
     currentUser: { avatar: '', name: '' },
-    // currentUser: null,
     notices: { results: [], count: 0 },
     unreadnoticescount: 0,
   },
@@ -20,7 +19,6 @@ export default {
   effects: {
     *FetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
-      // console.log(response);
       yield put({
         type: 'saveCurrentUser',
         payload: response.data,

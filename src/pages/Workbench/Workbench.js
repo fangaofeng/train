@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { List, Button } from 'antd';
 import moment from 'moment';
 // import classNames from 'classnames';
-import Link from 'umi/link';
+import { Link } from 'umi';
 import { GridContent } from '@ant-design/pro-layout';
 // import moment from 'moment';
 import SelfCard from '@/components/Workbench/selfCard';
 import { useSelector, useDispatch } from 'dva';
 import Authorized from '@/utils/Authorized';
 import { getAuthority } from '@/utils/authority';
-import router from 'umi/router';
+import { history } from 'umi';
 import AdminBoard from './admin';
 import StudentBoard from './student';
 import TrainmanagerBoard from './trainmanager';
@@ -21,7 +21,7 @@ function Workbench() {
 
   const announcementList = useSelector(store => store.workbench.announcement);
   const announcementListLoading = useSelector(
-    store => store.loading.effects[announcementListAction]
+    store => store.loading.effects[announcementListAction],
   );
   const [announcementItemKey, setItemKey] = useState(0);
   const storedispatch = useDispatch();
@@ -37,7 +37,7 @@ function Workbench() {
     // console.log(key);
     switch (key) {
       case 'announcement':
-        router.push('/announcement/create');
+        history.push('/announcement/create');
         break;
 
       default:

@@ -1,19 +1,19 @@
-@import '~antd/lib/style/themes/default.less';
-.uploadZipContent{
-    .uploadZipStep{
-        border-bottom : 1px dashed #dcdcdc;
+@import '~antd/es/style/themes/default.less';
+.uploadZipContent {
+  .uploadZipStep {
+    border-bottom: 1px dashed #dcdcdc;
+  }
+  .foonter_btns {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+    :global {
+      .ant-btn {
+        margin: 0 5px;
+      }
     }
-    .foonter_btns{
-        margin-top: 30px;
-        display: flex;
-        justify-content: center;
-        padding: 8px 0;
-        :global {
-            .ant-btn{
-                margin: 0 5px;
-            }
-        }
-    }
+  }
 }
 //可以使用global.less里的样式
 // .uploadContent{
@@ -35,40 +35,40 @@
 //         }
 //     }
 // }
-@media screen and (min-width: @screen-sm)  {
-    .selfFormItem{
-        display: flex;
-        :global {
-            .ant-form-item-label{
-                width:auto;
-            }
-            .ant-form-item-control-wrapper{
-                flex: 1;
-            }
-        }
-        &.selfFormItemPadding{
-            padding-right: 30px;
-        }
+@media screen and (min-width: @screen-sm) {
+  .selfFormItem {
+    display: flex;
+    :global {
+      .ant-form-item-label {
+        width: auto;
+      }
+      .ant-form-item-control-wrapper {
+        flex: 1;
+      }
     }
-    .teacherInfo{
-        display: flex;
-        .teacherInfoLeft{
-            width: 124px;
-            padding: 12px 0 0 12px;
-        }
-        .teacherInfoRight{
-            flex: 1;
-        }
+    &.selfFormItemPadding {
+      padding-right: 30px;
     }
+  }
+  .teacherInfo {
+    display: flex;
+    .teacherInfoLeft {
+      width: 124px;
+      padding: 12px 0 0 12px;
+    }
+    .teacherInfoRight {
+      flex: 1;
+    }
+  }
 }
-.spanTipsContent{
-    position: absolute;
-    right: 0;
-    line-height: 1;
-    color: #969696;
-    bottom: 0;
-    margin-bottom: -28px;
-    span{
-        color: #f5222d;
-    }
+.spanTipsContent {
+  position: absolute;
+  right: 0;
+  line-height: 1;
+  color: #969696;
+  bottom: 0;
+  margin-bottom: -28px;
+  span {
+    color: #f5222d;
+  }
 }

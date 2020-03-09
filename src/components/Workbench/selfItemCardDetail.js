@@ -34,6 +34,7 @@ class SelfItemCardDetail extends Component {
       //   btns// 按钮
       // }
       stuFinishedConfig, // 学员 已完成
+
       // stuFinishedConfig:{
       //   availableTime,// 课程有效期 course有值，exam为null
       //   examEndTime,// 考试截止时间 exam有值，course为null
@@ -52,15 +53,14 @@ class SelfItemCardDetail extends Component {
           <div className={styles.title} title={title}>
             {title}
           </div>
-          {adminConfig &&
-            adminConfig.status && (
-              <div className={styles.admin_edit}>
-                <span>{adminConfig.status}</span>
-                <Button type="primary" disabled={adminConfig.status === '已归档'}>
-                  {adminConfig.btns}
-                </Button>
-              </div>
-            )}
+          {adminConfig && adminConfig.status && (
+            <div className={styles.admin_edit}>
+              <span>{adminConfig.status}</span>
+              <Button type="primary" disabled={adminConfig.status === '已归档'}>
+                {adminConfig.btns}
+              </Button>
+            </div>
+          )}
           {trAdminConfig && (
             <div className={styles.teachAndSuitable}>
               {trAdminConfig.teacher && (
@@ -76,25 +76,23 @@ class SelfItemCardDetail extends Component {
             </div>
           )}
           {/* --------------------------待完成、已逾期-------------------------- */}
-          {stuUnfinishedConfig &&
-            stuUnfinishedConfig.progress !== null && (
-              <Progress
-                percent={Number(stuUnfinishedConfig.progress)}
-                status="active"
-                style={{ visibility: stuUnfinishedConfig.status === '未开始' ? 'hidden' : 'unset' }}
-              />
-            )}
-          {stuUnfinishedConfig &&
-            stuUnfinishedConfig.endTime && (
-              <div
-                title={`考试截止时间：${stuUnfinishedConfig.endTime}`}
-                className={styles.endTime}
-                style={{ visibility: stuUnfinishedConfig.status === '未开始' ? 'hidden' : 'unset' }}
-              >
-                考试截止时间：
-                {stuUnfinishedConfig.endTime}
-              </div>
-            )}
+          {stuUnfinishedConfig && stuUnfinishedConfig.progress !== null && (
+            <Progress
+              percent={Number(stuUnfinishedConfig.progress)}
+              status="active"
+              style={{ visibility: stuUnfinishedConfig.status === '未开始' ? 'hidden' : 'unset' }}
+            />
+          )}
+          {stuUnfinishedConfig && stuUnfinishedConfig.endTime && (
+            <div
+              title={`考试截止时间：${stuUnfinishedConfig.endTime}`}
+              className={styles.endTime}
+              style={{ visibility: stuUnfinishedConfig.status === '未开始' ? 'hidden' : 'unset' }}
+            >
+              考试截止时间：
+              {stuUnfinishedConfig.endTime}
+            </div>
+          )}
           {stuUnfinishedConfig && stuUnfinishedConfig.status === '未开始'
             ? stuUnfinishedConfig.planStartTime && (
                 // eslint-disable-next-line react/jsx-indent
@@ -119,26 +117,24 @@ class SelfItemCardDetail extends Component {
               )}
           {/* --------------------------待完成、已逾期-------------------------- */}
           {/* --------------------------已完成-------------------------- */}
-          {stuFinishedConfig &&
-            stuFinishedConfig.availableTime && (
-              <div className={styles.availableTime}>
-                <span title={`课程有效期：${stuFinishedConfig.availableTime}`}>
-                  课程有效期：
-                  {stuFinishedConfig.availableTime}
-                </span>
-                <Button type="primary">{stuFinishedConfig.btns}</Button>
-              </div>
-            )}
-          {stuFinishedConfig &&
-            stuFinishedConfig.examEndTime && (
-              <div className={styles.examEndTime}>
-                <span title={`考试时间：${stuFinishedConfig.examEndTime}`}>
-                  考试时间：
-                  {stuFinishedConfig.examEndTime}
-                </span>
-                <Button type="primary">{stuFinishedConfig.btns}</Button>
-              </div>
-            )}
+          {stuFinishedConfig && stuFinishedConfig.availableTime && (
+            <div className={styles.availableTime}>
+              <span title={`课程有效期：${stuFinishedConfig.availableTime}`}>
+                课程有效期：
+                {stuFinishedConfig.availableTime}
+              </span>
+              <Button type="primary">{stuFinishedConfig.btns}</Button>
+            </div>
+          )}
+          {stuFinishedConfig && stuFinishedConfig.examEndTime && (
+            <div className={styles.examEndTime}>
+              <span title={`考试时间：${stuFinishedConfig.examEndTime}`}>
+                考试时间：
+                {stuFinishedConfig.examEndTime}
+              </span>
+              <Button type="primary">{stuFinishedConfig.btns}</Button>
+            </div>
+          )}
           {/* --------------------------已完成-------------------------- */}
           {/* --------------------------推荐课程-------------------------- */}
           {stuRecommendedCourse && (

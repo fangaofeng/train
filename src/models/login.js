@@ -23,6 +23,7 @@ export default {
         password,
       };
       const response = yield call(login, param);
+      console.log(response);
       yield put({
         type: 'changeLoginStatus',
         payload: response,

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Tag, message } from 'antd';
 import { connect } from 'dva';
-import { formatMessage } from 'umi-plugin-react/locale';
+import { formatMessage } from 'umi';
 import moment from 'moment';
-import router from 'umi/router';
+import { history } from 'umi';
 
 // eslint-disable-next-line import/no-unresolved
 import NoticeIcon from '../NoticeIcon';
@@ -69,7 +69,7 @@ class GlobalHeaderRight extends Component {
   };
 
   onViewMore = () => {
-    router.push('/personalCenter/center/notifications');
+    history.push('/personalCenter/center/notifications');
   };
 
   getNoticeData = () => {

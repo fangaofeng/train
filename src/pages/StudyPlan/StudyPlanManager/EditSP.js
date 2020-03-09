@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { DatePicker, Card, Button, Input, Form, message, Spin } from 'antd';
 import moment from 'moment';
-import router from 'umi/router';
-// import Link from 'umi/link';
+import { history } from 'umi';
+// import {Link} from 'umi';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import CourseBasicInfo from '@/components/CourseBasicInfo';
@@ -215,7 +215,7 @@ class EditSP extends Component {
             <Button type="primary" onClick={this.editSubmit}>
               提交
             </Button>
-            <Button onClick={() => router.push('/studyPlan/studyPlanManager/index')}>取消</Button>
+            <Button onClick={() => history.push('/studyPlan/studyPlanManager/index')}>取消</Button>
           </div>
         </Card>
         <SubmitSuccessCard
@@ -230,7 +230,7 @@ class EditSP extends Component {
             <Fragment>
               <Button
                 type="primary"
-                onClick={() => router.push('/studyPlan/studyPlanManager/index')}
+                onClick={() => history.push('/studyPlan/studyPlanManager/index')}
               >
                 完成
               </Button>

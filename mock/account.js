@@ -22,7 +22,7 @@ export default {
 
   'POST /api/auth/login': (req, res) => {
     const { username, password } = req.body;
-    if (username === 'fgf' && password === '1234qwer') {
+    if (username === 'fgf' && password === '1234') {
       res.send({
         status: 'ok',
         data: {
@@ -32,7 +32,7 @@ export default {
       });
       return;
     }
-    if (username === 'tr' && password === '1234qwer') {
+    if (username === 'tr' && password === '1234') {
       res.send({
         status: 'ok',
         data: {
@@ -42,7 +42,7 @@ export default {
       });
       return;
     }
-    if (username === 'stu' && password === '1234qwer') {
+    if (username === 'stu' && password === '1234') {
       res.send({
         status: 'ok',
         data: {

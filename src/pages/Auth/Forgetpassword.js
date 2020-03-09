@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { formatMessage, FormattedMessage } from 'umi/locale';
-import Link from 'umi/link';
-import router from 'umi/router';
+import { Link, history, formatMessage, FormattedMessage } from 'umi';
+
 import { Form, Input, Button, Select, Row, Col, Popover, Progress } from 'antd';
 import loginAvatar from '@/assets/images/Login/Login_avatar.png';
 import styles from './Register.less';
@@ -54,7 +53,7 @@ class Register extends Component {
     const { form, register } = this.props;
     const account = form.getFieldValue('mail');
     if (register.status === 'ok') {
-      router.push({
+      history.push({
         pathname: '/auth/register-result',
         state: {
           account,

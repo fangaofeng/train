@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment } from 'react';
 import { List, Button, Card, Tabs } from 'antd';
 
-import Link from 'umi/link';
+import { Link } from 'umi';
 
 import SelfCard from '@/components/Workbench/selfCard';
 import SelfItemCard from '@/components/Workbench/selfItemCard';
@@ -47,7 +47,7 @@ function StuWorkbench() {
   }, []);
 
   const rendercourse = (item, flag) => {
-    const stuUnfinishedtodo = {
+    const stuUnfinishedConfig = {
       status: item.status,
       progress: item.rate_progress,
       endTime: item.plan.end_time,
@@ -59,9 +59,9 @@ function StuWorkbench() {
         </span>
       ),
 
-      btns: <Link to={`/myStudy/learnPlan/${item.id}`}>去学习</Link>,
+      btns: <Link to={`/myStudy/learnPlan/progress/${item.id}`}>去学习</Link>,
     };
-    const stuUnfinishedcomplete = {
+    const stuFinishedConfig = {
       availableTime: item.plan.end_time,
       btns: <Link to={`/myStudy/learnPlan//${item.id}`}>去学习</Link>,
     };
@@ -76,7 +76,8 @@ function StuWorkbench() {
           />
           <SelfItemCardDetail
             title={item.plan.name}
-            stuUnfinishedConfig={flag === 'completed' ? stuUnfinishedcomplete : stuUnfinishedtodo}
+            stuUnfinishedConfig={flag === 'todo' || flag === 'overdue' ? stuUnfinishedConfig : null}
+            stuFinishedConfig={flag === 'completed' ? stuFinishedConfig : null}
           />
         </SelfItemCard>
       </List.Item>
@@ -84,7 +85,7 @@ function StuWorkbench() {
   };
 
   const renderexam = (item, flag) => {
-    const stuUnfinishedtodo = {
+    const stuUnfinishedConfig = {
       status: item.status,
       endTime: item.plan.end_time,
       days: item.days_remaining,
@@ -96,7 +97,7 @@ function StuWorkbench() {
       ),
       btns: <Link to={`/myExam/onlineExam/login/${item.id}`}>去考试</Link>,
     };
-    const stuUnfinishedcomplete = {
+    const stuFinishedConfig = {
       endTime: item.end_time,
       btns: <Link to={`/studyPlan/studyPlanManager/create/${item.id}`}>查看试卷</Link>,
     };
@@ -107,11 +108,12 @@ function StuWorkbench() {
           <SelfItemCardImg
             imgSrc={item.plan.exampaper.cover}
             showExamTip
-            studyTime={`${Number(item.plan.exampaper.duration)}学时`}
+            studyTime={`${Number(item.plan.exampaper.duration)}分钟`}
           />
           <SelfItemCardDetail
             title={item.plan.name}
-            stuUnfinishedConfig={flag === 'completed' ? stuUnfinishedcomplete : stuUnfinishedtodo}
+            stuUnfinishedConfig={flag === 'todo' || flag === 'overdue' ? stuUnfinishedConfig : null}
+            stuFinishedConfig={flag === 'completed' ? stuFinishedConfig : null}
           />
         </SelfItemCard>
       </List.Item>

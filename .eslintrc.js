@@ -1,57 +1,32 @@
+const { strictEslint } = require('@umijs/fabric');
+
 module.exports = {
-  parser: 'babel-eslint',
-  extends: ['airbnb', 'prettier/react', 'prettier', 'plugin:compat/recommended'],
-  env: {
-    browser: true,
-    node: true,
-    es6: true,
-    mocha: true,
-    jest: true,
-    jasmine: true,
-  },
-  // globals: {
-  //   APP_TYPE: true,
-  // },
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    sourceType: 'module',
-  },
+  ...strictEslint,
   rules: {
-    'react/jsx-filename-extension': [
-      1,
+    ...(strictEslint.rules || {}),
+    'max-len': [
+      'error',
       {
-        extensions: ['.js'],
+        code: 120,
+        ignoreStrings: true,
+        ignoreComments: true,
+        ignoreRegExpLiterals: true,
+        ignoreTemplateLiterals: true,
+        ignoreTrailingComments: true,
       },
     ],
-    // 'prettier/prettier': 'error',
-    'react/jsx-wrap-multilines': 0,
-    'react/prop-types': 0,
-    'react/forbid-prop-types': 0,
-    'react/jsx-one-expression-per-line': 0,
-    'import/no-unresolved': [
-      2,
-      {
-        ignore: ['^@/', '^umi/'],
-      },
-    ],
-    'import/no-extraneous-dependencies': [
-      2,
-      {
-        optionalDependencies: true,
-      },
-    ],
-    'jsx-a11y/no-noninteractive-element-interactions': 0,
-    'jsx-a11y/click-events-have-key-events': 0,
-    'jsx-a11y/no-static-element-interactions': 0,
-    'jsx-a11y/anchor-is-valid': 0,
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
-    // 'linebreak-style': 0,
+    'no-unused-expressions': 0,
+    'jsx-a11y/control-has-associated-label': 'off',
+    // 禁用未使用过的标签
+    'no-unused-labels': 0,
+    'jsx-a11y/label-has-for': 0,
+    'jsx-a11y/label-has-associated-control': 'off',
+    'jsx-a11y/label-has-for': 'off',
   },
-  settings: {
-    polyfills: ['fetch', 'promises', 'url'],
+
+  globals: {
+    PRODUCTION: true,
+    page: true,
+    REACT_APP_ENV: false,
   },
-  plugins: ['react', 'jsx-a11y', 'import', 'react-hooks'], //
 };

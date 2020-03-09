@@ -10,7 +10,7 @@ import styles from './ViewSelectstyle.less';
 const FormItem = Form.Item;
 
 function UserSelecView(props) {
-  const { onSelectKeys, preparams } = props;
+  const { onSelectKeys, preparams, ColumnsOperation = [] } = props;
   const {
     form: { getFieldDecorator, setFieldsValue },
     form,
@@ -19,11 +19,13 @@ function UserSelecView(props) {
   const Users = useSelector(store => store.UserManager.Users);
 
   useEffect(() => {
-    setParams(preparams);
-    setFieldsValue({
-      department: preparams.department,
-    });
-  }, [hash(preparams)]);
+    if (preparams) {
+      setParams(preparams);
+      setFieldsValue({
+        department: preparams.department || '',
+      });
+    }
+  }, [hash(preparams || '')]);
 
   const handleSearch = e => {
     e.preventDefault();
@@ -68,6 +70,7 @@ function UserSelecView(props) {
       key: 'user_manager_type',
       render: (text, record) => <span>{record.role_display}</span>,
     },
+    ...ColumnsOperation,
   ];
 
   const renderSimpleForm = () => {

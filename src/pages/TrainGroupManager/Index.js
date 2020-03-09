@@ -1,6 +1,6 @@
 import React from 'react';
 import listEditContent from '@/components/EditContent/list';
-import Link from 'umi/link';
+import { Link } from 'umi';
 import { Divider, Popconfirm, Button } from 'antd';
 
 export default () => {

@@ -5,7 +5,7 @@ import { Card, Button, List, Modal, Icon, Statistic } from 'antd';
 import classNames from 'classnames';
 
 import Question from '@/components/Question';
-import router from 'umi/router';
+import { history } from 'umi';
 
 import styles from './Answer.less';
 
@@ -179,7 +179,7 @@ class OnlineExamAnswer extends Component {
 
   // 确定归档（归档成功后关闭模态框）
   handleOk = () => {
-    router.push('/myExam/examPlan');
+    history.push('/myExam/examPlan');
   };
 
   render() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'dva';
 // import { Icon, Tooltip } from 'antd';
-// import { formatMessage } from 'umi-plugin-react/locale'
+// import { formatMessage } from 'umi'
 import AvatarDropdown from './AvatarDropdown';
 // import HeaderSearch from '../HeaderSearch'
 // import SelectLang from '../SelectLang'

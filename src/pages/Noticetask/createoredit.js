@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import { useDispatch } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import router from 'umi/router';
+import { history } from 'umi';
 import Authorized from '@/utils/Authorized';
 
 import {
@@ -147,9 +147,9 @@ export default props => {
         </Card>
         <FormButtonGroup offset={8} sticky>
           <Submit>发送</Submit>
-          <Button onClick={() => router.push(returnUrl)}>保存</Button>
+          <Button onClick={() => history.push(returnUrl)}>保存</Button>
           <Reset>重置</Reset>
-          <Button onClick={() => router.push(returnUrl)}>返回</Button>
+          <Button onClick={() => history.push(returnUrl)}>返回</Button>
         </FormButtonGroup>
       </SchemaForm>
     </PageHeaderWrapper>

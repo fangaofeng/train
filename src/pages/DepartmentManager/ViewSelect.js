@@ -7,7 +7,7 @@ export default props => {
   const [checkedKeys, setcheckedKeys] = useState(value);
   const action = 'DepartmentManager/GetOrgsDeparments';
   const name = '部门选择';
-  console.log('checkedKeys:', checkedKeys, value);
+  // console.log('checkedKeys:', checkedKeys, value);
   useEffect(() => {
     setcheckedKeys(value);
   }, [value]);

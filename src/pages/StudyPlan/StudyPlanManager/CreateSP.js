@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-syntax */
 import React, { Component, Fragment } from 'react';
 import { DatePicker, Card, Button, Table, Spin, message, Input, Form } from 'antd';
-import router from 'umi/router';
-// import Link from 'umi/link';
+import { history } from 'umi';
+// import {Link} from 'umi';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import SubmitSuccessCard from '@/components/SubmitSuccessCard';
@@ -96,7 +96,7 @@ class CreateSP extends Component {
 
   // 点击取消
   btnCancel = () => {
-    router.push('/studyPlan/studyPlanManager/index');
+    history.push('/studyPlan/studyPlanManager/index');
   };
 
   // 点击提交按钮
@@ -386,7 +386,7 @@ class CreateSP extends Component {
             <Fragment>
               <Button
                 type="primary"
-                onClick={() => router.push('/studyPlan/studyPlanManager/index')}
+                onClick={() => history.push('/studyPlan/studyPlanManager/index')}
               >
                 完成
               </Button>

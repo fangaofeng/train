@@ -1,7 +1,7 @@
 import React from 'react';
 import { Divider, Avatar } from 'antd';
 import ManagerTable from '@/components/ManagerTable';
-import Link from 'umi/link';
+import { Link } from 'umi';
 
 export default () => {
   const datalist = state => state.Announcement.articleList;

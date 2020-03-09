@@ -3,16 +3,18 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
+import { useRequest } from 'umi';
+
 import { notification } from 'antd';
 import token from './token';
-import router from 'umi/router';
+import { history, getDvaApp } from 'umi';
 declare global {
   interface Window {
     g_app: any;
   }
 }
 
-window.g_app = window.g_app || {};
+window.g_app = getDvaApp() || {};
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -40,6 +42,12 @@ const errorHandler = (error: { data: object; response: Response }): object => {
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
+    if (status === 200) {
+      return data;
+    }
+    if (status > 200 && status < 300) {
+      return { status: 'ok', message: `${status}` };
+    }
     if (status === 401) {
       // @HACK
       /* eslint-disable no-underscore-dangle */
@@ -49,30 +57,29 @@ const errorHandler = (error: { data: object; response: Response }): object => {
     }
     // environment should not be used
     else if (status === 403) {
-      router.push('/exception/403');
-      return;
+      history.push('/exception/403');
+      return { status: 'error', detail: `你需要重新登陆` };
     } else if (status <= 504 && status >= 500) {
-      router.push('/exception/500');
-      return;
+      history.push('/exception/500');
     } else if (status >= 404 && status < 422) {
-      router.push('/exception/404');
-      return;
+      history.push('/exception/404');
     } else {
       notification.error({
         message: `请求错误 ${status}: ${url}`,
         description: errorText,
       });
-      return;
     }
-  } else if (!response) {
+    return { status: 'error', detail: `server return ${codeMessage[status]}` };
+  }
+  if (!response) {
     notification.error({
       description: '您的网络发生异常，无法连接服务器',
       message: '网络异常',
     });
-    return;
+    return { status: 'error', detail: `connect time out` };
   }
 
-  return data;
+  return { status: 'error', detail: `unkonw error` };
 };
 
 /**
@@ -81,7 +88,7 @@ const errorHandler = (error: { data: object; response: Response }): object => {
 
 const request = extend({
   prefix: '/api',
-
+  timeout: 60000,
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });

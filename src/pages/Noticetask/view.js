@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import router from 'umi/router';
+import { history } from 'umi';
 import Authorized from '@/utils/Authorized';
 
 import {
@@ -112,7 +112,7 @@ export default props => {
           </Card>
         </Card>
         <FormButtonGroup offset={8} sticky>
-          <Button onClick={() => router.push(returnUrl)}>返回</Button>
+          <Button onClick={() => history.push(returnUrl)}>返回</Button>
         </FormButtonGroup>
       </SchemaForm>
     </PageHeaderWrapper>

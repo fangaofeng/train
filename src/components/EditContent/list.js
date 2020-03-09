@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { Card, Button, message } from 'antd';
-import router from 'umi/router';
+import { history } from 'umi';
 import { useSelector, useDispatch } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import PageTable from '@/components/PageTable';
@@ -83,7 +83,7 @@ export default function EditContent(props) {
               <span>{`可以使用本${name}的培训管理员：`}</span>
             </div>
             <div>
-              <Button type="primary" onClick={() => router.push(addUrl)}>
+              <Button type="primary" onClick={() => history.push(addUrl)}>
                 {`增加${name}`}
               </Button>
               <Button className="ant-btn-del" onClick={batchDelete}>

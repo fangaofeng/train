@@ -2,7 +2,7 @@ import React, { useEffect, Fragment } from 'react';
 import { List, Button, Card, Row, Col, Spin } from 'antd';
 
 // import classNames from 'classnames';
-import Link from 'umi/link';
+import { Link } from 'umi';
 
 // import moment from 'moment';
 import SelfCard from '@/components/Workbench/selfCard';
@@ -10,7 +10,7 @@ import SelfItemCard from '@/components/Workbench/selfItemCard';
 import SelfItemCardImg from '@/components/Workbench/selfItemCardImg';
 import SelfItemCardDetail from '@/components/Workbench/selfItemCardDetail';
 import { useDispatch, useSelector } from 'dva';
-import router from 'umi/router';
+import { history } from 'umi';
 import imgPlatform1 from '@/assets/images/Workbench/01.png';
 import imgPlatform2 from '@/assets/images/Workbench/02.png';
 import imgPlatform3 from '@/assets/images/Workbench/03.png';
@@ -64,13 +64,13 @@ function AdminWorkbench() {
     // console.log(key);
     switch (key) {
       case 'courseware':
-        router.push('/courseware/uploadZip');
+        history.push('/courseware/uploadZip');
         break;
       case 'exam':
-        router.push('/exam/uploadZip');
+        history.push('/exam/uploadZip');
         break;
       case 'announcement':
-        router.push('/announcement/create');
+        history.push('/announcement/create');
         break;
 
       default:

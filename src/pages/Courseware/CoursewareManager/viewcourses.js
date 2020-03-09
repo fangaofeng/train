@@ -1,7 +1,7 @@
 import React from 'react';
 import { ViewList } from '@/components/ViewPage';
 import { Button, List } from 'antd';
-import Link from 'umi/link';
+import { Link } from 'umi';
 import SelfItemCard from '@/components/Workbench/selfItemCard';
 import SelfItemCardImg from '@/components/Workbench/selfItemCardImg';
 import SelfItemCardDetail from '@/components/Workbench/selfItemCardDetail';

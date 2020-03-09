@@ -1,8 +1,8 @@
 import { Avatar, Icon, Menu, Spin } from 'antd';
 
-import { FormattedMessage } from 'umi-plugin-react/locale';
+import { formatMessage, FormattedMessage } from 'umi';
 import React from 'react';
-import router from 'umi/router';
+import { history } from 'umi';
 import { connect } from 'dva';
 // eslint-disable-next-line import/no-unresolved
 import HeaderDropdown from '../HeaderDropdown';
@@ -22,7 +22,7 @@ class AvatarDropdown extends React.Component {
 
       return;
     }
-    router.push(`/personalCenter/${key}`);
+    history.push(`/personalCenter/${key}`);
   };
 
   render() {

@@ -2,7 +2,7 @@ import React from 'react';
 import { ViewList } from '@/components/ViewPage';
 import { Button, message, List } from 'antd';
 import { useDispatch } from 'dva';
-import router from 'umi/router';
+import { history } from 'umi';
 import SelfItemCard from '@/components/Workbench/selfItemCard';
 import SelfItemCardImg from '@/components/Workbench/selfItemCardImg';
 import SelfItemCardDetail from '@/components/Workbench/selfItemCardDetail';
@@ -17,7 +17,7 @@ export default function viewPapers() {
       callback: res => {
         if (res && res.status === 'ok') {
           const { id } = res.data;
-          router.push(`/myStudy/publicprogress/${id}`);
+          history.push(`/myStudy/publicprogress/${id}`);
         } else {
           message.warning('课程无法学习');
         }

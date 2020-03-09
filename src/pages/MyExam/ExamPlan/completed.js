@@ -1,7 +1,6 @@
 import React from 'react';
 import { List, Button } from 'antd';
-// import router from 'umi/router';
-import Link from 'umi/link';
+import { Link } from 'umi';
 
 import ExamBasicInfo from '@/components/ExamBasicInfo';
 

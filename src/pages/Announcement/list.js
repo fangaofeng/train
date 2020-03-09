@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, Icon, Input, List, Row, Col } from 'antd';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import Link from 'umi/link';
+import { Link } from 'umi';
 import moment from 'moment';
 // import ArticleListContent from '@/components/ArticleListContent';
 import styles from '@/components/styles.less';

@@ -1,45 +1,44 @@
-@import '~antd/lib/style/themes/default.less';
-.uploadSuccessCard{
-    margin-bottom: 20px;
-    .uploadSuccessContent{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        .uploadSuccessTitle{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-            margin-bottom: 35px;
-            >span{
-                display: inline-block;
-                font-size: 20px;
-                font-weight: bold;
-                padding-left: 20px;
-            }
-        }
-        .uploadSuccessMsg{
-            padding: 20px 0;
-            >div{
-                margin-bottom: 18px;
-            }
-        }
+@import '~antd/es/style/themes/default.less';
+.uploadSuccessCard {
+  margin-bottom: 20px;
+  .uploadSuccessContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .uploadSuccessTitle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 35px;
+      > span {
+        display: inline-block;
+        font-size: 20px;
+        font-weight: bold;
+        padding-left: 20px;
+      }
     }
+    .uploadSuccessMsg {
+      padding: 20px 0;
+      > div {
+        margin-bottom: 18px;
+      }
+    }
+  }
 }
-.uploadSuccessCardTable{
-    .uploadSuccessCardTableMsg{
-        padding: 10px 0 30px 0;
+.uploadSuccessCardTable {
+  .uploadSuccessCardTableMsg {
+    padding: 10px 0 30px 0;
+  }
+  .footerBtns {
+    border-top: 1px dashed #dcdcdc;
+    display: flex;
+    justify-content: center;
+    padding: 34px 0 10px 0;
+    :global {
+      .ant-btn {
+        margin: 0 5px;
+      }
     }
-    .footerBtns{
-        border-top: 1px dashed #dcdcdc;
-        display: flex;
-        justify-content: center;
-        padding: 34px 0 10px 0;
-        :global {
-            .ant-btn{
-                margin: 0 5px;
-            }
-        }
-    }
+  }
 }
-

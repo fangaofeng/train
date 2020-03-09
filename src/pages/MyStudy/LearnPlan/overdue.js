@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Button } from 'antd';
-// import router from 'umi/router';
-// import Link from 'umi/link';
+// import { history } from 'umi'
+// import {Link} from 'umi';
 
 import LearnInfo from '@/components/LearnInfo';
 

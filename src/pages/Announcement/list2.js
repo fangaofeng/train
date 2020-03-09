@@ -3,7 +3,7 @@ import { List, Icon } from 'antd';
 import ViewList from '@/components/ViewPage/viewList';
 import ArticleListContent from '@/components/ArticleListContent';
 import moment from 'moment';
-import Link from 'umi/link';
+import { Link } from 'umi';
 
 export default () => {
   const datalist = state => state.Announcement.articleList;

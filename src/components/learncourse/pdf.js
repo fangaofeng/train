@@ -1,7 +1,7 @@
 import React, { useReducer, useRef } from 'react';
 import { Divider, Icon, Layout } from 'antd';
-// import router from 'umi/router';
-// import Link from 'umi/link';
+// import { history } from 'umi'
+// import {Link} from 'umi';
 
 import { Document, Page } from 'react-pdf';
 import screenfull from 'screenfull';

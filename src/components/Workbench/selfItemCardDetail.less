@@ -1,58 +1,56 @@
-@import '~antd/lib/style/themes/default.less';
+@import '~antd/es/style/themes/default.less';
 
 // ------------课件管理等图片下方信息------------
-.divBox(){
-    white-space: nowrap;      /*超出的空白区域不换行*/
-    overflow: hidden;         /*超出隐藏*/
-    text-overflow: ellipsis;  /*文本超出显示省略号*/
+.divBox() {
+  white-space: nowrap; /*超出的空白区域不换行*/
+  overflow: hidden; /*超出隐藏*/
+  text-overflow: ellipsis; /*文本超出显示省略号*/
 }
-.list_item_card_info_conter{
-    padding: 10px 0;
-    div.title{
-        .divBox();
-        color: #000;
-        font-size: 16px;
-        margin-bottom: 10px;
-        margin-top: 10px;
+.list_item_card_info_conter {
+  padding: 10px 0;
+  div.title {
+    .divBox();
+    color: #000;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  div.endTime {
+    .divBox();
+  }
+  div.admin_edit,
+  div.teachAndSuitable,
+  div.planStartTime,
+  div.leftDays,
+  div.availableTime,
+  div.examEndTime {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0 0 0;
+    > span {
+      display: inline-block;
+      .divBox();
     }
-    div.endTime{
-        .divBox();
-    }
+  }
+}
+// 1200~1600px
+@media screen and (max-width: @screen-xxl) and (min-width: @screen-xl) {
+  .list_item_card_info_conter {
     div.admin_edit,
     div.teachAndSuitable,
     div.planStartTime,
     div.leftDays,
     div.availableTime,
-    div.examEndTime{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0 0 0;
-        >span{
-            display: inline-block;
-            .divBox();
-        }
+    div.examEndTime {
+      display: flex;
+      justify-content: unset;
+      align-items: unset;
+      flex-direction: column;
+      > button {
+        margin-top: 10px;
+      }
     }
-}
-// 1200~1600px
-@media screen and (max-width: @screen-xxl) and (min-width: @screen-xl) {
-    .list_item_card_info_conter{
-        div.admin_edit,
-        div.teachAndSuitable,
-        div.planStartTime,
-        div.leftDays,
-        div.availableTime,
-        div.examEndTime{
-            display: flex;
-            justify-content: unset;
-            align-items: unset;
-            flex-direction: column;
-            >button{
-                margin-top: 10px;
-            }
-        }
-    }
+  }
 }
 // ------------课件管理等图片下方信息------------
-
-

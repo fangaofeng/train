@@ -1,7 +1,7 @@
 import React from 'react';
 import { Divider } from 'antd';
 
-import Link from 'umi/link';
+import { Link } from 'umi';
 import ManagerTable from '@/components/ManagerTable/index';
 
 export default () => {

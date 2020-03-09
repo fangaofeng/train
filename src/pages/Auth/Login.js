@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { FormattedMessage } from 'umi/locale';
-import Link from 'umi/link';
+import { Link, FormattedMessage } from 'umi';
 import { Checkbox, Alert } from 'antd';
 import Login from '@/components/Login';
 import loginAvatar from '@/assets/images/Login/Login_avatar.png';

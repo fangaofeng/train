@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Card, Button, Modal, Form } from 'antd';
-// import router from 'umi/router';
+// import { history } from 'umi'
 import { connect } from 'dva';
 import styles from './Common.less';
 import PageTable from '@/components/PageTable';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import router from 'umi/router';
+import { history } from 'umi';
 import { Card, Row, Col, Avatar, Button, message, Modal, Icon } from 'antd';
 import SelfCard from '@/components/Workbench/selfCard';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
@@ -25,7 +25,7 @@ class UploadZip2 extends Component {
   componentDidMount() {
     const { zipInfo } = this.props;
     if (Object.keys(zipInfo).length === 0) {
-      router.push('/courseware/uploadZip/uploadZip1');
+      history.push('/courseware/uploadZip/uploadZip1');
     }
   }
 
@@ -91,7 +91,7 @@ class UploadZip2 extends Component {
       },
       callback: res => {
         if (res && res.status === 'ok') {
-          router.push('/courseware/uploadZip/uploadZip3');
+          history.push('/courseware/uploadZip/uploadZip3');
         } else {
           message.warning('上架失败');
         }
@@ -101,7 +101,7 @@ class UploadZip2 extends Component {
 
   // 返回按钮
   goBack = () => {
-    router.push('/courseware/uploadZip/uploadZip1');
+    history.push('/courseware/uploadZip/uploadZip1');
   };
 
   // 保存成功提示模态框（关闭模态框）

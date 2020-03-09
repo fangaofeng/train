@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, List, Input, Button } from 'antd';
 
-import Link from 'umi/link';
+import { Link } from 'umi';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 

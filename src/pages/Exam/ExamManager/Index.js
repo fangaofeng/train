@@ -1,17 +1,17 @@
 import React from 'react';
 import { Divider, Button } from 'antd';
-import router from 'umi/router';
-import Link from 'umi/link';
+import { history } from 'umi';
+import { Link } from 'umi';
 import ManagerTable from '@/components/ManagerTable/index';
 // import styles from '@/components/styles.less';
 export default () => {
   const datalist = state => state.ExamManager.allTestPapers;
   const extrabutton = (
     <div styles>
-      <Button type="primary" onClick={() => router.push('/exam/uploadZip/uploadZip1')}>
+      <Button type="primary" onClick={() => history.push('/exam/uploadZip/uploadZip1')}>
         上传试卷
       </Button>
-      <Button type="primary" onClick={() => router.push('/exam/create')}>
+      <Button type="primary" onClick={() => history.push('/exam/create')}>
         创建试卷
       </Button>
     </div>

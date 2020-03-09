@@ -104,8 +104,8 @@ export default {
             plan: {
               name: '关于2018年秋季公司全员合规技能竞赛的通知',
               end_time: '2018-10-12 23:30:58',
-              course: {
-                class_hour: '1.50',
+              exampaper: {
+                duration: '30',
                 cover: `${basicUrl}/002.jpg`,
                 // "file_type": "MP4",
               },
@@ -120,10 +120,10 @@ export default {
             plan: {
               name: '关于2018年秋季公司全员合规技能竞赛的通知',
               end_time: '2018-10-12 23:30:58',
-              course: {
-                class_hour: '1.50',
-                cover: `${basicUrl}/004.jpg`,
-                // "file_type": "PDF",
+              exampaper: {
+                duration: '30',
+                cover: `${basicUrl}/002.jpg`,
+                // "file_type": "MP4",
               },
             },
             progress: {},
@@ -138,8 +138,8 @@ export default {
               name: '关于2018年秋季公司全员合规技能竞赛的通知',
               start_time: '2018-10-12 23:30:58',
               end_time: '2018-10-12 23:30:58',
-              course: {
-                class_hour: '1.50',
+              exampaper: {
+                duration: '30',
                 cover: `${basicUrl}/002.jpg`,
                 // "file_type": "MP4",
               },
@@ -155,8 +155,8 @@ export default {
               name: '关于2018年秋季公司全员合规技能竞赛的通知',
               start_time: '2018-10-12 23:30:58',
               end_time: '2018-10-12 23:30:58',
-              course: {
-                class_hour: '1.50',
+              exampaper: {
+                duration: '30',
                 cover: `${basicUrl}/002.jpg`,
                 // "file_type": "MP4",
               },

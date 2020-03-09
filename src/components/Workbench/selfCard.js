@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
-import Link from 'umi/link';
+import { Link } from 'umi';
 import classNames from 'classnames';
 import styles from './selfCard.less';
 

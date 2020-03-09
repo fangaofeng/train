@@ -2,7 +2,7 @@ import React, { useEffect, Fragment } from 'react';
 import { List, Button } from 'antd';
 import { useDispatch, useSelector } from 'dva';
 // import classNames from 'classnames';
-import Link from 'umi/link';
+import { Link } from 'umi';
 
 // import moment from 'moment';
 import SelfCard from '@/components/Workbench/selfCard';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Button, message, Input, Form } from 'antd';
-import router from 'umi/router';
+import { history } from 'umi';
 
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
@@ -198,7 +198,7 @@ class AddTrainGroup extends Component {
             <Button type="primary" onClick={this.handleSubmit}>
               提交
             </Button>
-            <Button onClick={() => router.push('/trainGroupManager/index')}>取消</Button>
+            <Button onClick={() => history.push('/trainGroupManager/index')}>取消</Button>
           </div>
         </Card>
         <Card
@@ -223,13 +223,13 @@ class AddTrainGroup extends Component {
           </div>
 
           <div className={styles.foonter_btns}>
-            <Button type="primary" onClick={() => router.push('/trainGroupManager/index')}>
+            <Button type="primary" onClick={() => history.push('/trainGroupManager/index')}>
               返回
             </Button>
             <Button
               // type="primary"
               onClick={() =>
-                router.push({
+                history.push({
                   pathname: `/trainGroupManager/viewTrainGroup/${responseGroupId}`,
                   query: {
                     num: responseGroupNumber,

@@ -22,8 +22,8 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import SelfCard from '@/components/Workbench/selfCard';
 // import classNames from 'classnames';
 // import JSZip from 'jszip';
-import router from 'umi/router';
-import Link from 'umi/link';
+import { history } from 'umi';
+import { Link } from 'umi';
 import styles from './UploadZip1.less';
 // import { getUploadExamurl } from '@/services/uploadUrl/uploadUrl';
 import storetoken from '@/utils/token';
@@ -156,7 +156,7 @@ class UploadExamStepFirst extends Component {
             zipfileid, // zip文件的id
           },
         });
-        router.push('/exam/uploadZip/uploadZip2');
+        history.push('/exam/uploadZip/uploadZip2');
       }
     });
 
@@ -386,7 +386,7 @@ class UploadExamStepFirst extends Component {
                     {isFirstUpload ? '上传试卷包（ZIP）文件' : '重新上传试卷包（ZIP）文件'}
                   </Button>
                 </Upload>
-                <div
+                {/* <div
                   style={{
                     marginTop: '20px',
                     marginBottom: '20px',
@@ -400,7 +400,7 @@ class UploadExamStepFirst extends Component {
                       {zipFileName}
                     </span>
                   ) : null}
-                </div>
+                </div> */}
                 <Form hideRequiredMark style={{ display: isFirstUpload ? 'none' : 'block' }}>
                   <SelfCard title="试卷信息" nopadding="true">
                     <FormItem label="试卷编号" className={styles.selfFormItem}>

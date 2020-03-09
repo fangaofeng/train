@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Button, Progress, Icon, Upload, Row, Col, message } from 'antd';
-import router from 'umi/router';
-// import Link from 'umi/link';
-// import Redirect from 'umi/redirect';
+import { history } from 'umi';
+// import {Link} from 'umi';
+// import Redirect from 'umi';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 // import { getUploadUsersurl } from '@/services/uploadUrl/uploadUrl';
@@ -271,7 +271,7 @@ class UploadUserStep1 extends Component {
             <Button
               type="primary"
               onClick={() => {
-                router.push('/userManager/index');
+                history.push('/userManager/index');
               }}
               style={{ display: uploadStatus === 'success' ? 'block' : 'none' }}
             >

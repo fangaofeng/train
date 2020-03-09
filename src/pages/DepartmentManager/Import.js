@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button, Progress, Icon, Upload, Row, Col, Spin, message } from 'antd';
 import { connect } from 'dva';
-import router from 'umi/router';
+import { history } from 'umi';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 // import { getDepartmentUploadurl } from '@/services/uploadUrl/uploadUrl';
 import uploadSuccess from '@/assets/images/upload_success.png';
@@ -230,7 +230,7 @@ class DepartmentManager extends Component {
               type="primary"
               style={{ display: uploadStatus === 'success' ? 'block' : 'none' }}
             >
-              <a onClick={() => router.push('/DepartmentManager/index')}>返回</a>
+              <a onClick={() => history.push('/DepartmentManager/index')}>返回</a>
             </Button>
           </div>
         </Card>

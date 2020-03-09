@@ -10,33 +10,15 @@ import ProLayout, {
   DefaultFooter,
   SettingDrawer,
 } from '@ant-design/pro-layout';
-import React, { useEffect } from 'react';
-import Link from 'umi/link';
-// import { Dispatch } from 'redux';
-import { connect } from 'dva';
-import { formatMessage } from 'umi-plugin-react/locale';
-import Authorized from '@/utils/Authorized';
-import RightContent from '@/components/GlobalHeader/RightContent';
-// import { ConnectState } from '@/models/connect';
-// eslint-disable-next-line import/no-unresolved
-import setttings from '../../config/defaultSettings';
-import logo from '../assets/images/Header/logo.png';
 
-// export interface BasicLayoutProps extends ProLayoutProps {
-//   breadcrumbNameMap: {
-//     [path: string]: MenuDataItem;
-//   };
-//   settings: Settings;
-//   dispatch: Dispatch;
-// }
-// export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
-//   breadcrumbNameMap: {
-//     [path: string]: MenuDataItem;
-//   };
-// };
-/**
- * use Authorized check all menu item
- */
+import React, { useEffect } from 'react';
+import { Link, formatMessage, Redirect } from 'umi';
+import { connect } from 'dva';
+import Authorized from '@/utils/Authorized';
+import { getAuthority } from '@/utils/authority';
+
+import RightContent from '@/components/GlobalHeader/RightContent';
+import logo from '../assets/images/Header/logo.png';
 
 const menuDataRender = menuList =>
   menuList.map(item => {
@@ -47,34 +29,19 @@ const menuDataRender = menuList =>
     return Authorized.check(item.authority, localItem, null);
   });
 
-const defaultFooterDom = <DefaultFooter copyright={setttings.companyband} links={[]} />;
-
-const footerRender = () => {
-  // if (!isAntDesignPro()) {
-  //   return defaultFooterDom
-  // }
-
-  return (
-    <>
-      {defaultFooterDom}
-      <div
-        style={{
-          padding: '0px 24px 24px',
-          textAlign: 'center',
-        }}
-      />
-    </>
-  );
+const footerRender = settings => {
+  return <DefaultFooter copyright={settings.companyband} links={[]} />;
 };
 
 const BasicLayout = props => {
   const { dispatch, children, settings } = props;
+  const authority = getAuthority() || undefined;
   /**
    * constructor
    */
 
   useEffect(() => {
-    if (dispatch) {
+    if (authority && dispatch) {
       dispatch({
         type: 'account/FetchCurrent',
       });
@@ -86,10 +53,10 @@ const BasicLayout = props => {
       });
     }
   }, []);
+
   /**
    * init variables
    */
-
   const handleMenuCollapse = payload => {
     if (dispatch) {
       dispatch({
@@ -100,8 +67,11 @@ const BasicLayout = props => {
   };
 
   return (
+    // eslint-disable-next-line react/jsx-fragments
     <>
       <ProLayout
+        className="chidrendiv"
+        isChildrenLayout={false}
         logo={logo}
         onCollapse={handleMenuCollapse}
         menuItemRender={(menuItemProps, defaultDom) => {
@@ -129,13 +99,15 @@ const BasicLayout = props => {
             <span>{route.breadcrumbName}</span>
           );
         }}
-        footerRender={footerRender}
+        footerRender={tsettings => footerRender(tsettings)}
         menuDataRender={menuDataRender}
         formatMessage={formatMessage}
         rightContentRender={rightProps => <RightContent {...rightProps} />}
         {...props}
         {...settings}
       >
+        {/* <Authorized>{children}</Authorized> */}
+
         {children}
       </ProLayout>
       <SettingDrawer

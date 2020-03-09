@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { Card, Button, message } from 'antd';
-import router from 'umi/router';
+import { history } from 'umi';
 import { useSelector, useDispatch } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import PageTable from '@/components/PageTable';
@@ -174,7 +174,7 @@ export default function EditContent(props) {
               重新上架
             </Button>
           ) : null}
-          <Button onClick={() => router.push(returnUrl)}>返回</Button>
+          <Button onClick={() => history.push(returnUrl)}>返回</Button>
         </div>
       </Card>
       <UserModalAdd

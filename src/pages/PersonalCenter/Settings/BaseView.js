@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { formatMessage } from 'umi-plugin-react/locale';
+import { formatMessage } from 'umi';
 import { Form, Input, Button, Card, Descriptions } from 'antd';
 import { connect } from 'dva';
 // import storetoken from '@/utils/token'

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Card, Table, Input, Button } from 'antd';
-import router from 'umi/router';
+import { history } from 'umi';
 import { useSelector, useDispatch } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import styles from '@/components/styles.less';
@@ -87,7 +87,7 @@ export default function ViewTable(props) {
           onChange={handleTableChange}
         />
         <div className={styles.foonter_btns}>
-          <Button type="primary" onClick={() => router.push(returnUrl)}>
+          <Button type="primary" onClick={() => history.push(returnUrl)}>
             返回
           </Button>
         </div>

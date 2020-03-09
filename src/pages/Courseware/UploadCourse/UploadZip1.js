@@ -9,8 +9,8 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import SelfCard from '@/components/Workbench/selfCard';
 import classNames from 'classnames';
 import JSZip from 'jszip';
-import router from 'umi/router';
-import Link from 'umi/link';
+import { history } from 'umi';
+import { Link } from 'umi';
 import styles from './UploadZip1.less';
 // import { getUploadCouserurl } from '@/services/uploadUrl/uploadUrl';
 import storetoken from '@/utils/token';
@@ -115,7 +115,7 @@ class UploadZipNew extends Component {
             zipfileResponse,
           },
         });
-        router.push('/courseware/uploadZip/uploadZip2');
+        history.push('/courseware/uploadZip/uploadZip2');
       }
     });
     return true;
@@ -234,7 +234,7 @@ class UploadZipNew extends Component {
 
       this.setState({
         isUploadDone: true,
-        zipfileResponse: info.file.response.zipfileid,
+        zipfileResponse: info.file.response.data.zipfileid,
       });
     } else if (info.file.status === 'error') {
       message.error(`${info.file.name}上传失败`);
@@ -318,7 +318,7 @@ class UploadZipNew extends Component {
                     {isFirstUpload ? '上传课件包（ZIP）文件' : '重新上传课件包（ZIP）文件'}
                   </Button>
                 </Upload>
-                <div
+                {/* <div
                   style={{
                     marginTop: '20px',
                     marginBottom: '20px',
@@ -332,8 +332,8 @@ class UploadZipNew extends Component {
                       {zipFileName}
                     </span>
                   ) : null}
-                  {/* <span><Icon type="paper-clip" theme="outlined" />反贿赂合规.zip</span> */}
-                </div>
+                   <span><Icon type="paper-clip" theme="outlined" />反贿赂合规.zip</span>
+                </div> */}
                 <Form hideRequiredMark style={{ display: isFirstUpload ? 'none' : 'block' }}>
                   <SelfCard title="课程信息" nopadding="true">
                     <FormItem label="课件编号：" className={styles.selfFormItem}>

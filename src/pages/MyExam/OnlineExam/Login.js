@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Card, Button, Row, Col, Spin, message } from 'antd';
-import router from 'umi/router';
-// import Link from 'umi/link';
+import { history } from 'umi';
+// import {Link} from 'umi';
 import { connect } from 'dva';
 import styles from './Login.less';
 
@@ -69,7 +69,7 @@ class OnlineExamLogin extends Component {
       match: { params },
     } = this.props;
     const { id } = params;
-    router.push(`/myExam/onlineExam/answer/${id}`);
+    history.push(`/myExam/onlineExam/answer/${id}`);
   };
 
   render() {

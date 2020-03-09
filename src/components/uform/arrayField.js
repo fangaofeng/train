@@ -172,3 +172,4 @@ const FormCardsField = styled(props => {
   }
 `;
 registerFormField('list', FormCardsField);
+// export default FormCardsField;

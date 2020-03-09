@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Card, Row, Col, Spin, Button, message } from 'antd';
 import { connect } from 'dva';
-// import { Link } from 'umi/link';
+// import { Link } from 'umi';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
-import router from 'umi/router';
+import { history } from 'umi';
 import styles from './style.less';
 import TreeEdit from '@/components/TreeEditDynamic';
 import SelfCard from '@/components/Workbench/selfCard';
@@ -92,10 +92,10 @@ class DepartmentManager extends Component {
 
   render() {
     const { departmentloading, departments, ui } = this.props;
-    if (ui === 'onlyupload') router.push('/DepartmentManager/import');
+    if (ui === 'onlyupload') history.push('/DepartmentManager/import');
     const extra =
       ui === 'canupload' ? (
-        <Button type="link" onClick={() => router.push('/DepartmentManager/import')}>
+        <Button type="link" onClick={() => history.push('/DepartmentManager/import')}>
           {' '}
           重新导入部门信息
         </Button>

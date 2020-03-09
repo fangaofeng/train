@@ -1,69 +1,67 @@
-
-@import '~antd/lib/style/themes/default.less';
+@import '~antd/es/style/themes/default.less';
 // 课件管理列表card中图片部分样式
-.list_item_card_img_conter{
-    position: relative;
+.list_item_card_img_conter {
+  position: relative;
 
-    .list_item_card_img{
-        width: 100%;
+  .list_item_card_img {
+    width: 100%;
+  }
+  div.top_left_triangle {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-width: 25px;
+    border-style: solid;
+    &.course {
+      border-color: @primary-color transparent transparent @primary-color;
     }
-    div.top_left_triangle{
-        position: absolute;
-        top: 0;
-        width: 0;
-        height: 0;
-        border-width: 25px;
-        border-style: solid;
-        &.course{
-            border-color: @primary-color transparent transparent @primary-color;
-        }
-        &.exam{
-            border-color: #fbba22 transparent transparent #fbba22;
-        }
+    &.exam {
+      border-color: #fbba22 transparent transparent #fbba22;
     }
-    div.top_left_msg{
-        position: absolute;
-        top: 6px;
-        left: 3px;
-        color: #fff;
-        transform: rotate(-45deg);
+  }
+  div.top_left_msg {
+    position: absolute;
+    top: 6px;
+    left: 3px;
+    color: #fff;
+    transform: rotate(-45deg);
+  }
+  div.bottom_right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+  }
+  div.bottom_right_triangle {
+    border-width: 12px 6px;
+    border-style: solid;
+    border-color: transparent #8fc127 #8fc127 transparent;
+  }
+  div.bottom_right_msg {
+    height: 24px;
+    background: #8fc127;
+    color: #fff;
+    padding: 0 10px;
+  }
+  .list_item_card_hover {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
-    div.bottom_right{
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        display: flex;
+  }
+  &:hover {
+    .list_item_card_hover {
+      display: block;
     }
-    div.bottom_right_triangle{
-        border-width: 12px 6px;
-        border-style: solid;
-        border-color: transparent #8fc127 #8fc127 transparent;
-    }
-    div.bottom_right_msg{
-        
-        height: 24px;
-        background: #8fc127;
-        color: #fff;
-        padding: 0 10px;
-    }
-    .list_item_card_hover{
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.6);
-        button{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-        }
-    }
-    &:hover{
-        .list_item_card_hover{
-            display: block;
-        }
-    }
+  }
 }

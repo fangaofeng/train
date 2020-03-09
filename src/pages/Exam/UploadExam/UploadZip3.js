@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
-import router from 'umi/router';
+import { history } from 'umi';
 import { Button } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import SubmitSuccessCard from '@/components/SubmitSuccessCard';
@@ -19,7 +19,7 @@ class UploadZip3 extends Component {
   componentDidMount() {
     const { testInfo } = this.props;
     if (Object.keys(testInfo).length === 0) {
-      router.push('/exam/uploadZip/uploadZip1');
+      history.push('/exam/uploadZip/uploadZip1');
     }
   }
 
@@ -38,7 +38,7 @@ class UploadZip3 extends Component {
           }}
           btns={
             <Fragment>
-              <Button type="primary" onClick={() => router.push('/exam/index')}>
+              <Button type="primary" onClick={() => history.push('/exam/index')}>
                 返回
               </Button>
             </Fragment>

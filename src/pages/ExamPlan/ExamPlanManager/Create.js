@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-syntax */
 import React, { Component, Fragment } from 'react';
 import { DatePicker, Card, Button, Table, message, Input, Spin, Form } from 'antd';
-import router from 'umi/router';
-// import Link from 'umi/link';
+import { history } from 'umi';
+// import {Link} from 'umi';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ExamBasicInfo from '@/components/ExamBasicInfo';
@@ -96,7 +96,7 @@ class CreateExam extends Component {
 
   // 点击取消
   btnCancel = () => {
-    router.push('/examPlan/examPlanManager/index');
+    history.push('/examPlan/examPlanManager/index');
   };
 
   // 点击提交按钮
@@ -408,7 +408,10 @@ class CreateExam extends Component {
           }}
           btns={
             <Fragment>
-              <Button type="primary" onClick={() => router.push('/examPlan/examPlanManager/index')}>
+              <Button
+                type="primary"
+                onClick={() => history.push('/examPlan/examPlanManager/index')}
+              >
                 完成
               </Button>
             </Fragment>

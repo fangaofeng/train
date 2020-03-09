@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import router from 'umi/router';
-// import { FormattedMessage } from 'umi-plugin-react/locale';
+import { history } from 'umi';
+// import { formatMessage } from 'umi';
 import { Menu } from 'antd';
 import { PageHeaderWrapper, GridContent } from '@ant-design/pro-layout';
 import styles from './Info.less';
@@ -63,7 +63,7 @@ class Info extends Component {
   };
 
   selectKey = ({ key }) => {
-    router.push(`/personalCenter/settings/${key}`);
+    history.push(`/personalCenter/settings/${key}`);
     this.setState({
       selectKey: key,
     });

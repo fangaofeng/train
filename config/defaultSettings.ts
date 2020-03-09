@@ -56,7 +56,7 @@ export default {
     locale: false,
   },
 
-  title: '博纳德在线培训平台',
+  title: '',
   pwa: false,
   iconfontUrl: 'https://at.alicdn.com/t/font_1522724_lgyw7kkfn58.js',
 

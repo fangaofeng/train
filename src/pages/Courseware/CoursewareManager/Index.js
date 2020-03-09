@@ -1,14 +1,14 @@
 import React from 'react';
 import { Divider, Button } from 'antd';
-import router from 'umi/router';
-import Link from 'umi/link';
+import { history } from 'umi';
+import { Link } from 'umi';
 import ManagerTable from '@/components/ManagerTable/index';
 
 export default () => {
   const datalist = state => state.CourseManager.allCourseManager;
   const extrabutton = (
     <div className="">
-      <Button type="primary" onClick={() => router.push('/courseware/uploadZip/uploadZip1')}>
+      <Button type="primary" onClick={() => history.push('/courseware/uploadZip/uploadZip1')}>
         上传课件
       </Button>
     </div>

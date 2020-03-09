@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, List, Button } from 'antd';
-// import router from 'umi/router';
-import Link from 'umi/link';
+// import { history } from 'umi'
+import { Link } from 'umi';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 // import SelfCard from '@/components/Workbench/selfCard';

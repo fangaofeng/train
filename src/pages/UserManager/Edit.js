@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { formatMessage } from 'umi-plugin-react/locale';
+import { formatMessage } from 'umi';
 import { Form, Input, Button, Card, message, Spin } from 'antd';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
