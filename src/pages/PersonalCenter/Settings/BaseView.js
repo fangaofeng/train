@@ -2,56 +2,12 @@ import React, { Component } from 'react';
 import { formatMessage } from 'umi';
 import { Form, Input, Button, Card, Descriptions } from 'antd';
 import { connect } from 'dva';
-// import storetoken from '@/utils/token'
 
 import styles from './BaseView.less';
 
-// import { getTimeDistance } from '@/utils/utils';
-// import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl'
 import AvatarView from '@/components/AvatarView';
 
 const FormItem = Form.Item;
-
-// const token = storetoken.get()
-
-// 头像组件 方便以后独立，增加裁剪之类的功能
-// const AvatarView = ({ avatar }) => (
-//   <Fragment>
-//     <div className={styles.avatar_title}>个人图像</div>
-//     <div className={styles.avatar}>
-//       <img src={avatar} alt="avatar" />
-//     </div>
-//     <Upload name="avatar" action={uploadurl} {...uploadProps}>
-//       <div className={styles.button_view}>
-//         <Button icon="upload">
-//           <FormattedMessage id="app.settings.basic.change-avatar" defaultMessage="Change avatar" />
-//         </Button>
-//       </div>
-//     </Upload>
-//   </Fragment>
-// );
-
-// const validatorGeographic = (rule, value, callback) => {
-//   const { province, city } = value;
-//   if (!province.key) {
-//     callback('Please input your province!');
-//   }
-//   if (!city.key) {
-//     callback('Please input your city!');
-//   }
-//   callback();
-// };
-
-// const validatorPhone = (rule, value, callback) => {
-//   const values = value.split('-');
-//   if (!values[0]) {
-//     callback('Please input your area code!');
-//   }
-//   if (!values[1]) {
-//     callback('Please input your phone number!');
-//   }
-//   callback();
-// };
 
 @connect(({ account, loading, settings }) => ({
   avataruploadurl: settings.uploadurl.avatar,
@@ -177,7 +133,7 @@ class BaseView extends Component {
                         id: 'app.settings.basic.profile-placeholder',
                       })}
                       rows={3}
-                    />
+                    />,
                   )}
                 </FormItem>
                 {/* <FormItem label={formatMessage({ id: 'app.settings.basic.country' })}>

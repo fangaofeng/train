@@ -44,9 +44,9 @@ export default {
       const response = yield call(getArticleDetail, payload);
       callback(response); // 返回结果
     },
-    *CreateArticle({ payload, config, callback }, { call }) {
+    *CreateArticle({ payload, callback }, { call }) {
       console.log('CreateArticle');
-      const response = yield call(createArticle, payload, config);
+      const response = yield call(createArticle, payload);
       callback(response); // 返回结果
     },
     // 系统管理员 ——> 文章管理 ——> 文章编辑（拟制中） ——> 批量删除

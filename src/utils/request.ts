@@ -3,11 +3,11 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { useRequest } from 'umi';
+import { history, getDvaApp } from 'umi';
 
 import { notification } from 'antd';
 import token from './token';
-import { history, getDvaApp } from 'umi';
+
 declare global {
   interface Window {
     g_app: any;
@@ -58,7 +58,7 @@ const errorHandler = (error: { data: object; response: Response }): object => {
     // environment should not be used
     else if (status === 403) {
       history.push('/exception/403');
-      return { status: 'error', detail: `你需要重新登陆` };
+      return { status: 'error', detail: `你没有权限或者需要重新登陆` };
     } else if (status <= 504 && status >= 500) {
       history.push('/exception/500');
     } else if (status >= 404 && status < 422) {
@@ -107,3 +107,4 @@ request.interceptors.request.use(async (url, options) => {
   };
 });
 export default request;
+// export default (path, paload) => useRequest(request(path, paload));

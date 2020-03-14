@@ -7,39 +7,15 @@ export default {
 
   state: {
     collapsed: false,
-    uploadurl: {
-      course: '',
-      paper: '',
-      avatar: '',
-      org: '',
-      user: '',
-    },
   },
 
-  effects: {
-    *GetUploadurl({ payload }, { call, put }) {
-      const response = yield call(getUploadurl, payload);
-
-      if (response && response.status === 'ok') {
-        yield put({
-          type: 'saveuploadurl',
-          payload: response.data,
-        });
-      }
-    },
-  },
+  effects: {},
 
   reducers: {
     changeLayoutCollapsed(state, { payload }) {
       return {
         ...state,
         collapsed: payload,
-      };
-    },
-    saveuploadurl(state, { payload }) {
-      return {
-        ...state,
-        uploadurl: payload,
       };
     },
   },

@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { List, Button } from 'antd';
 import moment from 'moment';
 // import classNames from 'classnames';
-import { Link } from 'umi';
+import { Link, history } from 'umi';
 import { GridContent } from '@ant-design/pro-layout';
 // import moment from 'moment';
 import SelfCard from '@/components/Workbench/selfCard';
 import { useSelector, useDispatch } from 'dva';
 import Authorized from '@/utils/Authorized';
 import { getAuthority } from '@/utils/authority';
-import { history } from 'umi';
 import AdminBoard from './admin';
 import StudentBoard from './student';
 import TrainmanagerBoard from './trainmanager';
@@ -34,7 +33,6 @@ function Workbench() {
 
   // 跳转页面
   const btnChangePage = key => {
-    // console.log(key);
     switch (key) {
       case 'announcement':
         history.push('/announcement/create');
@@ -89,7 +87,7 @@ function Workbench() {
               )}
             />
           </div>
-          <Authorized authority="admin">
+          <Authorized authority="admin" noMatch="">
             <Button
               type="dashed"
               style={{ width: '100%', marginTop: 20, marginBottom: 20 }}
@@ -104,14 +102,14 @@ function Workbench() {
           </Authorized>
         </SelfCard>
 
-        <Authorized authority="admin">
+        <Authorized authority="admin" noMatch="">
           <AdminBoard />
         </Authorized>
-        <Authorized authority="trainmanager">
+        <Authorized authority="trainmanager" noMatch="">
           {' '}
           <TrainmanagerBoard />{' '}
         </Authorized>
-        <Authorized authority="stu">
+        <Authorized authority="stu" noMatch="">
           {' '}
           <StudentBoard />
         </Authorized>

@@ -67,7 +67,7 @@ export default () => {
         } else if (record.status === '发表') {
           dom = (
             <span>
-              <Link to={`/Article/Announcement/onShelf/${record.id}`}>编辑</Link>
+              <Link to={`/announcement/edit/${record.id}`}>编辑</Link>
               <Divider type="vertical" />
               <a
                 onClick={() =>

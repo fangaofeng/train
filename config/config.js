@@ -5,18 +5,18 @@ import webpackPlugin from './plugin.config';
 import defaultSettings from './defaultSettings';
 
 import myThemeConfig from './myThemeConfig';
-const { PRODUCTION, REACT_APP_ENV } = process.env;
-
+const { REACT_APP_ENV } = process.env;
+const ttt = process.env;
 const { pwa } = defaultSettings;
 const { winPath } = utils;
 
 export default defineConfig({
   // add for transfer to umi
-  // hash: true,
+  hash: true,
   antd: {},
   base: '/front',
   publicPath: '/front/static/',
-  favicon: PRODUCTION ? '/front/static/favicon.png' : '/favicon.png',
+  favicon: REACT_APP_ENV ? '/favicon.png' : '/front/static/favicon.png',
   dva: {
     hmr: true,
   },
@@ -35,7 +35,6 @@ export default defineConfig({
   },
   define: {
     REACT_APP_ENV: REACT_APP_ENV || false,
-    PRODUCTION: PRODUCTION || false, // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
   },
   // 路由配置
   routes: pageRoutes,

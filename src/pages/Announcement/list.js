@@ -81,7 +81,7 @@ class articleManager extends Component {
 
     return (
       <PageHeaderWrapper title="公告列表">
-        <Row gutter={8}>
+        <Row gutter={8} style={{ display: 'flex' }}>
           <Col xs={24} sm={24} md={24} lg={18} xl={16}>
             <Card className={styles.managerContent}>
               <div className={styles.searchContent}>
@@ -130,8 +130,8 @@ class articleManager extends Component {
               />
             </Card>{' '}
           </Col>
-          <Col xs={24} sm={24} md={24} lg={6} xl={8}>
-            <Card title="最近公告" />
+          <Col xs={24} sm={24} md={24} lg={6} xl={8} style={{ display: 'flex' }}>
+            <Card title="最近公告" style={{ width: '100%' }} />
           </Col>
         </Row>
       </PageHeaderWrapper>

@@ -10,7 +10,6 @@ import settings from '../../config/defaultSettings';
 
 class UserLayout extends React.PureComponent {
   render() {
-    console.log(settings);
     const { children } = this.props;
     const copyright = (
       <Fragment>

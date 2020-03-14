@@ -25,7 +25,6 @@ module.exports = {
   },
 
   globals: {
-    PRODUCTION: true,
     page: true,
     REACT_APP_ENV: false,
   },

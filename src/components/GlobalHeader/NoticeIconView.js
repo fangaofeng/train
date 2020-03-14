@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Tag, message } from 'antd';
 import { connect } from 'dva';
-import { formatMessage } from 'umi';
+import { formatMessage, history } from 'umi';
 import moment from 'moment';
-import { history } from 'umi';
 
 // eslint-disable-next-line import/no-unresolved
 import NoticeIcon from '../NoticeIcon';

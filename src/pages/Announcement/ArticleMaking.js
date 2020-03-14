@@ -66,13 +66,21 @@ class FormDemo extends React.Component {
         payload: { id },
         callback: res => {
           if (res && res.status === 'ok') {
-            const { body, thumbnail, title, description, status, pubTime, cover } = res.data;
+            const {
+              body,
+              thumbnail,
+              title,
+              description,
+              status,
+              pub_time: pubTime,
+              cover,
+            } = res.data;
 
             form.setFieldsValue({
               body: BraftEditor.createEditorState(body),
               title,
               status,
-              pubTime,
+              pubTime: moment(pubTime),
               cover: this.propToFileList(thumbnail),
               description,
             });
@@ -156,7 +164,7 @@ class FormDemo extends React.Component {
             },
           });
         } else {
-          data.append('pubTime', values.pubTime);
+          data.append('pub_time', values.pubTime);
           dispatch({
             type: 'Announcement/CreateArticle',
             payload: data,
@@ -253,7 +261,7 @@ class FormDemo extends React.Component {
     const { previewImage } = this.state;
     return (
       <PageHeaderWrapper title="发布公告">
-        <Row gutter={8}>
+        <Row gutter={8} style={{ display: 'flex' }}>
           <Col xs={24} sm={24} md={24} lg={18} xl={16}>
             <Card className={styles.managerContent}>
               <Form onSubmit={this.handleSubmit} className={styles.formContent}>
@@ -298,7 +306,7 @@ class FormDemo extends React.Component {
                     uploadButton
                   )} */}
                       {previewImage ? null : uploadButton}
-                    </Upload>
+                    </Upload>,
                   )}
                 </FormItem>
                 <FormItem label="文章摘要">
@@ -307,7 +315,7 @@ class FormDemo extends React.Component {
                       autoSize={{ minRows: 2, maxRows: 5 }}
                       size="large"
                       placeholder="请输入文章摘要"
-                    />
+                    />,
                   )}
                 </FormItem>
                 <Form.Item label="发布日期">
@@ -321,7 +329,7 @@ class FormDemo extends React.Component {
                       showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
                       placeholder="提醒时间"
                       style={{ width: '100%' }}
-                    />
+                    />,
                   )}
                 </Form.Item>
                 <Form.Item label="发布或草稿">
@@ -332,7 +340,7 @@ class FormDemo extends React.Component {
                     <Select placeholder="请选择仓库类型">
                       <Option value="d">草稿</Option>
                       <Option value="p">发布</Option>
-                    </Select>
+                    </Select>,
                   )}
                 </Form.Item>
                 <FormItem label="文章正文">
@@ -358,7 +366,7 @@ class FormDemo extends React.Component {
                       }}
                       controls={controls}
                       placeholder="请输入正文内容"
-                    />
+                    />,
                   )}
                 </FormItem>
               </Form>
@@ -370,8 +378,8 @@ class FormDemo extends React.Component {
               </div>
             </Card>
           </Col>{' '}
-          <Col xs={24} sm={24} md={24} lg={6} xl={8}>
-            <Card title="最近公告" />
+          <Col xs={24} sm={24} md={24} lg={6} xl={8} style={{ display: 'flex' }}>
+            <Card title="最近公告" style={{ width: '100%' }} />
           </Col>
         </Row>
         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>

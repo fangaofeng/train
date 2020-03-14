@@ -1,10 +1,9 @@
-// import { message } from 'antd';
 import { routerRedux } from 'dva';
-
 import { login } from '@/services/auth';
 import { setAuthority } from '@/utils/authority';
 import tokenmanager from '../utils/token';
 import { getPageQuery } from '@/utils/utils';
+import { history } from 'umi';
 import { reloadAuthorized } from '@/utils/Authorized';
 
 export default {
@@ -23,7 +22,7 @@ export default {
         password,
       };
       const response = yield call(login, param);
-      console.log(response);
+
       yield put({
         type: 'changeLoginStatus',
         payload: response,
@@ -46,24 +45,22 @@ export default {
           localStorage.removeItem('WHLQYHGPXPT_USERNAME');
         }
         tokenmanager.save(token); // 保存token
-        reloadAuthorized();
         const urlParams = new URL(window.location.href);
-        const params = getPageQuery();
+        const params = getPageQuery(history.location.search);
         let { redirect } = params;
         if (redirect) {
           const redirectUrlParams = new URL(redirect);
           if (redirectUrlParams.origin === urlParams.origin) {
             redirect = redirect.substr(urlParams.origin.length);
-            if (redirect.startsWith('/#')) {
-              redirect = redirect.substr(2);
+            if (redirect.match(/^\/.*#/)) {
+              redirect = redirect.substr(redirect.indexOf('#') + 1);
             }
           } else {
-            window.location.href = redirect;
+            window.location.href = '/';
             return;
           }
         }
-        reloadAuthorized();
-        yield put(routerRedux.replace(redirect || '/'));
+        history.replace(redirect || '/');
       }
     },
     // 发送验证码
@@ -83,24 +80,11 @@ export default {
         },
       });
       reloadAuthorized();
-      // message.success('退出成功');
-      // 退出后不使用重定向
       yield put(
         routerRedux.push({
           pathname: '/auth/login',
-          // search: stringify({
-          //   redirect: window.location.href,
-          // }),
-        })
+        }),
       );
-      // yield put(
-      //   routerRedux.push({
-      //     pathname: '/auth/login',
-      //     search: stringify({
-      //       redirect: window.location.href,
-      //     }),
-      //   })
-      // );
     },
   },
 
@@ -124,8 +108,6 @@ export default {
       return {
         ...state,
         status,
-        // status: payload.status,
-        // type: payload.type,
       };
     },
   },

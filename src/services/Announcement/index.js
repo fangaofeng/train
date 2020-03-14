@@ -13,18 +13,16 @@ export async function delArticle(params) {
     data: {},
   });
 }
-export async function createArticle(params, config) {
-  // console.log('createArticle fn');
+export async function createArticle(params) {
   return request(`/blog/article`, {
     method: 'POST',
     data: params,
-    ...config,
   });
 }
 // 系统管理员 ——> 文章管理 ——> 创建文章
 export async function editArticle(params) {
   return request(`/blog/article/${params.id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     data: params.data,
   });
 }
