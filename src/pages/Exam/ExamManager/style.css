@@ -1,0 +1,15 @@
+.extra_btns {
+  display: flex;
+  justify-content: start;
+}
+.extra_btns :global .ant-btn {
+  margin: 0 5px;
+}
+.formContent {
+  display: flex;
+}
+.formContent :global .ant-form-item {
+  display: inline-flex;
+  padding: 0px 5px;
+  margin-bottom: 8px;
+}

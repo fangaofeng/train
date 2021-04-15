@@ -1,79 +1,37 @@
 @import '~antd/es/style/themes/default.less';
-
-.afterUpload {
-  .afterUploadRow {
-    border-bottom: 1px dashed #dcdcdc;
-  }
-  .firstCol {
-    div.msgDetail {
-      padding: 10px 0 20px 0;
+.uploadSuccessCard {
+  margin-bottom: 20px;
+  .uploadSuccessContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .uploadSuccessTitle {
       display: flex;
-      line-height: 1;
-      > span:nth-child(1) {
-      }
-      > span:nth-child(2) {
-        flex: 1;
-        &.msgDetailOverflow {
-          width: 0;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
-    }
-    .imgContent {
-      display: flex;
-      .imgLeft {
-        margin-right: 20px;
-        img {
-          height: 132px;
-          width: 235px;
-        }
-      }
-      .imgRight {
-        flex: 1;
-      }
-    }
-    // 试卷总分、合格分数
-    .columnContent {
-      display: flex;
-      .columnContentL {
-        width: 255px;
-      }
-      .columnContentR {
-        flex: 1;
-      }
-    }
-  }
-  .secondCol {
-    .searchInputContent {
-      margin: 15px 0;
-      display: flex;
+      justify-content: center;
       align-items: center;
-      :global {
-        .ant-input-search {
-          flex: 1;
-        }
-      }
-      // input{
-      //     flex: 1;
-      // }
-    }
-    :global {
-      .ant-table-pagination.ant-pagination {
-        display: flex;
-        justify-content: flex-end;
-        max-width: 100%;
-        flex-wrap: wrap;
-        padding-left: 90px;
-        .ant-pagination-total-text {
-          position: absolute;
-          left: 0;
-        }
+      margin-top: 10px;
+      margin-bottom: 35px;
+      > span {
+        display: inline-block;
+        font-size: 20px;
+        font-weight: bold;
+        padding-left: 20px;
       }
     }
+    .uploadSuccessMsg {
+      padding: 20px 0;
+      > div {
+        margin-bottom: 18px;
+      }
+    }
+  }
+}
+.uploadSuccessCardTable {
+  .uploadSuccessCardTableMsg {
+    padding: 10px 0 30px 0;
   }
   .footerBtns {
+    border-top: 1px dashed #dcdcdc;
     display: flex;
     justify-content: center;
     padding: 34px 0 10px 0;

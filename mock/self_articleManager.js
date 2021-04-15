@@ -1,17 +1,17 @@
 const basicUrl = 'http://localhost';
 
 // 模拟数据
-function mockTable(page, size) {
+function mockTable(current, pageSize) {
   let count;
-  if (page === 1 && size === 4) {
+  if (current === 1 && pageSize === 4) {
     count = 4;
   } else {
     count = 31;
   }
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= count) {
       let sta = '';
       let img = '';
@@ -27,7 +27,7 @@ function mockTable(page, size) {
       }
       list.push({
         // id:10,
-        id: `${page}${i}`,
+        id: `${current}${i}`,
         status: sta,
         arttype: '文章',
         comment_status: '打开',
@@ -86,8 +86,8 @@ export default {
    */
   'GET /api/blog/article': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable(current, pageSize);
     return res.json(result);
   },
   // 系统管理员 ——> 文章管理 ——> 主页，删除文章
@@ -102,6 +102,13 @@ export default {
    * 系统管理员 ——> 文章管理 ——> 文章编辑（拟制中） ——> 获取现有培训管理员的Table表格数据
    * 系统管理员 ——> 文章管理 ——> 文章编辑（拟制中） ——> 增加培训管理员的Table表格数据 有参数exclude=true
    */
+
+  'GET /api/blog/article/10': (req, res) =>
+    res.status(404).send({
+      status: '404',
+      detail: 'No message available',
+      path: '/api/blog/article/10',
+    }),
   'GET /api/blog/article/:id': (req, res) =>
     res.json({
       status: 'ok',

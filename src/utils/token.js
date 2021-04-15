@@ -1,4 +1,4 @@
-const STORAGE_TOKEN_NAME = 'WHLQYHGPXPT_TOKEN';
+const STORAGE_TOKEN_NAME = 'BNDQYHGPXPT_TOKEN';
 
 export default {
   get() {

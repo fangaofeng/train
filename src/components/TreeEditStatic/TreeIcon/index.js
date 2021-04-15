@@ -1,32 +1,26 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { EditOutlined, MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 
 export default ({ title, editNode, addNode, delNode }) => (
   <React.Fragment>
     <span>{title}</span>{' '}
-    <Icon
-      type="edit"
+    <EditOutlined
       style={{ marginLeft: '10px' }}
       onClick={e => {
         e.stopPropagation();
         editNode();
-      }}
-    />
-    <Icon
-      type="minus-circle"
+      }} />
+    <MinusCircleOutlined
       style={{ marginLeft: '10px' }}
       onClick={e => {
         e.stopPropagation();
         delNode();
-      }}
-    />
-    <Icon
-      type="plus-circle"
+      }} />
+    <PlusCircleOutlined
       style={{ marginLeft: '10px' }}
       onClick={e => {
         e.stopPropagation();
         addNode();
-      }}
-    />
+      }} />
   </React.Fragment>
 );

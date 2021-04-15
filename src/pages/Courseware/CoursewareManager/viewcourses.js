@@ -1,13 +1,14 @@
 import React from 'react';
 import { ViewList } from '@/components/ViewPage';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { Button, List } from 'antd';
 import { Link } from 'umi';
 import SelfItemCard from '@/components/Workbench/selfItemCard';
 import SelfItemCardImg from '@/components/Workbench/selfItemCardImg';
 import SelfItemCardDetail from '@/components/Workbench/selfItemCardDetail';
+import { coursewareService } from '@/services';
 
 export default function viewPapers() {
-  const datalist = state => state.CourseManager.allCourseManager;
   const renderItem = item => (
     <List.Item>
       <SelfItemCard>
@@ -32,11 +33,14 @@ export default function viewPapers() {
   );
 
   const props = {
-    action: 'CourseManager/GetCourses',
+    service: coursewareService,
     name: '课程',
-    datalist,
     renderItem,
   };
 
-  return ViewList(props);
+  return (
+    <PageHeaderWrapper>
+      <ViewList {...props} />
+    </PageHeaderWrapper>
+  );
 }

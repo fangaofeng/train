@@ -1,17 +1,17 @@
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 
 // 模拟table表格数据
-function mockTable(page, size, importid) {
+function mockTable(current, pageSize, importid) {
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= 58) {
       let content = '';
       if (importid) {
-        content = `-${page}-${i}-${importid}`;
+        content = `-${current}-${i}-${importid}`;
       } else {
-        content = `-${page}-${i}`;
+        content = `-${current}-${i}`;
       }
       list.push({
         id: `${i}`,
@@ -20,6 +20,7 @@ function mockTable(page, size, importid) {
         username: `Linda${content}`, // 登录账号
         email: `123456${content}`, // EMAIL
         // user_pwd:`123456${content}`,// 登录密码
+        department: 21,
         department_name: `技术部${content}`, // 归属部门
         employee_position: `产品运营专员${content}`, // 职务
         role_display: `系统管理员${content}`, // 用户类别
@@ -44,8 +45,8 @@ export default {
    */
   'GET /api/user': (req, res) => {
     const params = req.query;
-    const { page, size, importid } = params;
-    const result = mockTable(page, size, importid);
+    const { current, pageSize, importid } = params;
+    const result = mockTable(current, pageSize, importid);
     return res.json({ status: 'ok', data: result });
   },
 
@@ -62,11 +63,11 @@ export default {
         name: '学员',
 
         user_no: '201908170021',
-        employee_position: '',
+        employee_position: '工程师  士大夫士大夫士大夫',
         email: 'sadfs@sfs.com',
         role_display: '员工',
-        role: '员工',
-        info: '',
+        roles: '员工',
+        info: '学员学员学员',
         department_name: `技术部`, // 归属部门
 
         thumbnail: 'http://localhost/avatar_default_big_bak.png', // 缩略图

@@ -21,11 +21,10 @@ module.exports = {
     'no-unused-labels': 0,
     'jsx-a11y/label-has-for': 0,
     'jsx-a11y/label-has-associated-control': 'off',
-    'jsx-a11y/label-has-for': 'off',
   },
 
   globals: {
-    page: true,
+    current: true,
     REACT_APP_ENV: false,
   },
 };

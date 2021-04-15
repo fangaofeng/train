@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import { useSelector, useDispatch } from 'dva';
 import { Button, message, Modal } from 'antd';
 import UserSelect from './ViewSelect';
 
@@ -12,9 +11,7 @@ function reducer(state, action) {
   }
 }
 export default props => {
-  const { subname, id, visiblecallback, visible, addAction, operationname } = props;
-  const storedispatch = useDispatch();
-  const addloading = useSelector(store => store.loading.effects[addAction]);
+  const { subname, id, visiblecallback, visible, addService, operationname, type } = props;
   const [state, statedispatch] = useReducer(reducer, { selectedKeys: [] });
 
   const toperationname = operationname || '增加';
@@ -25,23 +22,8 @@ export default props => {
       message.info(`请选择您需要${toperationname}的${subname}！`);
       return;
     }
-
-    storedispatch({
-      type: addAction,
-      payload: {
-        id,
-        data: state.selectedKeys,
-      },
-      callback: res => {
-        if (res && res.status === 'ok') {
-          message.success(`${subname}${toperationname}成功`);
-          statedispatch({ type: 'selectedKeys', rows: [] });
-        } else {
-          message.warning(`${subname}${toperationname}失败`);
-        }
-        visiblecallback(false, true);
-      },
-    });
+    addService.run(id, selectedKeys);
+    visiblecallback(false, true);
   };
 
   const addHandleCancel = () => {
@@ -56,10 +38,10 @@ export default props => {
       bodyStyle={{ paddingTop: 0, paddingBottom: 0 }}
       onOk={addHandleOk}
       onCancel={addHandleCancel}
-      confirmLoading={addloading}
+      confirmLoading={addService.loading}
       footer={
         <div style={{ textAlign: 'center' }}>
-          <Button type="primary" loading={addloading} onClick={addHandleOk}>
+          <Button type="primary" loading={addService.loading} onClick={addHandleOk}>
             确定
           </Button>
           <Button onClick={addHandleCancel}>取消</Button>
@@ -67,6 +49,7 @@ export default props => {
       }
     >
       <UserSelect
+        type={type}
         onSelectKeys={rows => statedispatch({ type: 'selectedKeys', rows })}
         preparams={{ department: id }}
       />

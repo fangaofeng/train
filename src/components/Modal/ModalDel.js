@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Icon, message, Modal } from 'antd';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Button, message, Modal } from 'antd';
 
 class CommonConent extends Component {
   constructor(props) {
@@ -80,11 +81,7 @@ class CommonConent extends Component {
             padding: '40px 0',
           }}
         >
-          <Icon
-            type="exclamation-circle"
-            theme="filled"
-            style={{ color: '#faad14', fontSize: '24px', marginRight: '15px' }}
-          />
+          <ExclamationCircleFilled style={{ color: '#faad14', fontSize: '24px', marginRight: '15px' }} />
           确定要删除所选数据？
         </div>
       </Modal>

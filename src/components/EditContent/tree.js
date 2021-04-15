@@ -1,31 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'dva';
-
-import { TreeSelect } from 'antd';
+import React from 'react';
+import { TreeSelect, Spin } from 'antd';
 
 export default function TreeSelectEx(props) {
-  const { action, onCheck, checkedKeys, isBox = true } = props;
-
-  const storedispatch = useDispatch();
-  const treedata = useSelector(store => store.DepartmentManager.departments);
-
-  const getListData = useCallback(() =>
-    storedispatch({
-      type: action,
-    })
-  );
-
-  useEffect(() => {
-    getListData();
-  }, []);
-
-  const onChange = tcheckedKeys => {
-    if (onCheck) {
-      onCheck(tcheckedKeys);
-    }
-  };
-
-  const renderTreedata = tdata =>
+  const { service, onChange, checkedKeys, isBox = true, placeholder } = props;
+  const { data, loading } = service.listRequest();
+  const renderTreedata = (tdata = []) =>
     tdata.map(item => {
       if (item.children) {
         return {
@@ -38,15 +17,18 @@ export default function TreeSelectEx(props) {
       }
       return { title: item.name, key: item.id, value: item.id, dataRef: item };
     });
-  return (
+
+  return loading ? (
+    <Spin size="small" />
+  ) : (
     <TreeSelect
-      treeData={renderTreedata(treedata)}
+      treeData={renderTreedata(data)}
       value={checkedKeys}
-      onChange={onChange}
+      onChange={tcheckedKeys => onChange(tcheckedKeys)}
       treeCheckable={isBox}
       treeDefaultExpandAll
       showCheckedStrategy={TreeSelect.SHOW_PARENT}
-      searchPlaceholder="请点击选进行选择"
+      placeholder={placeholder || '请点击选进行选择'}
       style={{ width: '100%' }}
     />
   );

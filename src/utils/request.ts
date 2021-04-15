@@ -8,13 +8,13 @@ import { history, getDvaApp } from 'umi';
 import { notification } from 'antd';
 import token from './token';
 
-declare global {
-  interface Window {
-    g_app: any;
-  }
-}
+// declare global {
+//   interface Window {
+//     g_app: any;
+//   }
+// }
 
-window.g_app = getDvaApp() || {};
+// window.g_app = getDvaApp() || {};
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',

@@ -1,17 +1,14 @@
 import React, { useReducer, useRef } from 'react';
-import { Divider, Icon, Layout } from 'antd';
-// import { history } from 'umi'
-// import {Link} from 'umi';
-
+import { LeftOutlined, RightOutlined, ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Divider, Layout } from 'antd';
 import { Document, Page } from 'react-pdf';
 import screenfull from 'screenfull';
-// import web from '@/assets/main.pdf'
+
 import styles from './Common.less';
 
 const { Footer, Content } = Layout;
-// @connect(({ loading }) => ({
-//   loading: loading.effects['MyLearnPlan/GetLearnPlanVideoOrPDF'],
-// }))
+
 const initialState = {
   numPages: 0,
   scale: 1.2,
@@ -80,7 +77,7 @@ function PdfViewer(props) {
       {
         numpage: tPageNumber,
       },
-      state.ended
+      state.ended,
     );
   };
 
@@ -97,7 +94,7 @@ function PdfViewer(props) {
       {
         numpage: pageNumber,
       },
-      state.ended
+      state.ended,
     );
   };
 
@@ -127,8 +124,7 @@ function PdfViewer(props) {
             {' '}
             {/* <div className={styles.pdfFooter}> */}
             <div>
-              <Icon
-                type="zoom-out"
+              <ZoomOutOutlined
                 onClick={zoomDecrease}
                 title="缩小"
                 style={{
@@ -143,8 +139,7 @@ function PdfViewer(props) {
                   margin: '0 15px',
                 }}
               />{' '}
-              <Icon
-                type="zoom-in"
+              <ZoomInOutlined
                 onClick={zoomAdd}
                 title="放大"
                 style={{
@@ -153,8 +148,7 @@ function PdfViewer(props) {
               />
             </div>{' '}
             <div>
-              <Icon
-                type="left"
+              <LeftOutlined
                 onClick={previousPage}
                 title={state.pageNumber === 1 ? '已经是第一页' : '上一页'}
                 style={{
@@ -169,8 +163,7 @@ function PdfViewer(props) {
                 {' '}
                 {state.pageNumber}/ {state.numPages}
               </span>
-              <Icon
-                type="right"
+              <RightOutlined
                 onClick={nextPage}
                 title={state.pageNumber === state.numPages ? '已经是最后一页' : '下一页'}
                 style={{
@@ -179,7 +172,7 @@ function PdfViewer(props) {
               />
             </div>{' '}
             <div>
-              <Icon
+              <LegacyIcon
                 type={state.isFullscreen ? 'fullscreen-exit' : 'fullscreen'}
                 title="全屏查看"
                 style={{

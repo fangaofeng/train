@@ -2,20 +2,6 @@
 
 @pro-header-hover-bg: rgba(0, 0, 0, 0.025);
 
-.logo {
-  display: inline-block;
-  height: @layout-header-height;
-  padding: 0 0 0 24px;
-  font-size: 20px;
-  line-height: @layout-header-height;
-  vertical-align: top;
-  cursor: pointer;
-  img {
-    display: inline-block;
-    vertical-align: middle;
-  }
-}
-
 .menu {
   :global(.anticon) {
     margin-right: 8px;
@@ -87,25 +73,6 @@
     &:hover,
     &:global(.opened) {
       background: @primary-color;
-    }
-  }
-}
-
-:global(.ant-pro-global-header) {
-  background-image: url('../../assets/images/Header/header_bg.png');
-
-  .dark {
-    .action {
-      color: @text-color;
-      > i {
-        color: @text-color;
-      }
-      &:hover {
-        color: rgba(255, 255, 255, 0.85);
-        > i {
-          color: rgba(255, 255, 255, 0.85);
-        }
-      }
     }
   }
 }

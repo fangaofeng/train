@@ -1,10 +1,10 @@
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 // // 模拟table表格数据
-function mockTable(page, size) {
+function mockTable(current, pageSize) {
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= 31) {
       let sta = '';
       if (i === 0 || i === 5) {
@@ -19,14 +19,14 @@ function mockTable(page, size) {
         sta = '拟制中';
       }
       list.push({
-        id: `${page}${i}`,
+        id: `${current}${i}`,
         name: '反贿赂合规体系的建立与实践',
         exam_name: '反贿赂合规培训',
         start_time: '2018-10-26 12:50:00',
         end_time: '2018-11-25 12:50:00',
         course: 3,
-        ratio: `${page}${i}/1${page}${i}`,
-        pass_ration: `${page}${i}/1${page}${i}`,
+        ratio: `${current}${i}/1${current}${i}`,
+        pass_ration: `${current}${i}/1${current}${i}`,
         orexame: false,
         status: sta,
       });
@@ -44,20 +44,20 @@ function mockTable(page, size) {
   return obj;
 }
 // // 模拟table表格数据
-function mockTable2(page, size) {
+function mockTable2(current, pageSize) {
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= 31) {
       list.push({
-        id: `${page}${i}`,
-        group_no: `2017050000-${page}-${i}`,
-        name: `开发组-${page}-${i}`,
+        id: `${current}${i}`,
+        group_no: `2017050000-${current}-${i}`,
+        name: `开发组-${current}-${i}`,
         trainers: [121, 145, 158, 2, 52, 149, 162, 1, 116, 140],
         created_time: '2018-11-27T16:25:24.465263',
-        ratio: `${page}${i}/1${page}${i}`,
-        questionanswer: `${page}${i}/1${page}${i}`,
+        ratio: `${current}${i}/1${current}${i}`,
+        questionanswer: `${current}${i}/1${current}${i}`,
       });
     }
   }
@@ -74,11 +74,11 @@ function mockTable2(page, size) {
 }
 // 模拟table表格数据
 // 模拟table表格数据
-function mockTable3(page, size) {
+function mockTable3(current, pageSize) {
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= 31) {
       let sta = '';
       if (i === 0 || i === 5) {
@@ -93,10 +93,10 @@ function mockTable3(page, size) {
         sta = '已归档';
       }
       list.push({
-        id: `${page}${i}`,
-        user_no: `查看-2017050000-${page}-${i}`,
-        name: `查看-顾益明-${page}-${i}`,
-        department_name: `查看-技术部-${page}-${i}`,
+        id: `${current}${i}`,
+        user_no: `查看-2017050000-${current}-${i}`,
+        name: `查看-顾益明-${current}-${i}`,
+        department_name: `查看-技术部-${current}-${i}`,
         status: sta,
       });
     }
@@ -115,16 +115,16 @@ function mockTable3(page, size) {
 
 export default {
   // 考试管理——>主页，分页获取所有的考试计划
-  'GET /api/exam/plan': (req, res) => {
+  'GET /api/paper/plan': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable(current, pageSize);
     return res.json(result);
   },
 
   // ------------------------------------------------------------------
   // 获取单个计划详情，不包含群组
-  'GET /api/exam/plan/:id': (req, res) => {
+  'GET /api/paper/plan/:id': (req, res) => {
     res.send({
       status: 'ok',
       data: {
@@ -157,7 +157,7 @@ export default {
     });
   },
   // 考试管理——>发布考试计划——>点击提交按钮
-  'POST /api/exam/plan': (req, res) => {
+  'POST /api/paper/plan': (req, res) => {
     res.send({
       status: 'ok',
       data: {
@@ -176,7 +176,7 @@ export default {
   // ------------------------------------------------------------------
 
   // 考试管理——>编辑考试计划——>点击提交按钮
-  'PUT /api/exam/plan/:examPlanID': (req, res) => {
+  'PUT /api/paper/plan/:examPlanID': (req, res) => {
     res.send({
       status: 'ok',
       data: {
@@ -188,7 +188,7 @@ export default {
     });
   },
 
-  'PATCH /api/exam/plan/:examPlanID': (req, res) => {
+  'PATCH /api/paper/plan/:examPlanID': (req, res) => {
     res.send({
       status: 'ok',
       data: {
@@ -201,22 +201,22 @@ export default {
   },
   // ------------------------------------------------------------------
   // 考试管理——>查看考试计划（获取table表格数据）
-  'GET /api/exam/plan/:examPlanID/groups': (req, res) => {
+  'GET /api/paper/plan/:examPlanID/groups': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable2(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable2(current, pageSize);
     return res.json(result);
   },
   // 考试管理——>查看考试计划——>查看培训群组学习详情（获取table表格数据）
-  'GET /api/exam/plan/:examPlanID/group/:trainGroupID': (req, res) => {
+  'GET /api/paper/plan/:examPlanID/group/:trainGroupID': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable3(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable3(current, pageSize);
     return res.json(result);
   },
   // ------------------------------------------------------------------
   // 考试管理——>主页，归档考试计划
-  // 'POST /api/exam/plan/fileOnArchive': (req, res) => {
+  // 'POST /api/paper/plan/fileOnArchive': (req, res) => {
   //   res.send({
   //     status: 'ok',
   //     data:{

@@ -1,10 +1,10 @@
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 // 模拟table表格数据
-function mockTable(page, size) {
+function mockTable(current, pageSize) {
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= 31) {
       let sta = '';
       if (i === 0 || i === 3 || i === 6) {
@@ -17,17 +17,17 @@ function mockTable(page, size) {
         sta = '已归档';
       }
       list.push({
-        id: Number(`${page}${i}`),
-        name: `反贿赂合规培训${page}${i}`,
-        start_time: `2018-10-${page}${i}`,
-        end_time: `2019-10-${page}${i}`,
+        id: Number(`${current}${i}`),
+        name: `反贿赂合规培训${current}${i}`,
+        start_time: `2018-10-${current}${i}`,
+        end_time: `2019-10-${current}${i}`,
         status: sta, // 已指派、已完成、学习中、已归档
-        ratio: `${page}${i}/1${page}${i}`,
+        ratio: `${current}${i}/1${current}${i}`,
         course: {
-          id: Number(`${page}${i}`),
-          name: `反贿赂合规体系的建立与实践${page}${i}`,
+          id: Number(`${current}${i}`),
+          name: `反贿赂合规体系的建立与实践${current}${i}`,
         },
-        questionanswer: `${page}${i}/1${page}${i}`,
+        questionanswer: `${current}${i}/1${current}${i}`,
       });
     }
   }
@@ -43,20 +43,20 @@ function mockTable(page, size) {
   return obj;
 }
 // 模拟table表格数据
-function mockTable2(page, size) {
+function mockTable2(current, pageSize) {
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= 31) {
       list.push({
-        id: `${page}${i}`,
-        group_no: `2017050000-${page}-${i}`,
-        name: `开发组-${page}-${i}`,
+        id: `${current}${i}`,
+        group_no: `2017050000-${current}-${i}`,
+        name: `开发组-${current}-${i}`,
         trainers: [121, 145, 158, 2, 52, 149, 162, 1, 116, 140],
         created_time: '2018-11-27T16:25:24.465263',
-        ratio: `${page}${i}/1${page}${i}`,
-        questionanswer: `${page}${i}/1${page}${i}`,
+        ratio: `${current}${i}/1${current}${i}`,
+        questionanswer: `${current}${i}/1${current}${i}`,
       });
     }
   }
@@ -72,11 +72,11 @@ function mockTable2(page, size) {
   return obj;
 }
 // 模拟table表格数据
-function mockTable3(page, size) {
+function mockTable3(current, pageSize) {
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= 31) {
       let sta = '';
       if (i === 0 || i === 5) {
@@ -91,12 +91,12 @@ function mockTable3(page, size) {
         sta = '超期已完成';
       }
       list.push({
-        id: `${page}${i}`,
-        user_no: `查看-2017050000-${page}-${i}`,
-        name: `查看-顾益明-${page}-${i}`,
-        department_name: `查看-技术部-${page}-${i}`,
+        id: `${current}${i}`,
+        user_no: `查看-2017050000-${current}-${i}`,
+        name: `查看-顾益明-${current}-${i}`,
+        department_name: `查看-技术部-${current}-${i}`,
         status: sta,
-        questionanswer: `${page}${i}/1${page}${i}`,
+        questionanswer: `${current}${i}/1${current}${i}`,
       });
     }
   }
@@ -142,8 +142,8 @@ export default {
   // 学习计划管理——>主页，获取所有的学习计划
   'GET /api/learn/plan': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable(current, pageSize);
     return res.json(result);
   },
   // ------------------------------------------------------------------
@@ -200,15 +200,15 @@ export default {
   // 学习计划管理——>查看学习计划（获取table表格数据）
   'GET /api/learn/plan/:id/groups': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable2(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable2(current, pageSize);
     return res.json(result);
   },
   // 学习计划管理——>查看学习计划——>查看培训群组学习详情（获取table表格数据）
   'GET /api/learn/plan/:studyPlanID/:trainGroupID/members': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable3(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable3(current, pageSize);
     return res.json(result);
   },
   // // ------------------------------------------------------------------

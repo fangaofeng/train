@@ -1,10 +1,14 @@
-// import { stringify } from 'qs'
-import request from '@/utils/request';
+import { useRequest } from 'umi';
+import { ServiceBase } from './base';
 
-// eslint-disable-next-line import/prefer-default-export
-export async function getUploadurl(params) {
-  return request('/config/uploadpath', {
-    method: 'GET',
-    data: params,
-  });
+class Config extends ServiceBase {
+  getuploadurl() {
+    return this.path;
+  }
+
+  getuploadurlRequest(options = {}) {
+    return useRequest(() => this.getuploadurl(), { ...options });
+  }
 }
+
+export default new Config('/config/uploadpath');

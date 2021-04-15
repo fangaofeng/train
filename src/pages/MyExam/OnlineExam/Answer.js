@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Prompt } from 'react-router-dom';
 import { connect } from 'dva';
-import { Card, Button, List, Modal, Icon, Statistic } from 'antd';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Card, Button, List, Modal, Statistic } from 'antd';
 import classNames from 'classnames';
 
 import Question from '@/components/Question';
@@ -77,27 +78,27 @@ class OnlineExamAnswer extends Component {
     });
   };
 
-  getQuestions = (page, size, examid) => {
+  getQuestions = (current, pageSize, examid) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'onlineExam/GetExamQuestions',
       payload: {
         id: examid,
-        // page,
-        // size,
+        // current,
+        // pageSize,
       },
     });
   };
 
-  getCurrentQuestions = (page, size) => {
+  getCurrentQuestions = (current, pageSize) => {
     const {
       allSortQuestionAnswers,
       pagination: { total },
     } = this.state;
 
-    const startIndex = (page - 1) * size;
-    const endIndex = startIndex + size > total ? total - 1 : startIndex + size;
-    // console.log(page, startIndex, endIndex, total);
+    const startIndex = (current - 1) * pageSize;
+    const endIndex = startIndex + pageSize > total ? total - 1 : startIndex + pageSize;
+    // console.log(current, startIndex, endIndex, total);
     return allSortQuestionAnswers.slice(startIndex, endIndex);
   };
 
@@ -307,9 +308,7 @@ class OnlineExamAnswer extends Component {
           }
         >
           <div style={{ display: 'flex', justifyContent: 'center', padding: '40px 0' }}>
-            <Icon
-              type="exclamation-circle"
-              theme="filled"
+            <ExclamationCircleFilled
               style={{ color: '#faad14', fontSize: '24px', marginRight: '15px' }}
             />
             <div>

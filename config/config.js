@@ -7,7 +7,7 @@ import defaultSettings from './defaultSettings';
 import myThemeConfig from './myThemeConfig';
 const { REACT_APP_ENV } = process.env;
 const ttt = process.env;
-const { pwa } = defaultSettings;
+const { pwa, iconfontUrl } = defaultSettings;
 const { winPath } = utils;
 
 export default defineConfig({
@@ -17,18 +17,31 @@ export default defineConfig({
   base: '/front',
   publicPath: '/front/static/',
   favicon: REACT_APP_ENV ? '/favicon.png' : '/front/static/favicon.png',
-  dva: {
-    hmr: true,
+  // dva: {
+  //   hmr: true,
+  // },
+  layout: {
+    name: ' ', //南京博纳德网络科技有限公司
+    logo: 'http://localhost/logo_txt_white.png',
+    locale: false,
+    collapsedButtonRender: false,
+    iconfontUrl,
+    fixedHeader: false,
+    ...defaultSettings,
+  },
+  request: {
+    dataField: 'data',
   },
   locale: {
     default: 'zh-CN',
     baseNavigator: false,
   },
-  // dynamicImport: {
-  //   // 无需 level, webpackChunkName 配置
-  //   // loadingComponent: './components/PageLoading/index'
-  //   loading: '@/components/PageLoading/index',
-  // },
+  //dynamicImport: {
+  // 无需 level, webpackChunkName 配置
+  // loadingComponent: './components/PageLoading/index'
+  // loading: '@/components/PageLoading/index',
+  //},
+
   pwa,
   targets: {
     ie: 11,

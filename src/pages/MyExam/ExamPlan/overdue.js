@@ -2,14 +2,11 @@ import React from 'react';
 import { List, Button } from 'antd';
 // import { history } from 'umi'
 import { Link } from 'umi';
-
+import ViewList from '@/components/ViewPage/viewList';
 import ExamBasicInfo from '@/components/ExamBasicInfo';
-
-import ViewList from '@/components/ViewPage/viewList2';
+import { examplanService } from '@/services';
 
 export default () => {
-  const datalist = state => state.MyExam.overdues;
-
   const renderItem = item => (
     <List.Item
       actions={[
@@ -25,11 +22,11 @@ export default () => {
   );
 
   const props = {
-    action: 'MyExam/getExamProgress',
-    actionparams: { status: 'overdue' },
+    service: examplanService,
+    params: { status: 'overdue' },
     name: '逾期的考试',
-    datalist,
     renderItem,
+    isGride: false,
   };
 
   return ViewList(props);

@@ -11,7 +11,9 @@ export default {
       phone: '13912344412',
       employee_position: '开发经理', // 职位
       email: 'fgf@whl.com', // 邮箱
-      role_display: '系统管理员', // 角色
+      role_display: ['系统管理员'], // 角色
+      roles: ['admin'],
+      currentrole: 'admin',
       thumbnail: 'http://localhost/avatar_default_big_bak.png', // 缩略图
       avatar: 'http://localhost/avatar_default_big_bak.png',
       department_name: '总经办', // 部门
@@ -22,7 +24,7 @@ export default {
 
   'POST /api/auth/login': (req, res) => {
     const { username, password } = req.body;
-    if (username === 'fgf' && password === '1234') {
+    if (username === 'admin' && password === '1234') {
       res.send({
         status: 'ok',
         data: {

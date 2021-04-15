@@ -32,7 +32,7 @@ export interface DefaultSettings {
    */
   fixSiderbar: boolean;
   menu: { locale: boolean };
-  title: string;
+
   pwa: boolean;
   // Your custom iconfont Symbol script Url
   // eg：//at.alicdn.com/t/font_1039637_btcrd5co4w.js
@@ -40,6 +40,7 @@ export interface DefaultSettings {
   // Usage: https://github.com/ant-design/ant-design-pro/pull/3517
   iconfontUrl: string;
   colorWeak: boolean;
+  companyband: string;
 }
 
 export default {
@@ -56,18 +57,18 @@ export default {
     locale: false,
   },
 
-  title: '',
   pwa: false,
   iconfontUrl: 'https://at.alicdn.com/t/font_1522724_lgyw7kkfn58.js',
 
   company: '南京博纳德网络科技有限公司',
   companyband: '2019 南京博纳德网络科技有限公司',
-  uploadurl: {
-    course: 'http://localhost:8000/api/course/upload',
-    paper: 'http://localhost:8000/api/paper/upload',
-    avatar: 'http://localhost:8000/api/account/avatar',
-    org: 'http://localhost:8000/api/orgs/upload',
-    user: 'http://localhost:8000/api/user/upload',
-    blogCover: 'http://localhost:8000/', // 假的
-  },
 } as DefaultSettings;
+
+// uploadurl: {
+//   course: 'http://localhost:8000/api/course/upload',
+//   paper: 'http://localhost:8000/api/paper/upload',
+//   avatar: 'http://localhost:8000/api/account/avatar',
+//   org: 'http://localhost:8000/api/orgs/upload',
+//   user: 'http://localhost:8000/api/user/upload',
+//   blogCover: 'http://localhost:8000/', // 假的
+// },

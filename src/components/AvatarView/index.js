@@ -1,14 +1,10 @@
 /* eslint-disable no-nested-ternary */
 import React, { Component } from 'react';
-import { Upload, Icon, message, Avatar } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
+import { Upload, message, Avatar } from 'antd';
 import storetoken from '@/utils/token';
-// import { getUploadAvatarurl } from '@/services/uploadUrl/uploadUrl';
 
-// function getBase64(img, callback) {
-//   const reader = new FileReader();
-//   reader.addEventListener('load', () => callback(reader.result));
-//   reader.readAsDataURL(img);
-// }
 
 function beforeUpload(file) {
   const isJPG = file.type === 'image/jpeg';
@@ -62,10 +58,9 @@ class AvatarView extends Component {
   render() {
     const { loading, imageUrl } = this.state;
     const { uploadurl } = this.props;
-    console.log('loading', loading);
     const uploadButton = (
       <div>
-        <Icon type={loading ? 'loading' : 'plus'} />
+        <LegacyIcon type={loading ? 'loading' : 'plus'} />
         <div className="ant-upload-text">上传头像</div>
       </div>
     );
@@ -92,9 +87,9 @@ class AvatarView extends Component {
         >
           {imageUrl ? (
             loading ? (
-              <Avatar size={136} icon="loading" />
+              <Avatar size={136} icon={<LoadingOutlined />} />
             ) : (
-              <Avatar size={136} src={imageUrl} icon="user" />
+              <Avatar size={136} src={imageUrl} icon={<UserOutlined />} />
             )
           ) : (
             uploadButton

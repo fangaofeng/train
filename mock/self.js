@@ -91,7 +91,7 @@ export default {
   },
 
   // 学员待完成、已完成、已逾期
-  'GET /api/exam/aggregation': (req, res) => {
+  'GET /api/paper/aggregation': (req, res) => {
     res.send({
       status: 'ok',
       data: {

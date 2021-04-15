@@ -1,9 +1,9 @@
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
-function mockTable(page, size) {
+function mockTable(current, pageSize) {
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= 31) {
       let sta = '';
       if (i === 0 || i === 5) {
@@ -19,7 +19,7 @@ function mockTable(page, size) {
       }
       let courseSrc;
       let fileType;
-      const idt = `${page}${i}`;
+      const idt = `${current}${i}`;
       if (idt % 2 === 1) {
         fileType = 'MP4';
         courseSrc = 'http://localhost/test.mp4'; // 课件资源路径
@@ -76,8 +76,8 @@ export default {
 
   'GET /api/learn/publicprogress': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable(current, pageSize);
     return res.json(result);
   },
   /**

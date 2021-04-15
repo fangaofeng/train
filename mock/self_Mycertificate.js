@@ -1,17 +1,17 @@
 const basicUrl = 'http://localhost';
 
 // 模拟数据
-function mockTable(page, size) {
+function mockTable(current, pageSize) {
   let count;
-  if (page === 1 && size === 4) {
+  if (current === 1 && pageSize === 4) {
     count = 4;
   } else {
     count = 31;
   }
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= count) {
       let sta = '';
       let img = '';
@@ -30,12 +30,12 @@ function mockTable(page, size) {
       }
       list.push({
         // id:10,
-        id: `${page}${i}`,
+        id: `${current}${i}`,
         applicable_user: '财务管理人员',
         category: '公开课',
         class_hour: '1.50',
         courseware_file: 'http://192.168.101.11:8000/media/coursewarefile/string_fhlhg.mp4',
-        courseware_no: `2018103100${page}${i}`,
+        courseware_no: `2018103100${current}${i}`,
         courseware_type: '通用课件',
         cover: `${basicUrl}/${img}`, // 背景图片
         drag_flag: true,
@@ -73,8 +73,8 @@ export default {
    */
   'GET /api/trainCertificate': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable(current, pageSize);
     return res.json(result);
   },
   // 系统管理员 ——> 课件管理 ——> 主页，删除课件

@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserOutlined } from '@ant-design/icons';
 import { Button, Input, Avatar } from 'antd';
 import classNames from 'classnames';
 import styles from './Common.less';
@@ -32,7 +33,7 @@ export default props => {
           </div>{' '}
           <div className={styles.teacherInfo}>
             <div className={styles.teacherInfoLeft}>
-              <Avatar size={60} src={course.teacherimg} alt="老师头像" icon="user" />
+              <Avatar size={60} src={course.teacherimg} alt="老师头像" icon={<UserOutlined />} />
             </div>{' '}
             <div className={styles.teacherInfoRight}>
               <div className={styles.teacherJSXM}>

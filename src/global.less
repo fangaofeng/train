@@ -86,6 +86,11 @@ ol {
   }
 }
 
+.ant-btn-link {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 // 1、查看培训群组学习详情(超期未完成，超期已完成）表格行样式
 // 2、查看培训群组考试详情（超期未完成，成绩不合格）表格行样式
 .tableRowClassNameErr {
@@ -130,6 +135,26 @@ ol {
     }
     .ant-menu-item:not(:last-child) {
       margin-bottom: 0;
+    }
+  }
+}
+.header {
+  :global(.ant-pro-global-header) {
+    background-image: url('~@/assets/images/Header/header_bg.png');
+
+    .dark {
+      .action {
+        color: @text-color;
+        > i {
+          color: @text-color;
+        }
+        &:hover {
+          color: rgba(255, 255, 255, 0.85);
+          > i {
+            color: rgba(255, 255, 255, 0.85);
+          }
+        }
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Button } from 'antd';
 import classNames from 'classnames';
-// import Authorized from '@/utils/Authorized';
+
 import styles from './ImgWord.less';
 
 class ImgWord extends Component {

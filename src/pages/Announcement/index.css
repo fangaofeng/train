@@ -1,6 +1,3 @@
-.managerContent .formContent {
-  border-bottom: 1px dashed #dcdcdc;
-}
 .managerContent .formContent :global .ant-form-item {
   margin-bottom: 24px;
 }

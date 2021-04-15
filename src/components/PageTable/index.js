@@ -52,8 +52,8 @@ function PageTable(props) {
       type: action,
       payload: {
         ...params,
-        page: pagination.current, // 页码
-        size: pagination.pageSize, // 每页条数
+        current: pagination.current, // 页码
+        pageSize: pagination.pageSize, // 每页条数
       },
     });
   };

@@ -14,7 +14,7 @@ export interface Loading {
   models: {
     global?: boolean;
     menu?: boolean;
-    setting?: boolean;
+    settings?: boolean;
     account?: boolean;
     login?: boolean;
   };

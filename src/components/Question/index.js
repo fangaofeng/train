@@ -12,15 +12,12 @@ class Question extends Component {
 
   // 单选框，改变选项时触发
   radioOnChange = e => {
-    console.log(e.target.value);
-
     const { setCurrentAnswer, index } = this.props;
     setCurrentAnswer(index, e.target.value);
   };
 
   // 多选框，改变选项时触发
   checkboxOnChange = value => {
-    console.log(value.join('/'));
     const { setCurrentAnswer, index } = this.props;
     setCurrentAnswer(index, value.join('/'));
   };

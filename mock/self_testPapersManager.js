@@ -1,17 +1,17 @@
 const basicUrl = 'http://localhost';
 
 // 模拟数据
-function mockTable(page, size) {
+function mockTable(current, pageSize) {
   let count;
-  if (page === 1 && size === 4) {
+  if (current === 1 && pageSize === 4) {
     count = 4;
   } else {
     count = 31;
   }
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= count) {
       let sta = '';
       let img = '';
@@ -30,9 +30,9 @@ function mockTable(page, size) {
       }
       list.push({
         // id:10,
-        id: `${page}${i}`,
+        id: `${current}${i}`,
         // 试卷编号
-        exame_no: `201810310001${page}${i}`,
+        exame_no: `201810310001${current}${i}`,
         // 试卷名称
         name: '反贿赂合规体系的建立与实践考试',
         // 考试时长
@@ -70,17 +70,17 @@ function mockTable(page, size) {
 }
 
 // 模拟table表格数据
-function mockTable3(page, size) {
+function mockTable3(current, pageSize) {
   let obj = {};
   const list = [];
-  for (let i = 0; i < size; i += 1) {
-    const currentTotal = (page - 1) * size + i + 1;
+  for (let i = 0; i < pageSize; i += 1) {
+    const currentTotal = (current - 1) * pageSize + i + 1;
     if (currentTotal <= 58) {
       list.push({
-        id: `${page}${i}`,
-        user_no: `2017050000-${page}-${i}`,
-        name: `试卷管理-顾益明-${page}-${i}`,
-        department_name: `试卷管理-技术部-${page}-${i}`,
+        id: `${current}${i}`,
+        user_no: `2017050000-${current}-${i}`,
+        name: `试卷管理-顾益明-${current}-${i}`,
+        department_name: `试卷管理-技术部-${current}-${i}`,
         created: i % 2 === 0 ? '是' : '否',
       });
     }
@@ -107,8 +107,8 @@ export default {
    */
   'GET /api/paper': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable(current, pageSize);
     return res.json(result);
   },
   // 系统管理员 ——> 试卷管理 ——> 主页，删除试卷
@@ -158,8 +158,8 @@ export default {
    */
   'GET /api/paper/:id/trainmanagers': (req, res) => {
     const params = req.query;
-    const { page, size } = params;
-    const result = mockTable3(page, size);
+    const { current, pageSize } = params;
+    const result = mockTable3(current, pageSize);
     return res.json(result);
   },
   // 系统管理员 ——> 试卷管理 ——> 试卷编辑（拟制中、已上架、已下架） ——> (单个删除、批量删除)
@@ -187,10 +187,6 @@ export default {
     });
   },
 
-  'POST /api/paper': (req, res) => {
-    const result = { status: 'ok', data: { id: 1 } };
-    return res.json(result);
-  },
   'POST /api/paper/upload': (req, res) => {
     const result = {
       status: 'ok',
@@ -302,6 +298,9 @@ export default {
     };
     return res.json(result);
   },
-
+  'POST /api/paper': (req, res) => {
+    const result = { status: 'ok', data: { id: 1 } };
+    return res.json(result);
+  },
   // ------------------------------------------------------------------
 };
