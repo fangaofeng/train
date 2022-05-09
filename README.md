@@ -20,7 +20,7 @@
   - 用户角色和权限配置
   - 课程类型配置
   - 运营界面配置
-![Image text](https://raw.githubusercontent.com/remmlqw/img-folder/master/login.png)
+
 #### 普通用户：
   - 登录,密码修改和重置(注册未实现,企业按照统一分配或其它方式,所以未实现)
   - 组织解构管理：
